@@ -222,68 +222,76 @@ exports.login = async (req, res) => {
   }
 };
 
-// change Password' 
-exports.changePassoword = async (req, res) => {
-  try {
-    const { currPwd, newPwd, confirmPwd } = req.body;
-    if (!currPwd || !newPwd || !confirmPwd) {
-      return res.status(400).json({
-        success: false,
-        message: "All fields are required !",
-      });
-    }
 
-    if (newPwd !== confirmPwd) {
-      return res.status(400).json({
-        success: false,
-        message: "OOps  Passwords are not matching !",
-      });
-    }
+// Controller for Changing Password
+exports.changePassword = async (req, res) => {
+	try {
+		// Get user data from req.user
+		const userDetails = await User.findById(req.user.id);
 
-    const userId = req.user.id;
-    const user = await User.findById(userId);
-    if (!user) {
-      return res.status(404).json({
-        success: false,
-        message: "User not found",
-      });
-    }
-    const isPwdMatch = await bcrypt.compare(currPwd, user.password);
+		// Get old password, new password, and confirm new password from req.body
+		const { oldPassword, newPassword, confirmNewPassword } = req.body;
 
-    if (!isPwdMatch) {
-      return res.status(401).json({
-        success: false,
-        message: "Your current password is wrong! Please try again",
-      });
-    }
+		// Validate old password
+		const isPasswordMatch = await bcrypt.compare(
+			oldPassword,
+			userDetails.password
+		);
+		if (!isPasswordMatch) {
+			// If old password does not match, return a 401 (Unauthorized) error
+			return res
+				.status(401)
+				.json({ success: false, message: "The password is incorrect" });
+		}
 
-    const hashedPwd = await bcrypt.hash(confirmPwd, 10);
+		// Match new password and confirm new password
+		if (newPassword !== confirmNewPassword) {
+			// If new password and confirm new password do not match, return a 400 (Bad Request) error
+			return res.status(400).json({
+				success: false,
+				message: "The password and confirm password does not match",
+			});
+		}
 
-    await User.findByIdAndUpdate(
-      userId,
-      { password: hashedPwd },
-      { new: true },
-    );
+		// Update password
+		const encryptedPassword = await bcrypt.hash(newPassword, 10);
+		const updatedUserDetails = await User.findByIdAndUpdate(
+			req.user.id,
+			{ password: encryptedPassword },
+			{ new: true }
+		);
 
-    // orr weeee can dooo itttttt  =====>
-    //   user.password = hashedPwd
-    //  await user.save();
+		// Send notification email
+		try {
+			const emailResponse = await mailSender(
+				updatedUserDetails.email,
+				passwordUpdated(
+					updatedUserDetails.email,
+					`Password updated successfully for ${updatedUserDetails.firstName} ${updatedUserDetails.lastName}`
+				)
+			);
+			console.log("Email sent successfully:", emailResponse.response);
+		} catch (error) {
+			// If there's an error sending the email, log the error and return a 500 (Internal Server Error) error
+			console.error("Error occurred while sending email:", error);
+			return res.status(500).json({
+				success: false,
+				message: "Error occurred while sending email",
+				error: error.message,
+			});
+		}
 
-    await mailSender(
-      user.email,
-      "Hey, your password was updated successfully.",
-      "Your Password is Updated",
-    );
-
-    return res.status(200).json({
-      success: true,
-      message: "Password changed successfully",
-    });
-  } catch (err) {
-    return res.status(500).json({
-      success: false,
-      message: "Error While changing passowrd !!",
-      error: err.message,
-    });
-  }
+		// Return success response
+		return res
+			.status(200)
+			.json({ success: true, message: "Password updated successfully" });
+	} catch (error) {
+		// If there's an error updating the password, log the error and return a 500 (Internal Server Error) error
+		console.error("Error occurred while updating password:", error);
+		return res.status(500).json({
+			success: false,
+			message: "Error occurred while updating password",
+			error: error.message,
+		});
+	}
 };

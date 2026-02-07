@@ -33,7 +33,7 @@ const {
 
 // Sub-Sections Controllers Import
 const {
-  creatingRating,
+  createRating,
   getAverageRating,
   getAllRating,
 } = require("../controllers/RatingAndReview");
@@ -58,6 +58,8 @@ router.post("/addSection", auth, isInstructor, createSection);
 router.post("/updateSection", auth, isInstructor, updateSection);
 // Delete A section
 router.post("/deleteSection", auth, isInstructor, deleteSection);
+// Add a Sub Section to a Section 
+router.post("/addSubSection", auth, isInstructor, createSubSection)
 // Edit sub section
 router.post("/updateSubSection", auth, isInstructor, updateSubSection);
 // Delete Sub Section
