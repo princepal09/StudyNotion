@@ -24,7 +24,6 @@ const courseSchema = new mongoose.Schema({
   tag: {
     type: [String],
     required: true,
-    trim: true,
   },
   courseContent: [
     {
@@ -55,7 +54,7 @@ const courseSchema = new mongoose.Schema({
   instructions : {
     type : [String]
   },
-  studentsEnrolled: [{
+  studentsEnrolled: [{  
     type: mongoose.Schema.Types.ObjectId,
     required: true,
     ref: "User",
