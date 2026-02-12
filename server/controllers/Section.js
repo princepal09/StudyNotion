@@ -12,9 +12,10 @@ exports.createSection = async (req, res) => {
         success: false,
         mesasge: "Missing Properties",
       });
-    }
+    }           
     //create section
     const newSection = await Section.create({ sectionName });
+    console.log("New Section :",newSection);
 
     // update course with section ObjectId
     const updatedCourseDetails = await Course.findByIdAndUpdate(
@@ -26,11 +27,16 @@ exports.createSection = async (req, res) => {
       },
       { new: true },
     )
-      .populate("courseContent")
+      .populate({
+        path : "courseContent",
+        populate : {
+          path : "subSection"
+        }
+      })
       .exec();
 
     // return response
-    return res.status(200).josn({
+    return res.status(200).json({
       success: true,
       message: "Section created successfully",
       updatedCourseDetails,

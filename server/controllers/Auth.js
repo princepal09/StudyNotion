@@ -4,6 +4,7 @@ const otpGenerator = require("otp-generator");
 const bcrypt = require("bcrypt");
 const jwt = require("jsonwebtoken");
 const { mailSender } = require("../utils/mailSender");
+const Profile = require("../models/Profile")
 require("dotenv").config();
 
 // sendOTP
@@ -60,105 +61,108 @@ exports.sendOTP = async (req, res) => {
   }
 };
 
-// SignUp
+// Signup Controller for Registering USers
+
 exports.signUp = async (req, res) => {
-  try {
-    // data fetch from request body
-    const {
-      firstName,
-      lastName,
-      email,
-      password,
-      confirmPassword,
-      accountType,
-      otp,
-    } = req.body;
-    // do validate
-    if (
-      !firstName ||
-      !lastName ||
-      !email ||
-      !password ||
-      !confirmPassword ||
-      !otp
-    ) {
-      return res.status(403).json({
-        success: false,
-        message: "All feilds are required",
-      });
-    }
+	try {
+		// Destructure fields from the request body
+		const {
+			firstName,
+			lastName,
+			email,
+			password,
+			confirmPassword,
+			accountType,
+			contactNumber,
+			otp,
+		} = req.body;
+		// Check if All Details are there or not
+		if (
+			!firstName ||
+			!lastName ||
+			!email ||
+			!password ||
+			!confirmPassword ||
+			!otp
+		) {
+			return res.status(403).send({
+				success: false,
+				message: "All Fields are required",
+			});
+		}
+		// Check if password and confirm password match
+		if (password !== confirmPassword) {
+			return res.status(400).json({
+				success: false,
+				message:
+					"Password and Confirm Password do not match. Please try again.",
+			});
+		}
 
-    // match the both two passwords
-    if (password !== confirmPassword) {
-      return res.status(400).json({
-        success: true,
-        message:
-          "Password and Confirm Password Value doesn't match, Please try again",
-      });
-    }
-    // Check user already exists or not before
-    const exisingUser = await User.findOne({ email });
-    if (exisingUser) {
-      return res.status(400).json({
-        success: false,
-        message: "User is already Registered",
-      });
-    }
+		// Check if user already exists
+		const existingUser = await User.findOne({ email });
+		if (existingUser) {
+			return res.status(400).json({
+				success: false,
+				message: "User already exists. Please sign in to continue.",
+			});
+		}
 
-    // Find more Recent OTP Stored for the user
-    const recentOtp = await OTP.find({ email })
-      .sort({ createdAt: -1 })
-      .limit(1);
-    console.log(recentOtp);
+		// Find the most recent OTP for the email
+		const response = await OTP.find({ email }).sort({ createdAt: -1 }).limit(1);
+		console.log(response);
+		if (response.length === 0) {
+			// OTP not found for the email
+			return res.status(400).json({ 
+				success: false,
+				message: "The OTP is not valid",
+			});
+		} else if (otp !== response[0].otp) {
+			// Invalid OTP
+			return res.status(400).json({
+				success: false,
+				message: "The OTP is not valid",
+			});
+		}
 
-    // VAlidate OTP
-    if (recentOtp.length === 0) {
-      // OTP not found
-      return res.status(400).json({
-        success: false,
-        message: "OTP not found",
-      });
-    } else if (otp !== recentOtp.otp) {
-      // Invalid OTP
-      return res.status(400).json({
-        success: false,
-        message: "OTP not matching",
-      });
-    }
-    // Hash password
-    const hashedPassword = bcrypt.hash(password, 10);
-    //Centry Create in DB
-    const profileDetails = await Profile.create({
-      gender: null,
-      dateOfBirth: null,
-      about: null,
-      contactNumber: null,
-    });
+		// Hash the password
+		const hashedPassword = await bcrypt.hash(password, 10);
 
-    const user = User.create({
-      firstName,
-      lastName,
-      email,
-      contactNumber,
-      password: hashedPassword,
-      accountType,
-      additionalDetails: profileDetails._id,
-      image: `https://api.dicebear.com/5.x/initials/svg?seed=${firstName} ${lastName}`,
-    });
+		// Create the user
+		let approved = "";
+		approved === "Instructor" ? (approved = false) : (approved = true);
 
-    return res.status(201).json({
-      success: true,
-      message: "User is Registered Successfully!!",
-      user,
-    });
-  } catch (err) {
-    console.log(err);
-    return res.status(500).json({
-      success: false,
-      message: "User Cannot be registered Please try again ",
-    });
-  }
-  //return res
+		// Create the Additional Profile For User
+		const profileDetails = await Profile.create({
+			gender: null,
+			dateOfBirth: null,
+			about: null,
+			contactNumber: null,
+		});
+		const user = await User.create({
+			firstName,
+			lastName,
+			email,
+			contactNumber,
+			password: hashedPassword,
+			accountType: accountType,
+			approved: approved,
+			additionalDetails: profileDetails._id,
+			image: `https://api.dicebear.com/5.x/initials/svg?seed=${firstName} ${lastName}`,
+		});
+
+		return res.status(200).json({
+			success: true,
+			user,
+			message: "User registered successfully",
+		});
+	} catch (error) {
+		console.error(error);
+		return res.status(500).json({
+			success: false,
+			message: "User cannot be registered. Please try again.",
+		});
+	}
 };
 
 // Login

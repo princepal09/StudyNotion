@@ -20,7 +20,7 @@ exports.createCategory = async (req, res) => {
 
     return res.status(201).json({
       success: true,
-      message: "Tag Created Successfully ",
+      message: "Category Created Successfully ",
     });
   } catch (err) {
     console.log(err);
@@ -40,6 +40,7 @@ exports.showAllCategories = async (req, res) => {
     return res.status(200).json({
       success: true,
       message: "All Tags returned Successfully",
+      allCategories : allTags
     });
   } catch (err) {
     console.log(err);
