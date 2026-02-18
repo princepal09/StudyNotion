@@ -1,3 +1,4 @@
+/* eslint-disable no-unused-vars */
 import React from 'react'
 import CTAButton from "../HomePage/Button"
 import HighlightText from './HighlightText'
@@ -34,7 +35,7 @@ const CodeBlocks = ({
     </div>
 
      {/*Section 2*/}
-     <div className=' h-fit  flex flex-row text-10[px] w-[100%] py-4 lg:w-[500px]'> 
+     <div className=' h-fit  flex flex-row text-10[px] w-full py-4 lg:w-125'> 
         {/*HW -> BG gradient*/}
 
         <div className='text-center flex flex-col w-[10%] text-richblack-400 font-inter font-bold'>
