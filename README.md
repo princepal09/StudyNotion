@@ -64,7 +64,7 @@ server/
 
 Create a `.env` file inside the `server/` directory and add the following:
 
-Server Configuration
+ Server Configuration
 
 PORT=4000
 
