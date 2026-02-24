@@ -5,6 +5,7 @@ import HighlightText from '../components/core/HomePage/HighlightText';
 import CTAButton from '../components/core/HomePage/Button'
 import Banner from "../assets/Images/banner.mp4"
 import CodeBlocks from '../components/core/HomePage/CodeBlocks';
+import image from '../assets/Images/bghome.svg'
 
 const Home = () => {
     return (
@@ -95,17 +96,17 @@ const Home = () => {
                         position={"lg:flex-row-reverse"}
                         heading={
                             <div className='text-4xl font-semibold'>
-                                Unlock Your
-                                <HighlightText text={"coding potential"} /> {" "}
-                                with our online courses
+                                Start
+                                <HighlightText text={"coding in seconds"} /> {" "}
+                                
                             </div>
                         }
                         subheading={
-                            "Our courses are designed and taught by industry experts who have years of experience in coding and are passionate about sharing their knowledge with you."
+                            "Go ahead, give it a try. Our hands-on learning environment means you'll be writing real code from your very first lesson."
                         }
                         ctabtn1={
                             {
-                                btnText: "try it yourself",
+                                btnText: "continue lesson",
                                 linkto: "/signup",
                                 active: true,
                             }
@@ -126,9 +127,65 @@ const Home = () => {
             </div>
 
             {/*Section 2  */}
+            <div className='bg-pure-greys-5 text-richblack-700'>
+                <div style={{backgroundImage : `url(${image})`}} className='homepage_bg h-83.25'>
+
+                    <div className='w-11/12 flex items-center flex-col justify-center gap-5 mx-auto max-w-maxContent'>
+                     <div className='h-32.5 '></div>
+                    <div className='flex flex-row gap-7 text-white '>
+                        <CTAButton active={true} linkto={"/signup"}>
+                        <div className='flex items-center gap-4'>
+                            Explore full catalog 
+                            <FaArrowRight/>
+                        </div>
+
+                        </CTAButton>
+
+                        <CTAButton active={false} linkto={"/signup"}>
+                        <div className='flex items-center gap-4'>
+                            Learn more 
+                            <FaArrowRight/>
+                        </div>
+
+                        </CTAButton>
+
+                    </div>
+ 
+                    </div>
+
+                </div> 
+
+                <div className=' w-11/12 max-w-maxContent flex flex-col items-center justify-between gap-5 mx-auto'>
+
+                <div className='flex flex-row gap-5 '>
+
+                    <div className='text-4xl font-semibold w-[45%]'>
+                        Get the Skills you need for a
+                        <HighlightText text={"Job that is in demand "}/>
+                    </div>
+
+                </div>
+                
+                <div className='flex flex-col gap-10 w-[40%] '>
+                    <p>
+                        The Modern StudyNotion is the dictates its own terms. Today, to be a competitive specialist requires more than thier professionals Skills.
+                    </p>
+
+                    <CTAButton active={true} linkto={"/signup"}>
+                    <div>Learn More</div>
+                    </CTAButton>
+
+                    
+
+                </div>
+
+                </div>
+
+            </div>
 
 
             {/*Section 3 */}
+
 
 
             {/*Footer */}
