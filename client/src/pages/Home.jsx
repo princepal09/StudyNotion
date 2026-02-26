@@ -8,6 +8,8 @@ import CodeBlocks from '../components/core/HomePage/CodeBlocks';
 import image from '../assets/Images/bghome.svg'
 import TimeLineSection from '../components/core/HomePage/TimeLineSection';
 import LearningLanguageSection from '../components/core/HomePage/LearningLanguageSection';
+import InstructorSection from '../components/core/HomePage/InstructorSection';
+import Footer from '../components/common/Footer';
 
 const Home = () => {
     return (
@@ -198,9 +200,23 @@ const Home = () => {
 
             {/*Section 3 */}
 
+            <div className='w-11/12 mx-auto max-w-maxContent flex-col gap-8 text-white bg-richblack-900 justify-between items-center'>
+
+            <InstructorSection/> 
+            
+            <h2 className='text-center font-semibold text-4xl mt-10'>Review from other Learners</h2>
+            
+            {/* Review Slider */}
+             
+
+
+            </div>
+
 
 
             {/*Footer */}
+            <Footer/>
+
 
 
         </div>

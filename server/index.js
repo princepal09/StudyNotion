@@ -6,7 +6,7 @@ const profileRoutes = require("./routes/Profile");
 const paymentRoutes = require("./routes/Payments");
 const courseRoutes = require("./routes/Course");
 
-const database = require("./config/database");
+const {dBconnect} = require("./config/database");
 const cookieParser = require("cookie-parser");
 const cors = require("cors");
 const { cloudinaryConnect } = require("./config/cloudinary");
@@ -16,8 +16,6 @@ dotenv.config();
 
 const PORT = process.env.PORT || 3000;
 
-// database connect
-database.connect()
 
 // middlewares
 app.use(express.json());
@@ -53,7 +51,12 @@ app.get("/", (req, res) => {
   });
 });
 
-
-app.listen(PORT,(req, res)=>{
+dBconnect().then(() =>{
+  app.listen(PORT,(req, res)=>{
     console.log(`App is running at ${PORT} PORT`)
 })
+})
+.catch(() =>{
+  console.log("SERVER HAS NOT STARTED YET!!")
+})
+
