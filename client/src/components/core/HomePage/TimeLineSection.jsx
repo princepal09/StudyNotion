@@ -40,7 +40,7 @@ const TimeLineSection = () => {
                             return (
                                 <div className='flex flex-row gap-6' key={idx}>
 
-                                    <div className='w-12.5 h-12.5 items-center  bg-white '>
+                                    <div className='w-12.5 h-12.5 flex justify-center items-center rounded-full   bg-white '>
                                         <img src={elem.logo} />
                                     </div>
 
