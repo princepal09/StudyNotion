@@ -22,7 +22,7 @@ const ExploreMore = () => {
 
 
   return (
-    <div>
+    <div className="w-11/12 relative  max-w-maxContent mx-auto">
 
       <div className="text-4xl font-semibold text-center">
         Unlock the
@@ -33,7 +33,7 @@ const ExploreMore = () => {
         Learn to build anything you can imagine
       </p>
 
-      <div className="flex gap-2 py-1 px-2 bg-richblack-800 rounded-full items-center mt-5">
+      <div className="flex gap-2 py-1 px-2 w-[60%] mx-auto bg-richblack-800 rounded-full items-center mt-5">
         {tabsName.map((elem, idx) => {
           return (
             <div className={`text-[16px] flex gap-2  ${currTab === elem ? "bg-richblack-900 text-richblack-5 font-meidum " :
