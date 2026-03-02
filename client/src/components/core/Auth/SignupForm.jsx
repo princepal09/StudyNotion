@@ -24,9 +24,12 @@ const SignupForm = () => {
 
       {/* Form  */}
       <form className='flex flex-col w-full gap-y-4 ' >
-        <div className='flex gap-x-4'>
-          <label> 
 
+        {/* Name  */}
+        <div className='flex gap-x-4'>
+
+          {/* First Name  */}
+          <label> 
             <p className='mb-1 text-[0.875rem] leading-5.5 text-richblack-5'>
               First Name <sup className='text-pink-200'>*</sup>
             </p>
@@ -41,6 +44,7 @@ const SignupForm = () => {
 
           </label>
 
+          {/* Last Name  */}
           <label >
               <p className='mb-1 text-[0.875rem] leading-5.5 text-richblack-5'>
               Last Name <sup className='text-pink-200'>*</sup>
@@ -55,8 +59,10 @@ const SignupForm = () => {
             />
 
           </label>
-        </div>
 
+        </div>
+         
+         {/* Email Address  */}
         <label className='w-ful'>
           
            <p className='mb-1 text-[0.875rem] leading-5.5 text-richblack-5'>
@@ -69,8 +75,11 @@ const SignupForm = () => {
             }} 
               className="w-full rounded-lg bg-richblack-800 p-3 text-richblack-5" />
         </label>
-
+        
+         {/* password  */}
         <div className='w-full flex gap-4'>
+
+           {/* Create password  */}
           <label className='relative w-[50%]' >
                    <p className="mb-1 text-[0.875rem] leading-5.5 text-richblack-5">
               Create Password <sup className="text-pink-200">*</sup>
@@ -82,7 +91,8 @@ const SignupForm = () => {
             }}   className="w-full rounded-lg bg-richblack-800 p-3 text-richblack-5"
             />
           </label>
-
+              
+              {/* Confirm password  */}
              <label className="relative w-[50%]">
                       <p className="mb-1 text-[0.875rem] leading-5.5 text-richblack-5">
                         Confirm Password <sup className="text-pink-200">*</sup>
@@ -99,7 +109,8 @@ const SignupForm = () => {
                 
                     </label>
         </div>
-
+        
+        {/* Create Account Button  */}
         <button type='submit'
            className='mt-6 rounded-lg bg-yellow-50 
            py-2 px-3 font-medium text-richblack-900
