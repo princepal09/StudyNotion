@@ -1,7 +1,7 @@
 import React from 'react'
 import {ACCOUNT_TYPE} from "../../../utils/constants"
 import Tab from '../../common/Tab'
-
+import { AiOutlineEye, AiOutlineEyeInvisible } from "react-icons/ai"
 const SignupForm = () => {
 
   const tabData = [
@@ -21,6 +21,96 @@ const SignupForm = () => {
     <div>
       {/* Tab  */}
       <Tab tabData = {tabData} field/>
+
+      {/* Form  */}
+      <form className='flex flex-col w-full gap-y-4 ' >
+        <div className='flex gap-x-4'>
+          <label> 
+
+            <p className='mb-1 text-[0.875rem] leading-5.5 text-richblack-5'>
+              First Name <sup className='text-pink-200'>*</sup>
+            </p>
+
+            <input type="text" required 
+            name='firstname' placeholder='Enter First Name' style={{
+              boxShadow: "inset 0px -1px 0px rgba(255, 255, 255, 0.18)",
+            }}
+
+            className='w-full rounded-lg bg-richblack-800 p-3 text-richblack-5'
+            />
+
+          </label>
+
+          <label >
+              <p className='mb-1 text-[0.875rem] leading-5.5 text-richblack-5'>
+              Last Name <sup className='text-pink-200'>*</sup>
+            </p>
+
+               <input type="text" required 
+            name='firstname' placeholder='Enter First Name' style={{
+              boxShadow: "inset 0px -1px 0px rgba(255, 255, 255, 0.18)",
+            }}
+
+            className='w-full rounded-lg bg-richblack-800 p-3 text-richblack-5'
+            />
+
+          </label>
+        </div>
+
+        <label className='w-ful'>
+          
+           <p className='mb-1 text-[0.875rem] leading-5.5 text-richblack-5'>
+              Email Address <sup className='text-pink-200'>*</sup>
+            </p>
+
+              <input type="email" required 
+            name='firstname' placeholder='Enter email address' style={{
+              boxShadow: "inset 0px -1px 0px rgba(255, 255, 255, 0.18)",
+            }} 
+              className="w-full rounded-lg bg-richblack-800 p-3 text-richblack-5" />
+        </label>
+
+        <div className='w-full flex gap-4'>
+          <label className='relative w-[50%]' >
+                   <p className="mb-1 text-[0.875rem] leading-5.5 text-richblack-5">
+              Create Password <sup className="text-pink-200">*</sup>
+            </p>
+
+             <input type="email" required 
+            name='firstname' placeholder='Enter Password' style={{
+              boxShadow: "inset 0px -1px 0px rgba(255, 255, 255, 0.18)",
+            }}   className="w-full rounded-lg bg-richblack-800 p-3 text-richblack-5"
+            />
+          </label>
+
+             <label className="relative w-[50%]">
+                      <p className="mb-1 text-[0.875rem] leading-5.5 text-richblack-5">
+                        Confirm Password <sup className="text-pink-200">*</sup>
+                      </p>
+                      <input
+                        required
+                       
+                        placeholder="Confirm Password"
+                        style={{
+                          boxShadow: "inset 0px -1px 0px rgba(255, 255, 255, 0.18)",
+                        }}
+                        className="w-full rounded-lg bg-richblack-800 p-3 pr-10 text-richblack-5"
+                      />
+                
+                    </label>
+        </div>
+
+        <button type='submit'
+           className='mt-6 rounded-lg bg-yellow-50 
+           py-2 px-3 font-medium text-richblack-900
+            cursor-pointer '
+        >
+             Create Account
+        </button>
+
+
+
+      </form>
 
     </div>
   )

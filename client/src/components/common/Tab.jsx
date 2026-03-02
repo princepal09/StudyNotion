@@ -12,7 +12,7 @@ const Tab = ({tabData}) => {
         tabData.map((tab) => (
           <button 
             key={tab.id}
-            className= {` py-2 px-5 rounded-full transition-all duration-200`}
+            className= {` py-2 px-5 rounded-full transition-all duration-200 cursor-pointer`}
            > 
            {tab?.tabName}
            </button>
