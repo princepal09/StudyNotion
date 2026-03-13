@@ -4,13 +4,14 @@ import logo from '../../assets/Logo/Logo-Full-Light.png'
 import { NavbarLinks } from '../../data/navbar-links'
 import { useSelector } from 'react-redux'
 import { AiOutlineShoppingCart } from 'react-icons/ai'
+import ProfileDropdown from '../core/Auth/ProfileDropdown'
 
 
 const Navbar = () => {
     const INSTRUCTOR = "Instructor"
 
     const { token } = useSelector((state) => state.auth)
-    const { user } = useSelector((state) => state.user)
+    const { user } = useSelector((state) => state.profile)
     const { totalItems } = useSelector((state) => state.cart)
 
 
@@ -64,6 +65,25 @@ const Navbar = () => {
 
                             </Link>
                         )
+                    }
+
+                    {
+                        token === null && (
+                            <Link to={'/login'}>
+                                <button className='border-richblack-700 bg-richblack-800 px-3 py-2 text-richblack-100 rounded'>Log in</button>
+                            </Link>
+                        )
+                    }
+                    {
+                        token === null && (
+                            <Link to={'/signup'}>
+                                <button className='border-richblack-700 bg-richblack-800 px-3 py-2 text-richblack-100 rounded'>Sign up</button>
+                            </Link>
+                        )
+                    }
+
+                    {
+                        token !== null && <ProfileDropdown />
                     }
                 </div>
 
