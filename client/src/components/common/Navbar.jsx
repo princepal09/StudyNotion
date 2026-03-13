@@ -2,8 +2,18 @@ import React from 'react'
 import { Link, NavLink } from 'react-router-dom'
 import logo from '../../assets/Logo/Logo-Full-Light.png'
 import { NavbarLinks } from '../../data/navbar-links'
+import { useSelector } from 'react-redux'
+import { AiOutlineShoppingCart } from 'react-icons/ai'
+
 
 const Navbar = () => {
+    const INSTRUCTOR = "Instructor"
+
+    const { token } = useSelector((state) => state.auth)
+    const { user } = useSelector((state) => state.user)
+    const { totalItems } = useSelector((state) => state.cart)
+
+
     return (
         <div className='flex h-17  items-center justify-center border-b border-b-richblack-700  '>
             <div className='flex w-11/12 max-w-maxContent items-center justify-between'>
@@ -38,7 +48,23 @@ const Navbar = () => {
 
                 {/* Login Signup Dashboard  */}
                 <div className='flex gap-x-4 items-center'>
+                    {
+                        user && user?.accountType != INSTRUCTOR && (
+                            <Link to={'/dashboard/cart'} className='relative'>
+                                <AiOutlineShoppingCart />
+                                {
+                                    totalItems > 0 && (
+                                        <span>
+                                            {
+                                                totalItems
+                                            }
+                                        </span>
+                                    )
+                                }
 
+                            </Link>
+                        )
+                    }
                 </div>
 
             </div>
