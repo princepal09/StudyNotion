@@ -67,7 +67,7 @@ const Navbar = () => {
                                                 {
                                                     subLinks.length ? (
                                                         subLinks.map((sublink, idx) => {
-                                                            return <Link to={''} key={idx}>
+                                                            return <Link to={'/category/yo'} key={idx}>
                                                                 <p>{sublink.name}</p>
                                                             </Link>
                                                         })
