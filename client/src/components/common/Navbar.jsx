@@ -6,6 +6,7 @@ import { useSelector } from 'react-redux'
 import { AiOutlineShoppingCart } from 'react-icons/ai'
 import ProfileDropdown from '../core/Auth/ProfileDropdown'
 import { apiConnector } from '../../services/apiConnector'
+import { RiArrowDropDownLine } from "react-icons/ri";
 import { categories } from '../../services/apis'
 
 
@@ -24,8 +25,8 @@ const Navbar = () => {
         try{
 
             const result = await apiConnector("GET", categories.CATEGORIES_API);
-            console.log("Printing Sublinks result:", result.data.data);
-            setSubLinks(result.data.data);
+            console.log("Printing Sublinks result:", result.data);
+            setSubLinks(result.data.allCategories);
 
 
         }catch(err){
@@ -55,7 +56,26 @@ const Navbar = () => {
                             NavbarLinks.map((link, idx) => (
                                 <li key={idx}>
                                     {
-                                        link.title === 'Catalog' ? (<div>
+                                        link.title === 'Catalog' ? (<div className='flex group relative items-center gap-1'>
+                                            <p>{link.title}</p>
+                                            <RiArrowDropDownLine size={18}/>
+
+                                            <div className='invisible translate-x-[-50%] translate-y-[20%] absolute left-[50%] top-[50%] flex flex-col rounded-md bg-richblack-5 p-4 text-richblack-900 opacity-0 transition-all duration-200 group-hover:visible group-hover:opacity-100  lg:w-75 '>
+
+                                                <div className="absolute left-[50%] translate-x-[80%] translate-y-[-20%]  rotate-45 rounded top-0 h-6 w-6 bg-richblack-5"></div>
+
+                                                {
+                                                    subLinks.length ? (
+                                                        subLinks.map((sublink, idx) => {
+                                                            return <Link to={''} key={idx}>
+                                                                <p>{sublink.name}</p>
+                                                            </Link>
+                                                        })
+                                                    ) : (<div></div>)
+                                                }
+ 
+                                            </div>
+
 
                                         </div>)
                                             :
