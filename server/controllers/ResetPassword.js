@@ -70,7 +70,7 @@ exports.resetPassword = async (req, res) => {
         message: "Token invalid",
       });
     }
-
+ 
     // token time check
     if (userDetails.resetPasswordExpires < Date.now()) {
       return res.json({

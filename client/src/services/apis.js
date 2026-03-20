@@ -13,4 +13,3 @@ export const categories = {
     CATEGORIES_API : BASE_URL + "/course/showAllCategories"
 }
 
-console.log(endpoints.SENDOTP_API)

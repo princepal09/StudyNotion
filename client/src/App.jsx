@@ -5,6 +5,7 @@ import Signup from "./pages/Signup"
 import Navbar from "./components/common/Navbar"
 import ForgotPassword from "./pages/ForgotPassword"
 import OpenRoute from "./components/core/Auth/OpenRoute"
+import UpdatePassword from "./pages/UpdatePassword"
 
 const App = () => {
   return (
@@ -28,6 +29,12 @@ const App = () => {
         <Route path="forgot-password" element = {
           <OpenRoute>  
           <ForgotPassword/>
+          </OpenRoute>
+          } />
+
+        <Route path="update-password/:id" element = {
+          <OpenRoute>  
+          <UpdatePassword/>
           </OpenRoute>
           } />
          
