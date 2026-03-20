@@ -111,12 +111,12 @@ exports.signUp = async (req, res) => {
 
 		// Find the most recent OTP for the email
 		const response = await OTP.find({ email }).sort({ createdAt: -1 }).limit(1);
-		console.log(response);
+		console.log("response",response);
 		if (response.length === 0) {
 			// OTP not found for the email
 			return res.status(400).json({ 
 				success: false,
-				message: "The OTP is not valid",
+				message: "The OTP is not valid because otp data is empty for this email",
 			});
 		} else if (otp !== response[0].otp) {
 			// Invalid OTP
