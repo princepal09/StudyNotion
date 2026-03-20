@@ -15,7 +15,7 @@ const UpdatePassword = () => {
     const { loading } = useSelector((state) => state.auth)
     const dispatch = useDispatch();
     const location = useLocation();
-    const {password, confirmPassword} = formData;
+    const { password, confirmPassword } = formData;
 
     const handleOnChange = (e) => {
         setFormData((prevData) => (
@@ -99,6 +99,12 @@ const UpdatePassword = () => {
                                 <button type='submit'>
                                     Reset password
                                 </button>
+                                <div className='mt-4 flex font-inter gap-2 items-center text-richblack-5 '>
+                                    <FaLongArrowAltLeft />
+                                    <Link to='/login'>
+                                        <p>Back to Login</p>
+                                    </Link>
+                                </div>
 
                             </form>
                         </div>
