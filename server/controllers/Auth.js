@@ -11,6 +11,7 @@ require("dotenv").config();
 exports.sendOTP = async (req, res) => {
   try {
     // fetch email from the request body
+	console.log("otp body hit hua")
     const { email } = req.body;
     const checkUserPresent = await User.findOne({ email });
 

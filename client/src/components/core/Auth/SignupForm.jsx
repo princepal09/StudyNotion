@@ -6,6 +6,7 @@ import { useNavigate } from 'react-router-dom'
 import { useDispatch } from 'react-redux'
 import { setSignUpData } from '../../../redux/slices/authSlice'
 import toast from 'react-hot-toast'
+import { sendOtp } from '../../../services/operations/authApi'
 const SignupForm = () => {
 
   const navigate = useNavigate();
@@ -36,12 +37,11 @@ const SignupForm = () => {
 
   }
   // Handle Form Submission
-  const handleOnSubmit = () => {
+  const handleOnSubmit = (e) => {
     e.preventDefault();
 
     if (password !== confirmPassword) {
       toast.error("Passwords do not match")
-      console.log("p")
       return;
     }
 
@@ -90,7 +90,7 @@ const SignupForm = () => {
       <Tab tabData={tabData} field={accountType} setField={setAccountType} />
 
       {/* Form  */}
-      <form onClick={handleOnSubmit} className='flex flex-col w-full gap-y-4 ' >
+      <form onSubmit={handleOnSubmit} className='flex flex-col w-full gap-y-4 ' >
 
         {/* Name  */}
         <div className='flex gap-x-4'>
