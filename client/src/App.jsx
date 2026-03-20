@@ -6,6 +6,7 @@ import Navbar from "./components/common/Navbar"
 import ForgotPassword from "./pages/ForgotPassword"
 import OpenRoute from "./components/core/Auth/OpenRoute"
 import UpdatePassword from "./pages/UpdatePassword"
+import VerifyEmail from "./pages/VerifyEmail"
 
 const App = () => {
   return (
@@ -35,6 +36,12 @@ const App = () => {
         <Route path="update-password/:id" element = {
           <OpenRoute>  
           <UpdatePassword/>
+          </OpenRoute>
+          } />
+
+        <Route path="verify-email" element = {
+          <OpenRoute>  
+          <VerifyEmail/>
           </OpenRoute>
           } />
          
