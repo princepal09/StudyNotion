@@ -7,6 +7,7 @@ import ForgotPassword from "./pages/ForgotPassword"
 import OpenRoute from "./components/core/Auth/OpenRoute"
 import UpdatePassword from "./pages/UpdatePassword"
 import VerifyEmail from "./pages/VerifyEmail"
+import ProfileDropdown from "./components/core/Auth/ProfileDropdown"
 
 const App = () => {
   return (

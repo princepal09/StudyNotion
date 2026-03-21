@@ -20,20 +20,20 @@ const Navbar = () => {
     const { totalItems } = useSelector((state) => state.cart)
 
     const [subLinks, setSubLinks] = useState([]);
- 
-    const fetchSubmit = async() =>{
-        try{
+
+    const fetchSubmit = async () => {
+        try {
 
             const result = await apiConnector("GET", categories.CATEGORIES_API);
             setSubLinks(result.data.allCategories);
 
 
-        }catch(err){
+        } catch (err) {
             console.log("Could not fetch the category list")
         }
     }
 
-    useEffect( () =>{
+    useEffect(() => {
         fetchSubmit()
     }, [])
 
@@ -57,7 +57,7 @@ const Navbar = () => {
                                     {
                                         link.title === 'Catalog' ? (<div className='flex group relative items-center gap-1'>
                                             <p>{link.title}</p>
-                                            <RiArrowDropDownLine size={18}/>
+                                            <RiArrowDropDownLine size={18} />
 
                                             <div className='invisible translate-x-[-50%] translate-y-[20%] absolute left-[50%] top-[50%] flex flex-col rounded-md bg-richblack-5 p-4 text-richblack-900 opacity-0 transition-all duration-200 group-hover:visible group-hover:opacity-100  lg:w-75 '>
 
@@ -72,7 +72,7 @@ const Navbar = () => {
                                                         })
                                                     ) : (<div></div>)
                                                 }
- 
+
                                             </div>
 
 
@@ -120,7 +120,7 @@ const Navbar = () => {
                             </Link>
                         )
                     }
-                    {   
+                    {
                         token === null && (
                             <Link to={'/signup'}>
                                 <button className='border-richblack-700 cursor-pointer bg-richblack-800 px-3 py-2 text-richblack-100 rounded'>Sign up</button>
