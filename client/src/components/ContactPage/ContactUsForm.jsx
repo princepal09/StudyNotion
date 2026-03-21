@@ -12,10 +12,16 @@ const ContactUsForm = () => {
     handleSubmit,
     reset,
     formState: { errors, isSubmitSuccessful },
-  } = useForm()
+  } = useForm({
+      defaultValues: {
+    countrycode: "+91", // 👈 default India
+  },
+}
+  )
+
 
   const submitContactForm = async (data) => {
-    // console.log("Form Data - ", data)
+    console.log("Form Data - ", data)
     try {
       setLoading(true)
       const res = await apiConnector(
@@ -24,7 +30,6 @@ const ContactUsForm = () => {
         data
       )
       // console.log("Email Res - ", res)
-      setLoading(false)
     } catch (error) {
       console.log("ERROR MESSAGE - ", error.message)
     }
@@ -117,7 +122,7 @@ const ContactUsForm = () => {
 
         <div className="flex gap-5">
           <div className="flex w-20.25 flex-col gap-2">
-            <select
+            <select 
               type="text"
               name="firstname"
               id="firstname"
@@ -129,7 +134,7 @@ const ContactUsForm = () => {
             >
               {CountryCode.map((ele, i) => {
                 return (
-                  <option key={i} value={ele.code}>
+                  <option  key={i} value={ele.code}>
                     {ele.code} -{ele.country}
                   </option>
                 )
