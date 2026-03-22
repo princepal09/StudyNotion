@@ -2,7 +2,7 @@
   "name": "studynotion",
   "version": "1.0.0",
   "description": "StudyNotion is a MERN-based Learning Management System (LMS).  \r 🚧 **Backend development is currently in progress.**",
-  "main": "index.js",
+  "main": "server.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
     "client": "npm run dev --prefix client",
@@ -16,12 +16,11 @@
   "keywords": [],
   "author": "",
   "license": "ISC",
-  "bugs": {
+  "bugs": { 
     "url": "https://github.com/princepal09/StudyNotion/issues"
   },
   "homepage": "https://github.com/princepal09/StudyNotion#readme",
   "dependencies": {
-    "concurrently": "^9.2.1",
-    "react-hot-toast": "^2.6.0"
+    "concurrently": "^9.2.1"
   }
 }
