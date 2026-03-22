@@ -1,20 +1,12 @@
 const express = require("express");
 const app = express();
-
 const userRoutes = require("./routes/User");
 const profileRoutes = require("./routes/Profile");
 const paymentRoutes = require("./routes/Payments");
 const courseRoutes = require("./routes/Course");
-
-const {dBconnect} = require("./config/database");
 const cookieParser = require("cookie-parser");
 const cors = require("cors");
-const { cloudinaryConnect } = require("./config/cloudinary");
 const fileupload = require("express-fileupload");
-const dotenv = require("dotenv");
-dotenv.config();
-
-const PORT = process.env.PORT || 5000;
 
 
 // middlewares
@@ -34,8 +26,7 @@ app.use(
   }),
 );
 
-//cloudinaryConnection
-cloudinaryConnect();
+
 
 //routes
 app.use("/api/v1/auth", userRoutes);
@@ -44,19 +35,11 @@ app.use("/api/v1/course", courseRoutes);
 app.use("/api/v1/payment", paymentRoutes);
 
 //default route
-app.get("/", (req, res) => {
+app.get("/", ( res) => {
   return res.json({
     success: true,
     message: " Your Server is up and running...",
   });
 });
 
-dBconnect().then(() =>{
-  app.listen(PORT,(req, res)=>{
-    console.log(`App is running at ${PORT} PORT`)
-})
-})
-.catch(() =>{
-  console.log("SERVER HAS NOT STARTED YET!!")
-})
-
+module.exports = { app };
