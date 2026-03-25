@@ -4,7 +4,7 @@ import { useDispatch } from 'react-redux'
 import { matchPath, NavLink, useLocation } from 'react-router-dom'
 
 const SidebarLink = ({ link, iconName }) => {
-    const Icon = Icons(iconName)
+    const Icon = Icons[iconName]
     const location = useLocation()
     const disptach = useDispatch()
     const matchRoute = (route) =>{

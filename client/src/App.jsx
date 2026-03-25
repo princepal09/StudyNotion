@@ -8,6 +8,10 @@ import OpenRoute from "./components/core/Auth/OpenRoute"
 import UpdatePassword from "./pages/UpdatePassword"
 import VerifyEmail from "./pages/VerifyEmail"
 import About from "./pages/About"
+import MyProfile from "./components/core/Dashboard/MyProfile"
+import Dashboard from "./pages/Dashboard"
+import PrivateRoute from "./components/core/Auth/PrivateRoute"
+import Error from "./pages/Error"
 
 const App = () => {
   return (
@@ -52,7 +56,21 @@ const App = () => {
           </OpenRoute>
           } />
 
+          <Route 
+          element = {
+            <PrivateRoute>
+              <Dashboard/>
+            </PrivateRoute>
+          }
+          >
+            
           <Route path="dashboard/my-profile" element = {<MyProfile/>}/>
+          {/* <Route path="dashboard/settings" element = {<Setting/>}/> */}
+
+          </Route>
+
+
+          <Route path="*" element = {<Error/>} />
          
       </Routes>
 
