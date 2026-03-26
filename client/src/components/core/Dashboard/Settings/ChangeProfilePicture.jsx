@@ -36,7 +36,7 @@ export default function ChangeProfilePicture() {
         }
     }
 
-    const handleFileUpload = () => {
+    const handleFileUpload = (e) => {
         if (!imageFile) {
             console.log("No file selected ❌")
             return
@@ -66,6 +66,7 @@ export default function ChangeProfilePicture() {
                     />
                     <div className="space-y-2">
                         <p>Change Profile Picture</p>
+
                         <div className="flex flex-row gap-3">
                             <input
                                 type="file"
@@ -82,8 +83,10 @@ export default function ChangeProfilePicture() {
                                 Select
                             </button>
                             <IconBtn
+                                disabled={loading}
                                 text={loading ? "Uploading..." : "Upload"}
                                 onclick={handleFileUpload}
+
                             >
                                 {!loading && (
                                     <FiUpload className="text-lg text-richblack-900" />

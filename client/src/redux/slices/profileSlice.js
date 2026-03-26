@@ -25,6 +25,7 @@ const profileSlice = createSlice({
             .addCase(updateDisplayPicture.fulfilled, (state, action) => {
                 state.loading = false
                 state.user = action.payload
+                localStorage.setItem("user", JSON.stringify(action.payload))
             })
             .addCase(updateDisplayPicture.rejected, (state, action) => {
                 state.loading = false
