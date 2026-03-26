@@ -7,8 +7,8 @@ const SidebarLink = ({ link, iconName }) => {
     const Icon = Icons[iconName]
     const location = useLocation()
     const disptach = useDispatch()
-    const matchRoute = (route) =>{
-        return matchPath({path:route}, location.pathname)
+    const matchRoute = (route) => {
+        return matchPath({ path: route }, location.pathname)
 
     }
 
@@ -16,20 +16,22 @@ const SidebarLink = ({ link, iconName }) => {
         <NavLink
             to={link.path}
             className={({ isActive }) =>
-                `relative px-8 py-2 text-sm font-medium ${isActive ? "bg-yellow-800" : "bg-opacity-0"
+                `relative transition-all duration-200     px-8 py-2 text-sm text-richblack-400 font-medium ${isActive ? "bg-yellow-800 text-yellow-50 " : "bg-opacity-0 text-richblack-300"
                 }`
             }    >
 
-                <span className={`absolute left-0 top-0 h-full w-[0.2rem] bg-yellow-50 ${matchRoute(link.path) ? "opacity-100" : "opacity-0"}`}>
+            <span className={`absolute left-0 top-0 h-full w-[0.2rem] bg-yellow-50 ${matchRoute(link.path) ? "opacity-100" : "opacity-0"}`}>
 
 
-                </span>
+            </span>
 
-                <div className='flex items-center gap-x-2 '>
-                    <Icon className = 'text-lg'/>
-                    <span>{link.name}</span>
+            <div className='flex items-center gap-x-2 '>
+                {/* Icon Goes Here */}
 
-                </div>
+                <Icon className='text-lg' />
+                <span>{link.name}</span>
+
+            </div>
 
         </NavLink>
     )

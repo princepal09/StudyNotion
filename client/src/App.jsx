@@ -12,66 +12,67 @@ import MyProfile from "./components/core/Dashboard/MyProfile"
 import Dashboard from "./pages/Dashboard"
 import PrivateRoute from "./components/core/Auth/PrivateRoute"
 import Error from "./pages/Error"
+import Settings from "./components/core/Dashboard/Settings"
 
 const App = () => {
   return (
     <div className="w-full min-h-screen bg-richblack-900 flex flex-col font-inter" >
-      <Navbar/>
+      <Navbar />
       <Routes>
-        <Route path = "/" element = {<Home/>} />
+        <Route path="/" element={<Home />} />
 
-        <Route path="signup" element = {
-          <OpenRoute>  
-          <Signup/>
+        <Route path="signup" element={
+          <OpenRoute>
+            <Signup />
           </OpenRoute>
-          } />
+        } />
 
-        <Route path="login" element = {
-          <OpenRoute>  
-          <Login/>
+        <Route path="login" element={
+          <OpenRoute>
+            <Login />
           </OpenRoute>
-          } />
+        } />
 
-        <Route path="forgot-password" element = {
-          <OpenRoute>  
-          <ForgotPassword/>
+        <Route path="forgot-password" element={
+          <OpenRoute>
+            <ForgotPassword />
           </OpenRoute>
-          } />
+        } />
 
-        <Route path="update-password/:id" element = {
-          <OpenRoute>  
-          <UpdatePassword/>
+        <Route path="update-password/:id" element={
+          <OpenRoute>
+            <UpdatePassword />
           </OpenRoute>
-          } />
+        } />
 
-        <Route path="verify-email" element = {
-          <OpenRoute>  
-          <VerifyEmail/>
+        <Route path="verify-email" element={
+          <OpenRoute>
+            <VerifyEmail />
           </OpenRoute>
-          } />
+        } />
 
-        <Route path="about" element = {
-          <OpenRoute>  
-          <About/>
+        <Route path="about" element={
+          <OpenRoute>
+            <About />
           </OpenRoute>
-          } />
+        } />
 
-          <Route 
-          element = {
+        <Route
+          element={
             <PrivateRoute>
-              <Dashboard/>
+              <Dashboard />
             </PrivateRoute>
           }
-          >
-            
-          <Route path="dashboard/my-profile" element = {<MyProfile/>}/>
-          {/* <Route path="dashboard/settings" element = {<Setting/>}/> */}
+        >
 
-          </Route>
+          <Route path="dashboard/my-profile" element={<MyProfile />} />
+          <Route path="dashboard/settings" element = {<Settings/>}/>
+
+        </Route>
 
 
-          <Route path="*" element = {<Error/>} />
-         
+        <Route path="*" element={<Error />} />
+
       </Routes>
 
     </div>
