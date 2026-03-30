@@ -11,7 +11,7 @@ const Signup = () => {
       description2 = " Education to future-proof your career."
       image = {signupImg}
       formType = "signup"
-       />
+       /> 
     </div>
   )
 }

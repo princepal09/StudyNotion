@@ -1,7 +1,7 @@
 import { createAsyncThunk } from "@reduxjs/toolkit"
 import { apiConnector } from "../apiConnector";
 import { settingsEndpoints } from "../apis"
-import { logout } from "./authAPI"
+import { logout } from "./authApi"
 
 
 const {
@@ -91,7 +91,7 @@ export const updateProfile = createAsyncThunk(
 export const changePassword = createAsyncThunk(
     "profile/changePassword",
     async ({ token, formData }, { rejectWithValue }) => {
-
+            //   console.log(formData)
         try {
             const response = await apiConnector(
                 "POST",

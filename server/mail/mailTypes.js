@@ -1,5 +1,6 @@
 const { mailSender } = require("./mailService");
 const emailTemplate = require("../mail/templates/emailVerificationTemplate");
+const { passwordUpdatedTemp } = require("./templates/passwordUpdate");
 
 exports.sendVerificationEmail = async (email, otp) => {
   // Create a transporter to send emails
@@ -20,3 +21,19 @@ exports.sendVerificationEmail = async (email, otp) => {
     throw err;
   }
 };
+
+exports.passwordUpdated = async (email, name) => {
+  try {
+    const mailResponse = await mailSender(
+      email,
+      'Password updated successfully',
+      passwordUpdatedTemp(email, name)
+    )
+    console.log("Email Sent Successfully :", mailResponse.response);
+
+
+  } catch (err) {
+    console.log("Error occured while sending mails:", err);
+    throw err;
+  }
+}

@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react'
 import OtpInput from 'react-otp-input';
 import { useDispatch, useSelector } from 'react-redux';
-import { sendOtp, signUp } from '../services/operations/authApi';
+import { sendOtp, signUp } from  '../services/operations/authApi';
 import { Link, useNavigate } from 'react-router-dom';
 import { BiArrowBack } from "react-icons/bi";
 import { RxCountdownTimer } from "react-icons/rx";
@@ -44,16 +44,16 @@ const VerifyEmail = () => {
 
                                 <OtpInput
                                     value={otp} onChange={setOtp} numInputs={6}
-x                                    style={{
+                                    x style={{
                                         boxShadow: "inset 0px -1px 0px rgba(255, 255, 255, 0.18)",
                                     }}
                                     containerStyle={{
                                         justifyContent: "space-between",
                                         gap: "0 10px",
-                                        
+
                                     }}
 
-                                    renderInput={(props) => <input  placeholder='-'  {...props} className="w-12 lg:w-15 border-0 bg-richblack-800 text-2xl placeholder:text-white py-2 px-2   rounded-lg text-richblack-5 aspect-square text-center focus:border-0 focus:outline-2 focus:outline-yellow-50"
+                                    renderInput={(props) => <input placeholder='-'  {...props} className="w-12 lg:w-15 border-0 bg-richblack-800 text-2xl placeholder:text-white py-2 px-2   rounded-lg text-richblack-5 aspect-square text-center focus:border-0 focus:outline-2 focus:outline-yellow-50"
                                     />}
                                 />
 

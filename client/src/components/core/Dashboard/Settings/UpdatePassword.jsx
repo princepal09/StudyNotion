@@ -1,7 +1,7 @@
 import React, { useState } from "react"
 import { useForm } from "react-hook-form"
 import { AiOutlineEye, AiOutlineEyeInvisible } from "react-icons/ai"
-import { useSelector } from "react-redux"
+import { useDispatch, useSelector } from "react-redux"
 import { useNavigate } from "react-router-dom"
 
 import { changePassword } from "../../../../services/operations/SettingsAPI"
@@ -10,6 +10,7 @@ import IconBtn from "../../../common/IconBtn"
 export default function UpdatePassword() {
   const { token } = useSelector((state) => state.auth)
   const navigate = useNavigate()
+  const dispatch = useDispatch()
 
   const [showOldPassword, setShowOldPassword] = useState(false)
   const [showNewPassword, setShowNewPassword] = useState(false)
