@@ -1,5 +1,10 @@
 import { createSlice } from "@reduxjs/toolkit";
-import { updateDisplayPicture } from "../../services/operations/SettingsAPI";
+import {
+    updateDisplayPicture,
+    updateProfile,
+    changePassword,
+    deleteProfile
+} from "../../services/operations/SettingsAPI"
 
 const initialState = {
     user: localStorage.getItem("user") ? JSON.parse(localStorage.getItem("user")) : null,
@@ -18,6 +23,10 @@ const profileSlice = createSlice({
     },
     extraReducers: (builder) => {
         builder
+
+            // =========================
+            // updateDisplayPicture
+            // =========================
             .addCase(updateDisplayPicture.pending, (state) => {
                 state.loading = true
                 state.error = null
@@ -25,9 +34,56 @@ const profileSlice = createSlice({
             .addCase(updateDisplayPicture.fulfilled, (state, action) => {
                 state.loading = false
                 state.user = action.payload
-                localStorage.setItem("user", JSON.stringify(action.payload))
             })
             .addCase(updateDisplayPicture.rejected, (state, action) => {
+                state.loading = false
+                state.error = action.payload
+            })
+
+            // =========================
+            // updateProfile
+            // =========================
+            .addCase(updateProfile.pending, (state) => {
+                state.loading = true
+                state.error = null
+            })
+            .addCase(updateProfile.fulfilled, (state, action) => {
+                state.loading = false
+                state.user = action.payload
+            })
+            .addCase(updateProfile.rejected, (state, action) => {
+                state.loading = false
+                state.error = action.payload
+            })
+
+            // =========================
+            // changePassword
+            // =========================
+            .addCase(changePassword.pending, (state) => {
+                state.loading = true
+                state.error = null
+            })
+            .addCase(changePassword.fulfilled, (state) => {
+                state.loading = false
+                // password change me user update nahi hota usually
+            })
+            .addCase(changePassword.rejected, (state, action) => {
+                state.loading = false
+                state.error = action.payload
+            })
+
+            // =========================
+            // deleteProfile
+            // =========================
+            .addCase(deleteProfile.pending, (state) => {
+                state.loading = true
+                state.error = null
+            })
+            .addCase(deleteProfile.fulfilled, (state) => {
+                state.loading = false
+                state.user = null   // profile delete → user clear
+            })
+            .addCase(deleteProfile.rejected, (state, action) => {
                 state.loading = false
                 state.error = action.payload
             })
