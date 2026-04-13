@@ -140,6 +140,7 @@ exports.signUp = async (req, res) => {
 			about: null,
 			contactNumber: null,
 		});
+		console.log("profileDetails", profileDetails)
 		const user = await User.create({
 			firstName,
 			lastName,
@@ -277,7 +278,7 @@ exports.changePassword = async (req, res) => {
 		try {
 			const emailResponse = await passwordUpdated(
 				updatedUserDetails.email,
-				updatedUserDetails.firstName
+				updatedUserDetails.firstame
 			);
 			console.log("Email sent successfully:", emailResponse.response);
 		} catch (error) {

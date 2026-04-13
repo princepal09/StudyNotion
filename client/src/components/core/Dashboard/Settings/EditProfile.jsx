@@ -1,33 +1,34 @@
-import { useForm } from "react-hook-form"
-import { useDispatch, useSelector } from "react-redux"
-import { useNavigate } from "react-router-dom"
+import { useForm } from "react-hook-form";
+import { useDispatch, useSelector } from "react-redux";
+import { useNavigate } from "react-router-dom";
 
-import { updateProfile } from "../../../../services/operations/SettingsAPI"
-import IconBtn from "../../../common/IconBtn"
+import { updateProfile } from "../../../../services/operations/SettingsAPI";
+import IconBtn from "../../../common/IconBtn";
 
-const genders = ["Male", "Female", "Non-Binary", "Prefer not to say", "Other"]
+const genders = ["Male", "Female", "Non-Binary", "Prefer not to say", "Other"];
 
 export default function EditProfile() {
-  const { user } = useSelector((state) => state.profile)
-  const { token } = useSelector((state) => state.auth)
-  const navigate = useNavigate()
-  const dispatch = useDispatch()
+  const { user } = useSelector((state) => state.profile);
+  console.log(user)
+  const { token } = useSelector((state) => state.auth);
+  const navigate = useNavigate();
+  const dispatch = useDispatch();
 
   const {
     register,
     handleSubmit,
     formState: { errors },
-  } = useForm()
+  } = useForm();
 
   const submitProfileForm = async (formData) => {
-    console.log("Form Data - ", formData)
+    console.log("Form Data - ", formData); 
     try {
-      dispatch(updateProfile({ token, formData }))
-    } catch (error) {
-      console.log("ERROR MESSAGE - ", error.message)
+      dispatch(updateProfile({ token, formData }));
+    } catch (error) { 
+      console.log("ERROR MESSAGE - ", error.message); 
     }
-  }
-  return (
+  };
+  return (  
     <>
       <form onSubmit={handleSubmit(submitProfileForm)}>
         {/* Profile Information */}
@@ -106,7 +107,7 @@ export default function EditProfile() {
             </div>
             <div className="flex flex-col gap-2 lg:w-[48%]">
               <label htmlFor="gender" className="text-richblack-5">
-                Gender  <span className="text-pink-200">*</span>
+                Gender <span className="text-pink-200">*</span>
               </label>
               <select
                 type="text"
@@ -121,7 +122,7 @@ export default function EditProfile() {
                     <option key={i} value={ele}>
                       {ele}
                     </option>
-                  )
+                  );
                 })}
               </select>
               {errors.gender && (
@@ -135,7 +136,7 @@ export default function EditProfile() {
           <div className="flex flex-col gap-5 lg:flex-row">
             <div className="flex flex-col gap-2 lg:w-[48%]">
               <label htmlFor="contactNumber" className="text-richblack-5">
-                Contact Number  <span className="text-pink-200">*</span>
+                Contact Number <span className="text-pink-200">*</span>
               </label>
               <input
                 type="tel"
@@ -184,7 +185,7 @@ export default function EditProfile() {
         <div className="flex justify-end gap-2">
           <button
             onClick={() => {
-              navigate("/dashboard/my-profile")
+              navigate("/dashboard/my-profile");
             }}
             className="cursor-pointer rounded-md bg-richblack-700 py-2 px-5 font-semibold text-richblack-50"
           >
@@ -194,5 +195,5 @@ export default function EditProfile() {
         </div>
       </form>
     </>
-  )
+  );
 }

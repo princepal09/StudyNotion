@@ -5,26 +5,29 @@ const { uploadImageToCloudinary } = require("../utils/imageUploader");
 exports.updateProfile = async (req, res) => {
 
 	try {
-		const { dateOfBirth = "", about = "", gender, contactNumber } = req.body;
+		const { dateOfBirth = "", about = "", gender = "", contactNumber = "" } = req.body;
 		const id = req.user.id;
 
 		// Find the profile by id
-		const userDetails = await User.findById(id);
-		const profile = await Profile.findById(userDetails.additionalDetails);
+		const userDetails = await User.findById(id).select("-password").populate("additionalDetails")
+		console.log("userDetails", userDetails.additionalDetails)
+		const updatedUserDetails = userDetails.additionalDetails; 
+		console.log(updatedUserDetails)
 
 		// Update the profile fields
-		profile.dateOfBirth = dateOfBirth;
-		profile.about = about;
-		profile.contactNumber = contactNumber;
-		profile.gender = gender;
+		updatedUserDetails.dateOfBirth = dateOfBirth;
+		updatedUserDetails.about = about;
+		updatedUserDetails.contactNumber = contactNumber;
+		updatedUserDetails.gender = gender;
 
 		// Save the updated profile
-		await profile.save();
+		await updatedUserDetails.save();
 
 		return res.json({
 			success: true,
 			message: "Profile updated successfully",
-			profile,
+			userDetails
+
 		});
 	} catch (error) {
 		console.log(error);
@@ -114,7 +117,7 @@ exports.updateDisplayPicture = async (req, res) => {
 			{ _id: userId },
 			{ image: image.secure_url },
 			{ new: true }
-		)
+		).populate("additionalDetails").select("-password")
 		res.send({
 			success: true,
 			message: `Image Updated successfully`,

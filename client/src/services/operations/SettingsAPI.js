@@ -2,6 +2,7 @@ import { createAsyncThunk } from "@reduxjs/toolkit"
 import { apiConnector } from "../apiConnector";
 import { settingsEndpoints } from "../apis"
 import { logout } from "./authApi"
+import toast from "react-hot-toast";
 
 
 const {
@@ -16,6 +17,8 @@ const {
 export const updateDisplayPicture = createAsyncThunk(
     "profile/updateDisplayPicture",
     async ({ token, formData }, { rejectWithValue }) => {
+        const toastId = toast.loading("Loading...")
+
         try {
             const response = await apiConnector(
                 "PUT",
@@ -25,7 +28,7 @@ export const updateDisplayPicture = createAsyncThunk(
                     Authorization: `Bearer ${token}`,
                 }
             )
-            console.log("Update Display API RESPONSE ", response);
+            console.log("Update Display API RESPONSE ", response.data.data);
 
 
             if (!response.data.success) {
@@ -34,12 +37,18 @@ export const updateDisplayPicture = createAsyncThunk(
 
             const user = response.data.data
             localStorage.setItem("user", JSON.stringify(user))
-
+            toast.success("Display Picture Updated Successfully")
             return user
         } catch (err) {
+            console.log("UPDATE_DISPLAY_PICTURE_API API ERROR............", err)
+
+            toast.error("Could Not Update Display Picture")
             return rejectWithValue(
                 err?.response?.data?.message || err.message
             )
+        } finally {
+            toast.dismiss(toastId)
+
         }
     }
 )
@@ -47,8 +56,8 @@ export const updateDisplayPicture = createAsyncThunk(
 
 export const updateProfile = createAsyncThunk(
     "profile/updateProfile",
-    async ({ token, formData}, { rejectWithValue }) => {
-        console.log(formData)
+    async ({ token, formData }, { rejectWithValue }) => {
+        const toastId = toast.loading("Loading...")
         try {
             const response = await apiConnector(
                 "PUT",
@@ -58,40 +67,44 @@ export const updateProfile = createAsyncThunk(
                     Authorization: `Bearer ${token}`,
                 }
             )
-            console.log("Update PROFILEEE API RESPONSE ", response);
+            console.log("Update PROFILEEE API RESPONSE ", response.data);
 
 
             if (!response.data.success) {
                 throw new Error(response.data.message)
             }
 
-            const userImage = response.data.updatedUserDetails.image
-                ? response.data.updatedUserDetails.image
-                : `https://api.dicebear.com/5.x/initials/svg?seed=${response.data.updatedUserDetails.firstName} ${response.data.updatedUserDetails.lastName}`
+            const userImage = response?.data?.userDetails?.image
+                ? response.data.userDetails.image
+                : `https://api.dicebear.com/5.x/initials/svg?seed=${response.data.userDetails.firstName} ${response.data.userDetails.lastName}`
 
             const updatedUser = {
-                ...response.data.updatedUserDetails,
-                image: userImage,
+                ...response.data.userDetails,
+                image : userImage
+
             }
 
 
             localStorage.setItem("user", JSON.stringify(updatedUser))
-
+            toast.success("Profile Updated Successfully")
             return updatedUser
         } catch (error) {
+            console.log("UPDATE_PROFILE_API API ERROR............", error)
+            toast.error("Could Not Update Profile")
             return rejectWithValue(
                 error?.response?.data?.message || error.message
             )
+        } finally {
+            toast.dismiss(toastId)
+
         }
     }
 )
 
-
-
 export const changePassword = createAsyncThunk(
     "profile/changePassword",
     async ({ token, formData }, { rejectWithValue }) => {
-            //   console.log(formData)
+        //   console.log(formData)
         try {
             const response = await apiConnector(
                 "POST",
