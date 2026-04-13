@@ -8,8 +8,8 @@ StudyNotion is a full-stack MERN-based Learning Management System (LMS) designed
 
 ## 📌 Project Status
 
-Backend: Nearly Complete ✅  
-Frontend: Not Started Yet 🚀  
+Backend: Completed ✅  
+Frontend:  Started 🚀  
 Deployment: Planned 🔄
 
 ---
@@ -41,12 +41,39 @@ Deployment: Planned 🔄
 - Bcrypt
 - Dotenv
 
-### Frontend (Upcoming)
+### Frontend 
 
 - React (Vite)
 - Tailwind CSS
-
+- Redux Toolkit (State Management)
+- React Router DOM
+- Axios
+- React Hook Form
+- React Hot Toast
+- React Icons
+- React OTP Input
+- React Type Animation
 ---
+
+### 1. Navigate to client folder
+cd client
+
+### 2. Install dependencies
+npm install
+
+### 3. Start development server
+npm run dev
+
+## 🔐 Environment Variables
+
+Create a `.env` file inside the `client/` directory and add the following:
+
+VITE_BASE_URL = http://localhost:4000/api/v1
+
+Frontend will run on:
+http://localhost:3000
+
+
 
 ## 📁 Backend Project Structure
 
