@@ -105,6 +105,7 @@ export const changePassword = createAsyncThunk(
     "profile/changePassword",
     async ({ token, formData }, { rejectWithValue }) => {
         //   console.log(formData)
+        const toastId = toast.loading("Loading...")
         try {
             const response = await apiConnector(
                 "POST",
@@ -120,11 +121,14 @@ export const changePassword = createAsyncThunk(
             if (!response.data.success) {
                 throw new Error(response.data.message)
             }
-
+            toast.success("Password changed successfully")
 
         } catch (error) {
+            toast.error(error.response.data.message )
             console.log("CHANGE_PASSWORD_API ERROR:", error)
             return rejectWithValue(error?.response?.data?.message)
+        }finally{
+            toast.dismiss(toastId)
         }
     }
 )

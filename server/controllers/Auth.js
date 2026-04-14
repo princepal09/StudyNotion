@@ -273,17 +273,18 @@ exports.changePassword = async (req, res) => {
 			{ password: encryptedPassword },
 			{ new: true }
 		);
+		console.log("updatedUSer",updatedUserDetails)
 
 		// Send notification email
 		try {
 			const emailResponse = await passwordUpdated(
 				updatedUserDetails.email,
-				updatedUserDetails.firstame
+				updatedUserDetails.firstName
 			);
-			console.log("Email sent successfully:", emailResponse.response);
+			console.log("Email sent successfully:");
 		} catch (error) {
 			// If there's an error sending the email, log the error and return a 500 (Internal Server Error) error
-			console.error("Error occurred while sending email:", error);
+			console.error("Error occurred while sending email:", error.message);
 			return res.status(500).json({
 				success: false,
 				message: "Error occurred while sending email",
