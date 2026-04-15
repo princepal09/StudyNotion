@@ -80,7 +80,7 @@ export const updateProfile = createAsyncThunk(
 
             const updatedUser = {
                 ...response.data.userDetails,
-                image : userImage
+                image: userImage
 
             }
 
@@ -124,10 +124,10 @@ export const changePassword = createAsyncThunk(
             toast.success("Password changed successfully")
 
         } catch (error) {
-            toast.error(error.response.data.message )
+            toast.error(error.response.data.message)
             console.log("CHANGE_PASSWORD_API ERROR:", error)
             return rejectWithValue(error?.response?.data?.message)
-        }finally{
+        } finally {
             toast.dismiss(toastId)
         }
     }
@@ -136,7 +136,7 @@ export const changePassword = createAsyncThunk(
 export const deleteProfile = createAsyncThunk(
     "profile/deleteProfile",
     async ({ token, navigate }, { dispatch, rejectWithValue }) => {
-
+        const toastId = toast.loading("Loading...")
         try {
             const response = await apiConnector(
                 "DELETE",
@@ -159,13 +159,14 @@ export const deleteProfile = createAsyncThunk(
 
             // logout bhi yahin handle karenge
             dispatch(logout(navigate))
-
             return response.data
         } catch (error) {
             console.log("DELETE_PROFILE_API ERROR:", error)
             toast.error("Could Not Delete Profile")
 
             return rejectWithValue(error.message)
+        }finally{
+            toast.dismiss(toastId)
         }
     }
 )

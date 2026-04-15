@@ -11,7 +11,7 @@ exports.updateProfile = async (req, res) => {
 		// Find the profile by id
 		const userDetails = await User.findById(id).select("-password").populate("additionalDetails")
 		console.log("userDetails", userDetails.additionalDetails)
-		const updatedUserDetails = userDetails.additionalDetails; 
+		const updatedUserDetails = userDetails.additionalDetails;
 		console.log(updatedUserDetails)
 
 		// Update the profile fields

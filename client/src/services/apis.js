@@ -26,4 +26,3 @@ export const settingsEndpoints = {
   DELETE_PROFILE_API: BASE_URL + "/profile/deleteProfile",
 }
 
-console.log(settingsEndpoints.UPDATE_DISPLAY_PICTURE_API)

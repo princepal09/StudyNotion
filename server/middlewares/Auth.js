@@ -4,14 +4,14 @@ const User = require("../models/User");
 
 exports.auth = async (req, res, next) => {
   try {
-    // extract token
+    // extract tokejs 
 
     const token =
+    req.headers?.authorization?.split(" ")[1];
       req.body?.token ||
       req.cookies?.token ||
-      req.headers?.authorization?.split(" ")[1];
 
-    console.log(token)
+    console.log("tokennnnnnnnnn", token)
 
     if (!token) {
       return res.status(401).json({
