@@ -1,43 +1,44 @@
-import React, { useEffect, useState } from "react"
-import { useForm } from "react-hook-form"
+import React, { useEffect, useState } from "react";
+import { useForm } from "react-hook-form";
 
-import CountryCode from "../../data/countrycode.json"
-import { apiConnector } from "../../services/apiConnector"
-import { contactusEndpoint } from "../../services/apis"
+import CountryCode from "../../data/countrycode.json";
+import { apiConnector } from "../../services/apiConnector";
+import { contactusEndpoint } from "../../services/apis";
+import toast from "react-hot-toast";
 
 const ContactUsForm = () => {
-  const [loading, setLoading] = useState(false)
+  const [loading, setLoading] = useState(false);
   const {
     register,
     handleSubmit,
     reset,
-    formState: { errors, isSubmitSuccessful },
+    formState: { errors, isSubmitSuccessful, isSubmitting },
   } = useForm({
-      defaultValues: {
-    countrycode: "+91", // 👈 default India
-  },
-}
-  )
-
+    defaultValues: {
+      countrycode: "+91", // 👈 default India
+    },
+  });
 
   const submitContactForm = async (data) => {
-    console.log("Form Data - ", data)
+    // console.log("Form Data - ", data)
+    setLoading(true);
+    const toastId = toast.loading("Loading...");
     try {
-      setLoading(true)
       const res = await apiConnector(
         "POST",
         contactusEndpoint.CONTACT_US_API,
-        data
-      )
-      // console.log("Email Res - ", res)
+        data,
+      );
+      // console.log("FORM Res - ", res);
+      toast.success("Form Submitted Successfully");
     } catch (error) {
-      console.log("ERROR MESSAGE - ", error.message)
+      console.log("ERROR MESSAGE - ", error.message);
+      toast.error("Error Ocurred while submitting the form");
+    } finally {
+      setLoading(false);
+      toast.dismiss(toastId);
     }
-    finally {
-      setLoading(false)
-
-    }
-  }
+  };
 
   useEffect(() => {
     if (isSubmitSuccessful) {
@@ -47,9 +48,9 @@ const ContactUsForm = () => {
         lastname: "",
         message: "",
         phoneNo: "",
-      })
+      });
     }
-  }, [reset, isSubmitSuccessful])
+  }, [reset, isSubmitSuccessful]);
 
   return (
     <form
@@ -122,7 +123,7 @@ const ContactUsForm = () => {
 
         <div className="flex gap-5">
           <div className="flex w-20.25 flex-col gap-2">
-            <select 
+            <select
               type="text"
               name="firstname"
               id="firstname"
@@ -134,10 +135,10 @@ const ContactUsForm = () => {
             >
               {CountryCode.map((ele, i) => {
                 return (
-                  <option  key={i} value={ele.code}>
+                  <option key={i} value={ele.code}>
                     {ele.code} -{ele.country}
                   </option>
-                )
+                );
               })}
             </select>
           </div>
@@ -194,14 +195,15 @@ const ContactUsForm = () => {
         disabled={loading}
         type="submit"
         className={`rounded-md bg-yellow-50 px-6 py-3 text-center text-[13px] font-bold text-black shadow-[2px_2px_0px_0px_rgba(255,255,255,0.18)] 
-         ${!loading &&
-          "transition-all duration-200 hover:scale-95 hover:shadow-none"
-          }  disabled:bg-richblack-500 sm:text-[16px] `}
+         ${
+           !loading &&
+           "transition-all duration-200 hover:scale-95 hover:shadow-none"
+         }  disabled:bg-richblack-500 sm:text-[16px] `}
       >
         Send Message
       </button>
     </form>
-  )
-}
+  );
+};
 
-export default ContactUsForm
+export default ContactUsForm;
