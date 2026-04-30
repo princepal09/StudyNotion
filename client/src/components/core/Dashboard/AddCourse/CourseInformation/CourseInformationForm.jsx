@@ -1,7 +1,8 @@
 import React, { useEffect, useState } from "react";
-import {  useForm } from "react-hook-form";
+import { useForm } from "react-hook-form";
 import { useDispatch, useSelector } from "react-redux";
 import { fetchCourseCategories } from "../../../../../services/operations/courseDetailApi";
+import { HiOutlineCurrencyRupee } from "react-icons/hi2";
 
 const CourseInformationForm = () => {
   const {
@@ -37,32 +38,80 @@ const CourseInformationForm = () => {
       setValue("courseRequirements", course.instructions);
       setValue("courseImage", course.thumbnail);
     }
-    // getCategories();
+    getCategories();
   }, []);
 
-  const onSubmit = async(data) =>{
-
-  }
+  const onSubmit = async (data) => {};
 
   return (
-    <form className="rounded-md border-richblack-700 bg-richblack-800 p-6 space-y-8" onSubmit={handleSubmit(onSubmit)} >
+    <form
+      className="rounded-md border-richblack-700 bg-richblack-800 p-6 space-y-8"
+      onSubmit={handleSubmit(onSubmit)}
+    >
+      <div>
+        <label>
+          Course Title <sup>*</sup>
+        </label>
+        <input
+          id="courseTitle"
+          type="text"
+          id="couseTitle"
+          placeholder="Enter Course Title"
+          {...register("courseTitle", { required: true })}
+          className="w-full"
+        />
+        {errors.cousrseTitle && <span>Course title is required</span>}
+      </div>
 
-        <div>
-            <label >Course Title <sup>*</sup></label>
-            <input type="text" id="couseTitle" placeholder="Enter Course Title"
-            {...register("courseTitle", {required : true})}
-            className="w-full"
-            />
+      <div className="relative">
+        <label>
+          Course Price <sup>*</sup>
+        </label>
+        <input
+          id="coursePrice"
+          className="w-full"
+          placeholder="Enter Course Price"
+          {...register("coursePrice", { required: true, valueAsNumber: true })}
+          className=" w-full"
+        />
+        <HiOutlineCurrencyRupee className="absolute top-1/2 text-richblack-400" />
+        {errors.courseShortDesc && <span>Course Price is required</span>}
+      </div>
+
+      <div>
+        <label>
+          Course Short Description <sup>*</sup>
+        </label>
+        <textarea
+          className="w-full"
+          placeholder="Enter Description"
+          {...register("courseShortDesc", { required: true })}
+          className="min-h-35 w-full"
+        />
+
+        {errors.courseShortDesc && <span>Course Title is required</span>}
+      </div>
+
+      <div>
+        <label>Course Category<sup>*</sup></label>
+        <select id='courseCategory' 
+        defaultValue={''}
+        {...register("courseCategory", {required : true})}
+        >
+            <option value="" disabled>Choose a Category</option>
             {
-                errors.cousrseTitle && (
-                    <span>Course title is required</span>
-                )
+                !loading && courseCategories.map((category, idx) => (
+                    <option key={idx} value={category?.id}>
+                        {category?.name}
+                    </option>
+                ) )
             }
-        </div>
-        
+      
+        </select>
 
+      </div>
     </form>
-  )
+  );
 };
 
 export default CourseInformationForm;
