@@ -16,6 +16,7 @@ import Settings from "./components/core/Dashboard/Settings";
 import EnrolledCourses from "./components/core/Dashboard/EnrolledCourses";
 import Cart from "./components/core/Dashboard/Cart";
 import Contact from "./pages/Contact";
+import AddCourse from "./components/core/Dashboard/AddCourse";
 
 const App = () => {
   return (
@@ -89,6 +90,7 @@ const App = () => {
         >
           <Route path="dashboard/my-profile" element={<MyProfile />} />
           <Route path="dashboard/settings" element={<Settings />} />
+          <Route path="dashboard/add-course" element={<AddCourse />} />
           <Route
             path="dashboard/enrolled-courses"
             element={<EnrolledCourses />}
