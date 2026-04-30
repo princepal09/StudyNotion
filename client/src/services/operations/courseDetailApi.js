@@ -1,11 +1,7 @@
-
-
-
-// fetching the available course categories
-
 import toast from "react-hot-toast"
 import { apiConnector } from "../apiConnector"
 
+// fetching the available course categories
 export const fetchCourseCategories = async() =>{
     let result = []
     try{
