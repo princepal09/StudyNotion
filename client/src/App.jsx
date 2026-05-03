@@ -17,6 +17,7 @@ import EnrolledCourses from "./components/core/Dashboard/EnrolledCourses";
 import Cart from "./components/core/Dashboard/Cart";
 import Contact from "./pages/Contact";
 import AddCourse from "./components/core/Dashboard/AddCourse";
+import './App.css'
 
 const App = () => {
   return (
