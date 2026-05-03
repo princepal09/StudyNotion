@@ -77,6 +77,7 @@ const CourseInformationForm = () => {
 
   //handles next button click
   const onSubmit = async (data) => {
+    // console.log(data)
     if (editCourse) {
       if (isFormUpdated()) {
         const currentValues = getValues();
@@ -134,15 +135,20 @@ const CourseInformationForm = () => {
 
     // create a new course
     const formData = new FormData();
+    
     formData.append("courseName", data.courseTitle);
     formData.append("courseDescription", data.courseShortDesc);
     formData.append("price", data.coursePrice);
     formData.append("category", data.courseCategory);
+    formData.append("tags", data.courseTags);
+    formData.append("thumbnail", data.courseImage);
     formData.append("whatYouWillLearn", data.courseBenefits);
     formData.append("instructions", JSON.stringify(data.courseRequirements));
     formData.append("status", COURSE_STATUS.DRAFT);
 
-    console.log("PRINTING FORMDATA", formData);
+    formData.forEach((value, key) => {
+      console.log(key, value);
+    });
 
     setLoading(true);
     const result = await addCourseDetails(formData, token);
@@ -157,7 +163,7 @@ const CourseInformationForm = () => {
   };
 
   return (
-      <form
+    <form
       onSubmit={handleSubmit(onSubmit)}
       className="space-y-8 rounded-md border border-richblack-700 bg-richblack-800 p-6"
     >
