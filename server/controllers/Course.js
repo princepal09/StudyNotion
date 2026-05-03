@@ -8,21 +8,24 @@ exports.createCourse = async (req, res) => {
 	try {
 		// Get user ID from request object
 		const userId = req.user.id;
-
+		
 		// Get all required fields from request body
 		let {
 			courseName,
 			courseDescription,
 			whatYouWillLearn,
 			price,
-			tag,
+			tags,
 			category,
 			status,
 			instructions,
 		} = req.body;
 
+		console.log(req.body)
+		
 		// Get thumbnail image from request files
-		// const thumbnail = req.files.thumbnailImage;
+		const thumbnail = req.files.thumbnail;
+		// console.log(req.files.thumbnail)
 
 		// Check if any of the required fields are missing
 		if (
@@ -30,6 +33,9 @@ exports.createCourse = async (req, res) => {
 			!courseDescription ||
 			!whatYouWillLearn ||
 			!price ||
+			!category ||
+			!tags ||
+			!thumbnail ||
 			!category
 		) {
 			return res.status(400).json({
@@ -61,21 +67,21 @@ exports.createCourse = async (req, res) => {
 			});
 		}
 		// Upload the Thumbnail to Cloudinary
-		// const thumbnailImage = await uploadImageToCloudinary(
-		// 	thumbnail,
-		// 	process.env.FOLDER_NAME
-		// );
-		// console.log(thumbnailImage);
-		// Create a new course with the given details
+		const thumbnailImage = await uploadImageToCloudinary(
+			thumbnail,
+			process.env.FOLDER_NAME
+		);
+		console.log(thumbnailImage);
+		// Create a new course with the given details 	
 		const newCourse = await Course.create({
 			courseName,
 			courseDescription,
 			instructor: instructorDetails._id,
 			whatYouWillLearn: whatYouWillLearn,
 			price,
-			// tag: tag,
+			tags: tags,
 			category: categoryDetails._id,
-			// thumbnail: thumbnailImage.secure_url,
+			thumbnail: thumbnailImage.secure_url,
 			status: status,
 			instructions: instructions,
 		});

@@ -21,7 +21,7 @@ const courseSchema = new mongoose.Schema({
     required: true,
     trim: true,
   },
-  tag: {
+  tags: {
     type: [String],
     required: true,
   },
