@@ -183,7 +183,7 @@ export const updateSection = async (data, token) => {
     })
     console.log("UPDATE SECTION API RESPONSE............", response)
     if (!response?.data?.success) {
-      throw new Error("Could Not Update Section")
+      throw new Error("Could Not Update Se  ction")
     }
     toast.success("Course Section Updated")
     result = response?.data?.data
