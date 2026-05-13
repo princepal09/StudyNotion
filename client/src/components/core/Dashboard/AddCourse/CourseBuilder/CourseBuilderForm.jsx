@@ -110,7 +110,7 @@ const CourseBuilderForm = () => {
         </div>
         <div className='mt-10 flex w-full'>
           <IconBtn 
-            type="Submit"
+            type="submit"
             text={editSectionName ? "Edit Section Name" : "Create Section"}
             outline={true}
             customClasses={"text-white"}

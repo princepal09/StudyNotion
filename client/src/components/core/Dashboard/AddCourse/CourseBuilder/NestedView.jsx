@@ -48,6 +48,8 @@ const NestedView = ({handleChangeEditSectionName}) => {
         setConfirmationModal(null);
     }
 
+    console.log(course);
+
 
   return (
     <div>

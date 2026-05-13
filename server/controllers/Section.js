@@ -35,6 +35,8 @@ exports.createSection = async (req, res) => {
       })
       .exec();
 
+      // console.log(updatedCourseDetails)
+
     // return response
     return res.status(200).json({
       success: true,
