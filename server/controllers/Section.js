@@ -1,6 +1,6 @@
 const Section = require("../models/Section");
 const Course = require("../models/Course");
-
+const SubSection = require("../models/SubSection")
 // createSection
 exports.createSection = async (req, res) => {
   try {
@@ -94,6 +94,8 @@ exports.deleteSection = async (req, res) => {
   try {
     // fetchDetail
     const { sectionId, courseId } = req.body;
+    console.log(sectionId)
+    
 
     // data validation
     if ((!sectionId || !courseId)) {
@@ -105,9 +107,10 @@ exports.deleteSection = async (req, res) => {
 
     // delete Section
     const deletedSection = await Section.findByIdAndDelete(sectionId);
+    console.log(deletedSection);
 
      
-    if(!deletedSubSection){
+    if(!deletedSection){
         return res.status(404).json({
             success : false,
             message : "User not found "
@@ -128,10 +131,11 @@ exports.deleteSection = async (req, res) => {
       },
     );
   } catch (err) {
+    console.log(err.message);
     return res.status(500).json({
       success: false,
       message: "Unable to Delete the Section",
-      err: err.mesasge,
+      err: err.message,
     });
   }
 };
