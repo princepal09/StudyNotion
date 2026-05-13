@@ -13,6 +13,7 @@ import {
   createSection,
   updateSection,
 } from "../../../../../services/operations/courseDetailApi";
+import NestedView from "./NestedView";
 
 const CourseBuilderForm = () => {
   const {

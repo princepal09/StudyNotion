@@ -4,7 +4,7 @@ const User = require("../models/User");
 
 exports.auth = async (req, res, next) => {
   try {
-    // extract tokejs 
+    // extract token
 
     const token =
     req.headers?.authorization?.split(" ")[1];
