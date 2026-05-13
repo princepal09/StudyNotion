@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { useForm } from "react-hook-form";
-import { setStep } from "../../../../../redux/slices/courseSlice";
+import { setCourse, setStep } from "../../../../../redux/slices/courseSlice";
 import { useDispatch, useSelector } from "react-redux";
 import { HiOutlineCurrencyRupee } from "react-icons/hi";
 import { BiUpload } from "react-icons/bi";
@@ -157,7 +157,7 @@ const CourseInformationForm = () => {
     console.log("PRINTING result", result);
 
     if (result) {
-      dispatch(setStep(2)); // ✅ FIXED
+      dispatch(setStep(2)); 
       dispatch(setCourse(result));
     }
   };
