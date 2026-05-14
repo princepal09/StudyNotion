@@ -28,7 +28,8 @@ const NestedView = ({handleChangeEditSectionName}) => {
     const handleDeleteSection = async (sectionId) => {
         const result = await deleteSection({
             sectionId,
-            courseId: course._id},
+            courseId: course._id
+        },
             token
         );
         console.log("PRINTING AFTER DELETE SECTIOn", result);
