@@ -4,6 +4,7 @@ import { useDispatch, useSelector } from "react-redux";
 import IconBtn from "../../../../common/IconBtn";
 import { resetCourseState, setStep } from "../../../../../redux/slices/courseSlice";
 import { editCourseDetails } from "../../../../../services/operations/courseDetailApi";
+import { COURSE_STATUS } from "../../../../../utils/constants";
 
 const PublishCourse = () => {
   const { register, handleSubmit, setValue, getValues } = useForm();
@@ -28,7 +29,7 @@ const PublishCourse = () => {
     // navigate("/dashboad/my-courses")
   }
 
-  const handleCoursePublish = () => {
+  const handleCoursePublish = async () => {
     if (
       (course?.status === COURSE_STATUS.PUBLISHED &&
         getValues("public") === true) ||

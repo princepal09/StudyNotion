@@ -44,14 +44,14 @@ const CourseInformationForm = () => {
     };
 
     if (editCourse) {
-      setValue("courseTitle", course.courseName);
-      setValue("courseShortDesc", course.courseDescription);
-      setValue("coursePrice", course.price);
-      setValue("courseTags", course.tag);
-      setValue("courseBenefits", course.whatYouWillLearn);
-      setValue("courseCategory", course.category);
-      setValue("courseRequirements", course.instructions);
-      setValue("courseImage", course.thumbnail);
+      setValue("courseTitle", course?.courseName);
+      setValue("courseShortDesc", course?.courseDescription);
+      setValue("coursePrice", course?.price);
+      setValue("courseTags", course?.tag);
+      setValue("courseBenefits", course?.whatYouWillLearn);
+      setValue("courseCategory", course?.category);
+      setValue("courseRequirements", course?.instructions);
+      setValue("courseImage", course?.thumbnail);
     }
 
     getCategories();
@@ -60,16 +60,15 @@ const CourseInformationForm = () => {
   const isFormUpdated = () => {
     const currentValues = getValues();
     if (
-      currentValues.courseTitle !== course.courseName ||
-      currentValues.courseShortDesc !== course.courseDescription ||
-      currentValues.coursePrice !== course.price ||
-      currentValues.courseTitle !== course.courseName ||
-      //currentValues.courseTags.toString() !== course.tag.toString() ||
-      currentValues.courseBenefits !== course.whatYouWillLearn ||
-      currentValues.courseCategory._id !== course.category._id ||
-      //currentValues.courseImage !== course.thumbnail ||
+      currentValues.courseTitle !== course?.courseName ||
+      currentValues.courseShortDesc !== course?.courseDescription ||
+      currentValues.coursePrice !== course?.price ||
+      //currentValues.courseTags.toString() !== course?.tag.toString() ||
+      currentValues.courseBenefits !== course?.whatYouWillLearn ||
+      currentValues.courseCategory._id !== course?.category._id ||
+      //currentValues.courseImage !== course?.thumbnail ||
       currentValues.courseRequirements.toString() !==
-        course.instructions.toString()
+        course?.instructions.toString()
     )
       return true;
     else return false;
@@ -83,31 +82,31 @@ const CourseInformationForm = () => {
         const currentValues = getValues();
         const formData = new FormData();
 
-        formData.append("courseId", course._id);
+        formData.append("courseId", course?._id);
 
-        if (currentValues.courseTitle !== course.courseName) {
+        if (currentValues.courseTitle !== course?.courseName) {
           formData.append("courseName", data.courseTitle);
         }
 
-        if (currentValues.courseShortDesc !== course.courseDescription) {
+        if (currentValues.courseShortDesc !== course?.courseDescription) {
           formData.append("courseDescription", data.courseShortDesc);
         }
 
-        if (currentValues.coursePrice !== course.price) {
+        if (currentValues.coursePrice !== course?.price) {
           formData.append("price", data.coursePrice);
         }
 
-        if (currentValues.courseBenefits !== course.whatYouWillLearn) {
+        if (currentValues.courseBenefits !== course?.whatYouWillLearn) {
           formData.append("whatYouWillLearn", data.courseBenefits);
         }
 
-        if (currentValues.courseCategory._id !== course.category._id) {
+        if (currentValues.courseCategory._id !== course?.category._id) {
           formData.append("category", data.courseCategory);
         }
 
         if (
           currentValues.courseRequirements.toString() !==
-          course.instructions.toString()
+          course?.instructions.toString()
         ) {
           formData.append(
             "instructions",
@@ -133,7 +132,7 @@ const CourseInformationForm = () => {
       return;
     }
 
-    // create a new course
+    // create a new course?
     const formData = new FormData();
     
     formData.append("courseName", data.courseTitle);
