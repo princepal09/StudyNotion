@@ -59,7 +59,7 @@ exports.updateSection = async (req, res) => {
     const { sectionName, sectionId, courseId } = req.body;
 
 
-    console.log(sectionName);
+    // console.log(sectionName);
 
     // data validation
     if ((!sectionName || !sectionId || !courseId)) {
@@ -90,6 +90,9 @@ exports.updateSection = async (req, res) => {
       }
     }).exec();
 
+
+    
+
     // console.log("UpdatedCourse",course);
 
     // return response
@@ -114,7 +117,7 @@ exports.deleteSection = async (req, res) => {
   try {
     // fetchDetail
     const { sectionId, courseId } = req.body;
-    console.log(sectionId)
+    // console.log(sectionId)
 
 
     // data validation
@@ -142,7 +145,7 @@ exports.deleteSection = async (req, res) => {
       }, {
       new: true,
     }
-    );
+    ).populate("courseContent");
 
     // Delete all subsections belonging to this section
     await SubSection.deleteMany({
