@@ -5,11 +5,11 @@ const User = require("../models/User");
 exports.auth = async (req, res, next) => {
   try {
     // extract token
-
     const token =
-    req.headers?.authorization?.split(" ")[1];
+    req.headers?.authorization?.split(" ")[1] ||
       req.body?.token ||
       req.cookies?.token ||
+
 
     console.log("tokennnnnnnnnn", token)
 

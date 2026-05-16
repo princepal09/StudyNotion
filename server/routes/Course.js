@@ -55,15 +55,15 @@ router.post("/createCourse", auth, isInstructor, createCourse);
 // Add a section to a course
 router.post("/addSection", auth, isInstructor, createSection);
 // Update a Section
-router.post("/updateSection", auth, isInstructor, updateSection);
+router.patch("/updateSection", auth, isInstructor, updateSection);
 // Delete A section
 router.delete("/deleteSection", auth, isInstructor, deleteSection);
 // Add a Sub Section to a Section 
 router.post("/addSubSection", auth, isInstructor, createSubSection)
 // Edit sub section
-router.post("/updateSubSection", auth, isInstructor, updateSubSection);
+router.patch("/updateSubSection", auth, isInstructor, updateSubSection);
 // Delete Sub Section
-router.post("/deleteSubSection", auth, isInstructor, deleteSubSection);
+router.delete("/deleteSubSection", auth, isInstructor, deleteSubSection);
 // Get all Registered Courses
 router.get("/getAllCourses", getAllCourses);
 // Get Details for a Specific Courses

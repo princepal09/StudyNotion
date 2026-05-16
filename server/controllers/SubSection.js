@@ -93,10 +93,10 @@ exports.updateSubSection = async (req, res) => {
     return res.json({
       data: updatedSection,
       success: true,
-      message: "Section updated successfully",
+      message: "SubSection updated successfully",
     })
   } catch (err) {
-    console.err(err.message)
+    console.log(err.message)
     return res.status(500).json({
       success: false,
       message: "An error occurred while updating the section",
@@ -132,7 +132,7 @@ exports.deleteSubSection = async (req, res) => {
       message: "SubSection deleted successfully",
     })
   } catch (error) {
-    console.error(error)
+    console.log(error.message)
     return res.status(500).json({
       success: false,
       message: "An error occurred while deleting the SubSection",
