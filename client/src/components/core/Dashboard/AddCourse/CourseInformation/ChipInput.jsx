@@ -23,22 +23,18 @@ export default function ChipInput({
   useEffect(() => {
     if (editCourse) {
       // console.log(course)
-      setChips(course?.tag)
+      setChips(course?.tags)
     }
     register(name, { required: true, validate: (value) => value.length > 0 })
-    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [])
 
   useEffect(() => {
     setValue(name, chips)
-    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [chips])
 
   // Function to handle user input when chips are added
   const handleKeyDown = (event) => {
-    // Check if user presses "Enter" or ","
     if (event.key === "Enter" || event.key === ",") {
-      // Prevent the default behavior of the event
       event.preventDefault()
       // Get the input value and remove any leading/trailing spaces
       const chipValue = event.target.value.trim()

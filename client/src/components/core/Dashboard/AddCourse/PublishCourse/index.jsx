@@ -2,7 +2,10 @@ import React, { useEffect, useState } from "react";
 import { useForm } from "react-hook-form";
 import { useDispatch, useSelector } from "react-redux";
 import IconBtn from "../../../../common/IconBtn";
-import { resetCourseState, setStep } from "../../../../../redux/slices/courseSlice";
+import {
+  resetCourseState,
+  setStep,
+} from "../../../../../redux/slices/courseSlice";
 import { editCourseDetails } from "../../../../../services/operations/courseDetailApi";
 import { COURSE_STATUS } from "../../../../../utils/constants";
 
@@ -23,11 +26,10 @@ const PublishCourse = () => {
     }
   }, []);
 
-  const goToCourses = () =>{
-
+  const goToCourses = () => {
     dispatch(resetCourseState());
     // navigate("/dashboad/my-courses")
-  }
+  };
 
   const handleCoursePublish = async () => {
     if (
@@ -45,12 +47,14 @@ const PublishCourse = () => {
     const formData = new FormData();
     formData.append("courseId", course._id);
 
-    const courseStatus = getValues("public") ?  COURSE_STATUS.PUBLISHED : COURSE_STATUS.DRAFT;
+    const courseStatus = getValues("public")
+      ? COURSE_STATUS.PUBLISHED
+      : COURSE_STATUS.DRAFT;
     formData.append("status", courseStatus);
     setLoading(true);
     const result = await editCourseDetails(formData, token);
 
-    if(result){
+    if (result) {
       goToCourses();
     }
 
@@ -62,8 +66,10 @@ const PublishCourse = () => {
   };
 
   return (
-    <div className="rounded-md border bg-richblack-800 p-6 border-richblack-700">
-      <p>Publish Course</p>
+    <div className="rounded-md border-[1px] border-richblack-700 bg-richblack-800 p-6">
+      <p className="text-2xl font-semibold text-richblack-5">
+        Publish Settings
+      </p>
 
       <form onSubmit={handleSubmit(onSubmit)}>
         <div>
@@ -72,25 +78,26 @@ const PublishCourse = () => {
               type="checkbox"
               id="public"
               {...register("public")}
-              className="rounded h-4 w-4"
+              className="border-gray-300 h-4 w-4 rounded bg-richblack-500 text-richblack-400 focus:ring-2 focus:ring-richblack-5"
             />
-            <span className="ml-3 ">Make this cours as Public</span>
+            <span className="ml-2 text-richblack-400">Make this cours as Public</span>
           </label>
         </div>
 
-        <div className="flex gap-x-3 justify-end">
+        {/* Next Prev Button */}
+        <div className="ml-auto flex max-w-max items-center gap-x-4">
           <button
             type="button"
             onClick={goBack}
-            className="flex items-center rounded-md"
+            className="flex cursor-pointer items-center gap-x-2 rounded-md bg-richblack-300 py-[8px] px-[20px] font-semibold text-richblack-900"
             disabled={loading}
           >
             Back
           </button>
 
-          <IconBtn disabled={loading} type='submit' text="Save changes" />
+          <IconBtn disabled={loading} type="submit" text="Save changes" />
         </div>
-      </form> 
+      </form>
     </div>
   );
 };

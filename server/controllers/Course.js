@@ -360,6 +360,8 @@ exports.getFullCourseDetails = async (req, res) => {
 			})
 			.exec()
 
+			courseDetails.instructor.password = undefined;
+
 		let courseProgressCount = await CourseProgress.findOne({
 			courseID: courseId,
 			userId: userId,

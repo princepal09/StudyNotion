@@ -8,7 +8,7 @@ import {
 } from "../../../../../services/operations/courseDetailApi";
 import { setCourse } from "../../../../../redux/slices/courseSlice";
 import { Form } from "react-router-dom";
-import { RxCross1 } from "react-icons/rx";
+import { RxCross1, RxCross2 } from "react-icons/rx";
 import Upload from "../Upload";
 import IconBtn from "../../../../common/IconBtn";
 import { useSelector } from "react-redux";
@@ -122,17 +122,21 @@ const SubSectionModal = ({
   };
 
   return (
-    <div>
-      <div>
-        <div>
-          <p>
+    <div className="fixed inset-0 z-[1000] !mt-0 grid h-screen w-screen place-items-center overflow-auto bg-white bg-opacity-10 backdrop-blur-sm">
+      <div className="my-10 w-11/12 max-w-[700px] rounded-lg border border-richblack-400 bg-richblack-800">
+        {/* Modal Header */}
+        <div className="flex items-center justify-between rounded-t-lg bg-richblack-700 p-5">
+          <p className="text-xl font-semibold text-richblack-5">
             {view && "Viewing"} {add && "Adding"} {edit && "Editing"} Lecture
           </p>
           <button onClick={() => (!loading ? setModalData(null) : {})}>
-            <RxCross1 />
+            <RxCross2 className="text-2xl text-richblack-5" />
           </button>
         </div>
-        <form onSubmit={handleSubmit(onSubmit)}>
+        <form
+          onSubmit={handleSubmit(onSubmit)}
+          className="space-y-8 px-8 py-10"
+        >
           <Upload
             name="lectureVideo"
             label="Lecture Video"
@@ -143,29 +147,44 @@ const SubSectionModal = ({
             viewData={view ? modalData.videoUrl : null}
             editData={edit ? modalData.videoUrl : null}
           />
-          <div>
-            <label>Lecture Title</label>
+          {/* Lecture Title */}
+          <div className="flex flex-col space-y-2">
+            <label className="text-sm text-richblack-5" htmlFor="lectureTitle">
+              Lecture Title {!view && <sup className="text-pink-200">*</sup>}
+            </label>
             <input
               id="lectureTitle"
               placeholder="Enter Lecture Title"
               {...register("lectureTitle", { required: true })}
-              className="w-full"
+              className="form-style w-full"
             />
-            {errors.lectureTitle && <span>Lecture Title is required</span>}
+            {errors.lectureTitle && (
+              <span className="ml-2 text-xs tracking-wide text-pink-200">
+                Lecture Title is required
+              </span>
+            )}
           </div>
-          <div>
-            <label>Lecture Description</label>
+          {/* Lecture Description */}
+          <div className="flex flex-col space-y-2">
+            <label className="text-sm text-richblack-5" htmlFor="lectureDesc">
+              Lecture Description{" "}
+              {!view && <sup className="text-pink-200">*</sup>}
+            </label>
             <textarea
               id="lectureDesc"
               placeholder="Enter Lecture Description"
               {...register("lectureDesc", { required: true })}
-              className="w-full min-h-[130px]"
+              className="form-style resize-x-none min-h-[130px] w-full"
             />
-            {errors.lectureDesc && <span>Lecture Description is required</span>}
+            {errors.lectureDesc && (
+              <span className="ml-2 text-xs tracking-wide text-pink-200">
+                Lecture Description is required
+              </span>
+            )}
           </div>
 
           {!view && (
-            <div>
+            <div className="flex justify-end">
               <IconBtn
                 text={loading ? "Loading..." : edit ? "Save Changes" : "Save"}
               />
