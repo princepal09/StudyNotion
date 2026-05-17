@@ -17,9 +17,15 @@ import EnrolledCourses from "./components/core/Dashboard/EnrolledCourses";
 import Cart from "./components/core/Dashboard/Cart";
 import Contact from "./pages/Contact";
 import AddCourse from "./components/core/Dashboard/AddCourse";
-import './App.css'
+import "./App.css";
+import MyCourses from "./components/core/Dashboard/MyCourses";
+import EditCourse from "./components/core/Dashboard/EditCourse";
+import { useSelector } from "react-redux";
+import { ACCOUNT_TYPE } from "./utils/constants";
 
 const App = () => {
+  const { user } = useSelector((state) => state.profile);
+
   return (
     <div className="w-full min-h-screen bg-richblack-900 flex flex-col font-inter">
       <Navbar />
@@ -91,12 +97,27 @@ const App = () => {
         >
           <Route path="dashboard/my-profile" element={<MyProfile />} />
           <Route path="dashboard/settings" element={<Settings />} />
-          <Route path="dashboard/add-course" element={<AddCourse />} />
-          <Route
-            path="dashboard/enrolled-courses"
-            element={<EnrolledCourses />}
-          />
-          <Route path="dashboard/cart" element={<Cart />} />
+
+          {user?.accountType === ACCOUNT_TYPE.STUDENT && (
+            <>
+              <Route path="dashboard/cart" element={<Cart />} />
+              <Route
+                path="dashboard/enrolled-courses"
+                element={<EnrolledCourses />}
+              />
+            </>
+          )}
+
+          {user?.accountType === ACCOUNT_TYPE.INSTRUCTOR && (
+            <>
+              <Route path="dashboard/add-course" element={<AddCourse />} />
+              <Route path="dashboard/my-courses" element={<MyCourses />} />
+              <Route
+                path="dashboard/edit-course/:courseId"
+                element={<EditCourse />}
+              />
+            </>
+          )}
 
           {/* TODO => for student accoun type render above two route   */}
         </Route>
