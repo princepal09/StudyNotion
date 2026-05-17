@@ -42,7 +42,7 @@ const PublishCourse = () => {
     }
 
     // if form is updated
-    const formData = new formData();
+    const formData = new FormData();
     formData.append("courseId", course._id);
 
     const courseStatus = getValues("public") ?  COURSE_STATUS.PUBLISHED : COURSE_STATUS.DRAFT;
@@ -88,9 +88,9 @@ const PublishCourse = () => {
             Back
           </button>
 
-          <IconBtn disabled={loading} text="Save changes" />
+          <IconBtn disabled={loading} type='submit' text="Save changes" />
         </div>
-      </form>
+      </form> 
     </div>
   );
 };
