@@ -71,7 +71,7 @@ const CoursesTable = ({ courses, setCourses }) => {
                      <img
                        src={course?.thumbnail}
                        alt={course?.courseName}
-                       className="h-[148px] w-[220px] rounded-lg object-cover"
+                       className="h-37 w-55 rounded-lg object-cover"
                      />
                      <div className="flex flex-col justify-between">
                        <p className="text-lg font-semibold text-richblack-5">
@@ -90,12 +90,12 @@ const CoursesTable = ({ courses, setCourses }) => {
                          Created: {formatDate(course.createdAt)}
                        </p>
                        {course.status === COURSE_STATUS.DRAFT ? (
-                         <p className="flex w-fit flex-row items-center gap-2 rounded-full bg-richblack-700 px-2 py-[2px] text-[12px] font-medium text-pink-100">
+                         <p className="flex w-fit flex-row items-center gap-2 rounded-full bg-richblack-700 px-2 py-0.5 text-[12px] font-medium text-pink-100">
                            <HiClock size={14} />
                            Drafted
                          </p>
                        ) : (
-                         <p className="flex w-fit flex-row items-center gap-2 rounded-full bg-richblack-700 px-2 py-[2px] text-[12px] font-medium text-yellow-100">
+                         <p className="flex w-fit flex-row items-center gap-2 rounded-full bg-richblack-700 px-2 py-0.5 text-[12px] font-medium text-yellow-100">
                            <div className="flex h-3 w-3 items-center justify-center rounded-full bg-yellow-100 text-richblack-700">
                              <FaCheck size={8} />
                            </div>
