@@ -27,7 +27,7 @@ function Navbar() {
     ;(async () => {
       setLoading(true)
       try {
-        const res = await fetchCourseCategories("GET", categories.CATEGORIES_API)
+        const res = await fetchCourseCategories()
         console.log(res)
         
         setSubLinks(res)

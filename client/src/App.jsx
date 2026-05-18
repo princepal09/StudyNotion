@@ -22,6 +22,7 @@ import MyCourses from "./components/core/Dashboard/MyCourses";
 import EditCourse from "./components/core/Dashboard/EditCourse";
 import { useSelector } from "react-redux";
 import { ACCOUNT_TYPE } from "./utils/constants";
+import Catalog from "./pages/Catalog";
 
 const App = () => {
   const { user } = useSelector((state) => state.profile);
@@ -82,6 +83,15 @@ const App = () => {
           element={
             <OpenRoute>
               <About />
+            </OpenRoute>
+          }
+        />
+
+        <Route
+          path="catalog/:catalogName"
+          element={
+            <OpenRoute>
+              <Catalog />
             </OpenRoute>
           }
         />
