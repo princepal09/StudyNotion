@@ -185,7 +185,7 @@ const SubSectionModal = ({
 
           {!view && (
             <div className="flex justify-end">
-              <IconBtn
+              <IconBtn disabled={loading} className = {`${loading ? "opacity-10" : "opacity-100"} `}
                 text={loading ? "Loading..." : edit ? "Save Changes" : "Save"}
               />
             </div>

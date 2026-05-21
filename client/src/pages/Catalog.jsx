@@ -2,6 +2,7 @@ import React, { useEffect, useState } from "react";
 import { fetchCourseCategories } from "../services/operations/courseDetailApi";
 import { getCatalogPageData } from "../services/operations/pageAndComponentData";
 import { useParams } from "react-router-dom";
+import { useSelector } from 'react-redux'
 import Footer from "../components/common/Footer";
 import CourseSlider from "../components/core/Catalog/CourseSlider";
 import Course_Card from "../components/core/Catalog/Course_Card";
@@ -9,8 +10,9 @@ import Course_Card from "../components/core/Catalog/Course_Card";
 const Catalog = () => {
   const { catalogName } = useParams();
   const [catalogPageData, setCatalogPageData] = useState(null);
-  const [categoryId, setCategoryId] = useState("");
+  const [categoryId, setCategoryId] = useState(null);
   const [active, setActive] = useState(false)
+  const {course} = useSelector((state) => state.course);
 
   // Fetch All Categories
 
@@ -68,8 +70,7 @@ const Catalog = () => {
             <p>New</p>
           </div>
 
-          <CourseSlider   Courses = {catalogPageData?.selectedCategory?.courses}
-           />
+          <CourseSlider   Courses = {catalogPageData?.selectedCategory?.course} />
 
         </div>
 
@@ -77,7 +78,7 @@ const Catalog = () => {
 
         <div>
           <p>Top Courses in {catalogPageData?.selectedCategory?.name}</p>
-          <div><CourseSlider Courses = {catalogPageData?.differentCategory?.courses}   /></div>
+          <div><CourseSlider Courses = {catalogPageData?.differentCategory?.course}   /></div>
         </div>
 
         {/* section 3  */}
@@ -86,11 +87,11 @@ const Catalog = () => {
 
           <div>
             <div className="grid grid-cols-1 lg:grid-cols-2">
-              {
+              {/* {
                 catalogPageData?.mostSellingCourses?.slice(0, 4).map( (course, idx) => (
                   <Course_Card   course = {course} key = {idx} Height = {"h-[400px]"} />
                 ) )
-              }
+              } */}
             </div>
           </div>
 

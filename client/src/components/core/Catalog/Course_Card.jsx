@@ -1,33 +1,43 @@
 import React, { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
+import RatingStars from "../../common/RatingStars";
+import GetAvgRating from "c:/Users/prince/Downloads/StudyNotion11/src/utils/avgRating";
 
 const Course_Card = ({ course, Height }) => {
-    console.log(course)
+  console.log(course);
 
-    const [avgReviewCount, setAvgReviewCount] = useState(0);
+  const [avgReviewCount, setAvgReviewCount] = useState(0);
 
-    useEffect(() => {
-          const count = getAvgRating(course?.ratingAndReviews)
-        //   setAvgReviewCount(count)
-    }, [count])
+  useEffect(() => {
+    const count = GetAvgRating(course?.ratingAndReviews);
+    setAvgReviewCount(count);
+  }, [course]);
   return (
     <div>
-      <Link to = {`/courses/${course?._id}`} >
+      <Link to={`/courses/${course?._id}`}>
         <div>
           <div>
-            <img className={`${Height} w-full rounded-xl object-cover`} src={course?.thumbnail} loading="lazy" alt="course thumbnail "/> 
+            <img
+              className={`${Height} w-full rounded-xl object-cover`}
+              src={course?.thumbnail}
+              loading="lazy"
+              alt="course thumbnail "
+            />
           </div>
 
           <div>
             <p>{course?.courseName}</p>
-            <p>{course?.instructor?.firstName} {course?.instructor?.lastName}</p>
+            <p>
+              {course?.instructor?.firstName} {course?.instructor?.lastName}
+            </p>
 
-            <div>
+            <div className='flex gap-x-3'>
               <span>{avgReviewCount || 0}</span>
-              {/* <RatingStars /> */}
-              <span></span>
+              <RatingStars Review_Count={avgReviewCount} />
+              <span>{course?.ratingAndReviews?.length} Ratings</span>
             </div>
-            <p></p>
+
+            <p>{course?.price}</p>
           </div>
         </div>
       </Link>
