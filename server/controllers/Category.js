@@ -72,7 +72,12 @@ exports.categoryPageDetails = async (req, res) => {
       .populate({
         path: "course",
         match: { status: "Published" },
-        populate: "ratingAndReviews",
+        populate: [{
+          path: "instructor",
+          select: "-password"
+        }, {
+          path: "ratingAndReviews"
+        }]
       })
       .exec()
 
@@ -104,6 +109,10 @@ exports.categoryPageDetails = async (req, res) => {
       .populate({
         path: "course",
         match: { status: "Published" },
+        populate: {
+          path: "instructor",
+          select: "-password"
+        }
       })
       .exec()
     //console.log("Different COURSE", differentCategory)
@@ -114,10 +123,11 @@ exports.categoryPageDetails = async (req, res) => {
         match: { status: "Published" },
         populate: {
           path: "instructor",
+          select: "-password"
         },
       })
       .exec()
-      console.log(allCategories)
+    console.log(allCategories)
     const allCourses = allCategories.flatMap((category) => category.courses)
     const mostSellingCourses = allCourses
       .sort((a, b) => b.sold - a.sold)
