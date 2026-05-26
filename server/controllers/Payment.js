@@ -4,8 +4,8 @@ const User = require("../models/User");
 const mongoose = require("mongoose");
 const { mailSender } = require("../mail/mailService");
 const { courseEnrollmentEmail } = require("../mail/templates/courseEnrollmentEmail");
-
-
+const crypto = require('crypto');
+const { paymentSuccessEmail } = require("../mail/templates/paymentSuccessEmail");
 // capture the payment and inititate the Razorpay order
 exports.capturePayment = async (req, res) => {
   const { courses } = req.body;
@@ -56,10 +56,10 @@ exports.capturePayment = async (req, res) => {
     const paymentResponse = await instance.orders.create(options);
     res.json({
       success: true,
-      message: paymentResponse
+      data: paymentResponse
     })
   } catch (err) {
-    console.log(err);
+    console.log(err.message);
     return res.json({
       success: false,
       message: 'Could not Initiate order'
@@ -71,12 +71,12 @@ exports.capturePayment = async (req, res) => {
 // Verify the payment 
 exports.verifyPayment = async (req, res) => {
   const razorpay_order_id = req.body?.razorpay_order_id;
-  const razorpay_payement_id = req.body?.razorpay_payement_id
-  const razorpay_signature = req.body?.razorpay_signature
+  const razorpay_payment_id = req.body?.razorpay_payment_id;
+  const razorpay_signature = req.body?.razorpay_signature;
   const courses = req.body?.courses;
   const userId = req.user.id;
 
-  if (!razorpay_order_id || !razorpay_payement_id || !razorpay_signature || !courses || !userId) {
+  if (!razorpay_order_id || !razorpay_payment_id || !razorpay_signature || !courses || !userId) {
     return res.status(200).json({
       success: false,
       message: "Payment Failed"
@@ -85,7 +85,7 @@ exports.verifyPayment = async (req, res) => {
 
   }
 
-  let body = razorpay_order_id + "|" + razorpay_payement_id;
+  let body = razorpay_order_id + "|" + razorpay_payment_id;
   const expectedSignature = crypto.createHmac("sha256", process.env.RAZORPAY_SECRET).update(body.toString()).digest("hex")
 
   if (expectedSignature === razorpay_signature) {
@@ -170,4 +170,30 @@ const enrollStudents = async (courses, userId, res) => {
 
 
 
+}
+
+exports.sendPaymentSuccessEmail  = async (req, res) => {
+  const {orderId, paymentId, amount} = req.body;
+
+  
+  if (!orderId || !paymentId|| !amount) {
+    return res.sttus(400).json({
+      success: false,
+      message: "Pleases Provide all the fields"
+    })
+  }
+
+    try{
+
+      //  Find the student
+      const enrolledStudent = await User.findById(userId);
+      await mailSender(enrolledStudent.email, 'Payment Recieved', paymentSuccessEmail(`${enrolledStudent.firstName}`, amount/100, orderId, paymentId))
+
+    }catch(err){
+       console.log("errror in sendig mails", err);
+       return res.status(500).json({
+        success : false,
+        message : "Could not send email"
+       })
+    }
 }
