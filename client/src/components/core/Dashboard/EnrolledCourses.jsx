@@ -5,6 +5,8 @@ const EnrolledCourses = () => {
   const { token } = useSelector((state) => state.auth);
   const [enrolledCourses, setEnrolledCourses] = useState(null);
 
+  console.log(enrolledCourses)
+
   const getEnrolledCourses = async () => {
     try {
       const response = await getUserEnrolledCourses(token);
@@ -44,17 +46,6 @@ const EnrolledCourses = () => {
                   <div>
                     <p>{course?.courseName}</p>
                     <p>{course?.courseDescription}</p>
-                  </div>
-
-                  <div>{course?.totalDuration}</div>
-
-                  <div>
-                    <p>Progress: {course.progressPercentage || 0}%</p>
-                    <ProgressBar
-                      completed={course?.progressPercentage || 0}
-                      height="8px"
-                      isLabelVisible={false}
-                    />
                   </div>
                 </div>
               </div>
