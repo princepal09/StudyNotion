@@ -4,6 +4,8 @@ import copy from 'copy-to-clipboard';
 import toast from 'react-hot-toast'
 import { ACCOUNT_TYPE } from "../../../utils/constants";
 import { addToCart } from "../../../redux/slices/cartSlice";
+import { BsFillCaretRightFill } from "react-icons/bs";
+import { FaShareSquare } from "react-icons/fa";
 const CourseDetailsCard = ({
   course,
   setConfirmationModal,
@@ -14,7 +16,11 @@ const CourseDetailsCard = ({
   const navigate = useNavigate();
   const dispatch = useDispatch();
 
-  const { thumbnail: thubmnailImage, price: currentPrice } = course;
+    const {
+    thumbnail: ThumbnailImage,
+    price: CurrentPrice,
+    _id: courseId,
+  } = course
 
   const handleAddToCart = () => {
     if(user && user?.accountType === ACCOUNT_TYPE.INSTRUCTOR){
@@ -42,53 +48,72 @@ const CourseDetailsCard = ({
       toast.success("Link Copied to Clipboard")
   }
   return (
-    <div>
-      <img
-        alt="Thumbnail Image"
-        className="max-h-[300px] min-h-[180px] w-[400px] rounded-xl"
-        src={thubmnailImage}
-      />
+    <>
+      <div
+        className={`flex flex-col gap-4 rounded-md bg-richblack-700 p-4 text-richblack-5`}
+      >
+        {/* Course Image */}
+        <img
+          src={ThumbnailImage}
+          alt={course?.courseName}
+          className="max-h-[300px] min-h-[180px] w-[400px] overflow-hidden rounded-2xl object-cover md:max-w-full"
+        />
 
-      <div>Rs. {currentPrice}</div>
-
-      <div>
-        <button
-          onClick={
-            user && course?.studentsEnrolled.includes(user?._id)
-              ? () => navigate("/dashboard/enrolled-courses")
-              : handleBuyCourse
-          }
-        >
-          {user && course?.studentsEnrolled.includes(user?._id)
-            ? "Go to Course"
-            : "Buy Now"}
-        </button>
-
-        {!course.studentsEnrolled.includes(user?._id) && (
-          <button onClick={handleAddToCart}>Add to Cart</button>
-        )}
-      </div>
-
-      <div>
-        <p>30 Day Money-Back Gurantee</p>
-        <p>This Course Includes :</p>
-
-        <div>
-          {course?.instructions?.map((item, idx) => (
-            <p key={idx}>
-              <span>{item}</span>
+        <div className="px-4">
+          <div className="space-x-3 pb-4 text-3xl font-semibold">
+            Rs. {CurrentPrice}
+          </div>
+          <div className="flex flex-col gap-4">
+            <button
+              className="yellowButton"
+              onClick={
+                user && course?.studentsEnrolled.includes(user?._id)
+                  ? () => navigate("/dashboard/enrolled-courses")
+                  : handleBuyCourse
+              }
+            >
+              {user && course?.studentsEnrolled.includes(user?._id)
+                ? "Go To Course"
+                : "Buy Now"}
+            </button>
+            {(!user || !course?.studentsEnrolled.includes(user?._id)) && (
+              <button onClick={handleAddToCart} className="blackButton">
+                Add to Cart
+              </button>
+            )}
+          </div>
+          <div>
+            <p className="pb-3 pt-6 text-center text-sm text-richblack-25">
+              30-Day Money-Back Guarantee
             </p>
-          ))}
+          </div>
+
+          <div className={``}>
+            <p className={`my-2 text-xl font-semibold `}>
+              This Course Includes :
+            </p>
+            <div className="flex flex-col gap-3 text-sm text-caribbeangreen-100">
+              {course?.instructions?.map((item, i) => {
+                return (
+                  <p className={`flex gap-2`} key={i}>
+                    <BsFillCaretRightFill />
+                    <span>{item}</span>
+                  </p>
+                )
+              })}
+            </div>
+          </div>
+          <div className="text-center">
+            <button
+              className="mx-auto flex items-center gap-2 py-6 text-yellow-100 "
+              onClick={handleShare}
+            >
+              <FaShareSquare size={15} /> Share
+            </button>
+          </div>
         </div>
       </div>
-
-      <div>
-        <button onClick={handleShare}>
-            Share
-        </button>
-      </div>
-
-    </div>
+    </>
   );
 };
 
