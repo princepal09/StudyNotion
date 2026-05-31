@@ -24,6 +24,8 @@ import { useSelector } from "react-redux";
 import { ACCOUNT_TYPE } from "./utils/constants";
 import Catalog from "./pages/Catalog";
 import CourseDetails from "./pages/CourseDetails";
+import ViewCourse from "./pages/viewCourse";
+import VideoDetails from "./components/core/ViewCourse/VideoDetails";
 
 const App = () => {
   const { user } = useSelector((state) => state.profile);
@@ -123,7 +125,26 @@ const App = () => {
             </>
           )}
 
-          {/* TODO => for student accoun type render above two route   */}
+          {/* TODO => for student account type render above two route   */}
+        </Route>
+
+        <Route element = {
+          <PrivateRoute>
+            <ViewCourse/>
+          </PrivateRoute>
+        }>
+
+          {
+            user?.accountType === ACCOUNT_TYPE.STUDENT && (
+              <>
+              <Route 
+              path="view-course/:courseId/section/:sectionId/sub-section/:subsectionId" 
+              element = {<VideoDetails/>}
+              />
+              </>
+            )
+          }
+
         </Route>
 
         <Route path="*" element={<Error />} />

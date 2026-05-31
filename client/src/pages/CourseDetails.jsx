@@ -40,7 +40,7 @@ const CourseDetails = () => {
 
   const handleActive = (id) => {
     setIsActive(
-      !isActive.includes(id) 
+      !isActive.includes(id)
         ? isActive.concat(id)
         : isActive.filter((e) => e !== id),
     );
@@ -145,8 +145,9 @@ const CourseDetails = () => {
           </div>
 
           <div>
-            <button onClick={() => setIsActive([])}
-            >Collapse all Sections</button>
+            <button onClick={() => setIsActive([])}>
+              Collapse all Sections
+            </button>
           </div>
         </div>
       </div>

@@ -1,0 +1,140 @@
+import React, { useEffect, useState } from "react";
+import { useSelector } from "react-redux";
+import { useLocation, useNavigate, useParams } from "react-router-dom";
+import { setCourseSectionData } from "../../../redux/slices/viewCourseSlice";
+import IconBtn from "../../common/IconBtn";
+
+const VideoDetailsSidebar = ({setReviewModal}) => {
+  const [activeStatus, setActiveStatus] = useState("");
+  const [videoBarActive, setVideoBarActive] = useState("");
+  const navigate = useNavigate();
+  const { sectionId, subSectionId } = useParams();
+  const {
+    courseSectionData,
+    courseEntireData,
+    totalNoOfLectures,
+    completedLectures,
+  } = useSelector((state) => state.viewCourse);
+
+  const location = useLocation();
+
+  useEffect(() => {
+    (() => {
+      if (!courseSectionData.length) {
+        return;
+      }
+      const currentSectionIndex = setCourseSectionData.findIndex(
+        (data) => data._id === sectionId,
+      );
+
+      const currentSubSectionIndex = couseSectionData?.[
+        currentSectionIndex
+      ]?.subSection.findIndex((data) => data._id === subSectionId);
+
+      const activeStatusId =
+        courseSectionData[currentSectionIndex]?.subSection?.[
+          currentSubSectionIndex
+        ]?._id;
+
+      // set current section here
+      setActiveStatus(courseSectionData?.[currentSectionIndex]?._id);
+
+      //set current sub-section here
+      setVideoBarActive(activeSubSectionId);
+    })();
+  }, [courseSectionData, courseEntireData, location.pathname]);
+
+  return (
+    <>
+    <div>
+        {/* for buttons and headings */}
+            <div>
+             {/* for buttons  */}
+                <div>
+
+                    <button onClick={() => navigate("/dashboard/enrolled-courses")} >
+                        Back
+                    </button>
+
+
+                    <div>
+
+                        <IconBtn text={"Add review"} onclick={() => setReviewModal(true)}/>
+
+                    </div>
+
+                </div>
+
+                {/* for headings or title */}
+                <div>  
+
+                    <p>{courseEntireData?.courseName}</p>
+                    <p>{completedLectures?.length} ? {totalNoOfLectures}</p>
+
+
+                </div>
+
+            </div>
+
+            {/* for sections and subsections  */}
+            <div>
+                {
+                    courseSectionData.map((course, idx) => (
+
+                        <div key={idx} onclick={() => setActiveStatus(course?._id)}  >
+
+                            {/* section  */}
+                            <div>
+                                <div>
+                                    {course?.sectionName}
+                                </div>
+
+                                {/* HW - add arrow icon here and handle rotate logic */}
+                            </div>
+
+                            {/* subSections  */}
+                            <div>
+                                {
+                                    activeStatus === course?._id && (
+                                        <div>
+                                            {
+                                                course?.subSection.map((topic, index) => (
+
+                                                    <div className={`flex gap-5 p-5 ${videoBarActive === topic._id ? "bg-yellow-200 text-richblack-900" : "bg-richblack-900 text-white"}`} key={index}
+                                                    onclick = {()=> {
+                                                        navigate(`view-course/${courseEntireData?._id}/section/${course?._id}/sub-section/${topic?._id}`)
+                                                        setVideoBarActive(topic?._id);
+                                                        
+                                                    }}
+                                                      >
+                                                        <input 
+                                                        type="checkbox"
+                                                        checked = {completedLectures?.includes(topic?._id)}
+                                                        onChange={() =>{}}
+                                                         />
+                                                         <span>
+                                                            {topic?.title}
+                                                         </span>
+
+                                                    </div>
+
+                                                ))
+                                            }
+                                        </div>
+                                    )
+                                }
+                            </div>
+
+                        </div>
+
+
+
+                    ))
+                }
+            </div>
+    </div>
+    </>
+  )
+};
+
+export default VideoDetailsSidebar;
