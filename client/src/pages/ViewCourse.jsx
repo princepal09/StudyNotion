@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react'
 import { useDispatch, useSelector } from 'react-redux';
-import { useParams } from 'react-router-dom';
+import { Outlet, useParams } from 'react-router-dom';
 import { getFullDetailsOfCourse } from '../services/operations/courseDetailApi';
 import { setCompletedLectures, setCourseSectionData, setEntireCourseData, setTotalNoOfLectures } from '../redux/slices/viewCourseSlice';
 import VideoDetailsSidebar from '../components/core/ViewCourse/VideoDetailsSidebar';
@@ -8,7 +8,7 @@ import VideoDetailsSidebar from '../components/core/ViewCourse/VideoDetailsSideb
 const ViewCourse = () => {
 
     const [reviewModal, setReviewModal] = useState(false);
-    const {course} = useParams();
+    const {courseId} = useParams();
     const {token} = useSelector((state) => state.auth);
     const dispatch = useDispatch();
 

@@ -9,12 +9,14 @@ const VideoDetailsSidebar = ({setReviewModal}) => {
   const [videoBarActive, setVideoBarActive] = useState("");
   const navigate = useNavigate();
   const { sectionId, subSectionId } = useParams();
+
   const {
     courseSectionData,
     courseEntireData,
     totalNoOfLectures,
     completedLectures,
   } = useSelector((state) => state.viewCourse);
+  
 
   const location = useLocation();
 
@@ -23,15 +25,15 @@ const VideoDetailsSidebar = ({setReviewModal}) => {
       if (!courseSectionData.length) {
         return;
       }
-      const currentSectionIndex = setCourseSectionData.findIndex(
+      const currentSectionIndex = courseSectionData.findIndex(
         (data) => data._id === sectionId,
       );
 
-      const currentSubSectionIndex = couseSectionData?.[
+      const currentSubSectionIndex = courseSectionData?.[
         currentSectionIndex
       ]?.subSection.findIndex((data) => data._id === subSectionId);
 
-      const activeStatusId =
+      const activeSubSectionId =
         courseSectionData[currentSectionIndex]?.subSection?.[
           currentSubSectionIndex
         ]?._id;

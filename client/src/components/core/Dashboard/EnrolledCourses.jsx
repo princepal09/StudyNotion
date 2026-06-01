@@ -2,11 +2,13 @@ import React, { useEffect, useState } from "react";
 import { useSelector } from "react-redux";
 import ProgressBar from "@ramonak/react-progress-bar"
 import { getUserEnrolledCourses } from "../../../services/operations/profileApi";
+import { useNavigate } from "react-router-dom";
 const EnrolledCourses = () => {
   const { token } = useSelector((state) => state.auth);
   const [enrolledCourses, setEnrolledCourses] = useState(null);
+  const navigate = useNavigate()
+  
 
-  console.log(enrolledCourses)
 
   const getEnrolledCourses = async () => {
     try {
@@ -16,6 +18,11 @@ const EnrolledCourses = () => {
       console.log("UNABLE TO FETCH ENROLL COURSES", err.message);
     }
   };
+
+
+    console.log("enrolledCourses", enrolledCourses);
+
+
 
   useEffect(() => {
     getEnrolledCourses();
