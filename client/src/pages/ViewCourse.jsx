@@ -6,6 +6,7 @@ import { setCompletedLectures, setCourseSectionData, setEntireCourseData, setTot
 import VideoDetailsSidebar from '../components/core/ViewCourse/VideoDetailsSidebar';
 
 const ViewCourse = () => {
+  console.log("ViewCourse rendered");
 
     const [reviewModal, setReviewModal] = useState(false);
     const {courseId} = useParams();

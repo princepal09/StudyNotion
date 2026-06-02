@@ -138,7 +138,7 @@ const App = () => {
             user?.accountType === ACCOUNT_TYPE.STUDENT && (
               <>
               <Route 
-              path="view-course/:courseId/section/:sectionId/sub-section/:subsectionId" 
+              path="view-course/:courseId/section/:sectionId/sub-section/:subSectionId" 
               element = {<VideoDetails/>}
               />
               </>

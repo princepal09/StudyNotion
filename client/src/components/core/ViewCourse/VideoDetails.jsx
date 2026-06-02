@@ -17,13 +17,15 @@ const VideoDetails = () => {
   const [videoEnded, setVideoEnded] = useState(false);
   const [loading, setLoading] = useState(false);
 
+  console.log(courseSectionData);
+
   const setVideoSpecificDetails = async () => {
     if (!courseSectionData.length) return;
 
     if (!courseId && !sectionId && !subSectionId) {
       navigate("/dashboard/enrolled-courses");
     } else {
-      console.log("courseSectionData", courseSectionData)
+      console.log("courseSectionData", courseSectionData);
       // let's assume k all 3 fields are present
       const filteredData = courseSectionData.filter(
         (course) => course._id === sectionId,
@@ -34,9 +36,9 @@ const VideoDetails = () => {
         (data) => data._id === subSectionId,
       );
 
-      console.log("filteredVideoData", filteredVideoData)
+      console.log("filteredVideoData", filteredVideoData);
 
-      // setVideoData(filteredVideoData[0]) ;
+      setVideoData(filteredVideoData[0]);
       setVideoEnded(false);
     }
   };
@@ -51,7 +53,7 @@ const VideoDetails = () => {
 
     const currentSubSectionIndex = courseSectionData[
       currentSectionIndex
-    ].subSectionId.findIndex((data) => data._id === subSectionId);
+    ].subSection.findIndex((data) => data._id === subSectionId);
 
     if (currentSectionIndex === 0 && currentSubSectionIndex === 0) {
       return true;
@@ -70,7 +72,7 @@ const VideoDetails = () => {
 
     const currentSubSectionIndex = courseSectionData[
       currentSectionIndex
-    ].subSectionId.findIndex((data) => data._id === subSectionId);
+    ].subSection.findIndex((data) => data._id === subSectionId);
 
     if (
       currentSectionIndex === courseSectionData.length - 1 &&
@@ -92,7 +94,7 @@ const VideoDetails = () => {
 
     const currentSubSectionIndex = courseSectionData[
       currentSectionIndex
-    ].subSectionId.findIndex((data) => data._id === subSectionId);
+    ].subSection.findIndex((data) => data._id === subSectionId);
 
     if (currentSubSectionIndex !== noOfSubSections - 1) {
       const nextSubSectionId =
@@ -124,7 +126,7 @@ const VideoDetails = () => {
 
     const currentSubSectionIndex = courseSectionData[
       currentSectionIndex
-    ].subSectionId.findIndex((data) => data._id === subSectionId);
+    ].subSection.findIndex((data) => data._id === subSectionId);
 
     if (currentSubSectionIndex !== 0) {
       // same section previous video
@@ -159,72 +161,80 @@ const VideoDetails = () => {
   console.log("videoUrl =", videoData?.videoUrl);
   console.log("title =", videoData?.title);
 
-  return;
-  <div className="text-white">
-    {videoData.length === 0 || !videoData ? (
-      <div>No Data Found</div>
-    ) : (
-      <div className="relative">
-        <ReactPlayer
-          ref={playerRef}
-          url={videoData?.videoUrl}
-          controls
-          width="100%"
-          height="500px"
-          onEnded={() => setVideoEnded(true)}
-        />
+  return (
+    <div className="text-white">
+      {videoData.length === 0 || !videoData ? (
+        <div>No Data Found</div>
+      ) : (
+        <div className="relative">
+          <ReactPlayer
+            ref={playerRef}
+            src={videoData?.videoUrl}
+            controls
+            config={{
+              file : {
+                attributes  :{
+                  controlList : 'nodownload'
+                }
+              }
+            }}
+            width="100%"
+            height="500px"
+            onEnded={() => setVideoEnded(true)}
+          />
 
-        {videoEnded && (
-          <div>
-            {!completedLectures.includes(subSectionId) && (
+          {videoEnded && (
+            <div>
+              {!completedLectures.includes(subSectionId) && (
+                <IconBtn
+                  disabled={loading}
+                  onClick={handleLectureCompletion}
+                  text={!loading ? "Mark As Completed" : "Loading..."}
+                />
+              )}
+
               <IconBtn
                 disabled={loading}
-                onClick={handleLectureCompletion}
-                text={!loading ? "Mark As Completed" : "Loading..."}
+                onClick={() => {
+                  if (playerRef?.current) {
+                    playerRef.current.seekTo(0, "seconds");
+                    setVideoEnded(false);
+                  }
+                }}
+                text="Rewatch"
+                customClasses="text-xl"
               />
-            )}
 
-            <IconBtn
-              disabled={loading}
-              onClick={() => {
-                if (playerRef?.current) {
-                  playerRef.current.seekTo(0, "seconds");
-                  setVideoEnded(false);
-                }
-              }}
-              text="Rewatch"
-              customClasses="text-xl"
-            />
+              <div>
+                {!isFirstVideo() && (
+                  <button
+                    disabled={loading}
+                    onClick={goToPrevVideo}
+                    className="blackButton"
+                  >
+                    Prev
+                  </button>
+                )}
 
-            <div>
-              {!isFirstVideo() && (
-                <button
-                  disabled={loading}
-                  onClick={goToPrevVideo}
-                  className="blackButton"
-                >
-                  Prev
-                </button>
-              )}
-
-              {!isLastVideo() && (
-                <button
-                  disabled={loading}
-                  onClick={goToNextVideo}
-                  className="blackButton"
-                >
-                  Next
-                </button>
-              )}
+                {!isLastVideo() && (
+                  <button
+                    disabled={loading}
+                    onClick={goToNextVideo}
+                    className="blackButton"
+                  >
+                    Next
+                  </button>
+                )}
+              </div>
             </div>
-          </div>
-        )}
-      </div>
-    )}
+          )}
+        </div>
+      )}
 
-    <h1>{videoData?.title}</h1>
-    <p>{videoData?.description}</p>
-  </div>;
+      <h1>{videoData?.title}</h1>
+      <p>{videoData?.description}</p>
+    </div>
+  );
 };
 
 export default VideoDetails;
