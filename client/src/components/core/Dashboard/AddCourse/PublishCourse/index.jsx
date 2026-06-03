@@ -8,13 +8,17 @@ import {
 } from "../../../../../redux/slices/courseSlice";
 import { editCourseDetails } from "../../../../../services/operations/courseDetailApi";
 import { COURSE_STATUS } from "../../../../../utils/constants";
+import { useNavigate } from "react-router-dom";
 
 const PublishCourse = () => {
   const { register, handleSubmit, setValue, getValues } = useForm();
   const { token } = useSelector((state) => state.auth);
   const { course } = useSelector((state) => state.course);
   const dispatch = useDispatch();
+  const nvaigate = useNavigate()
   const [loading, setLoading] = useState(false);
+
+  console.log("Printing course in publish course section", course);
 
   const goBack = () => {
     dispatch(setStep(2));
@@ -28,7 +32,7 @@ const PublishCourse = () => {
 
   const goToCourses = () => {
     dispatch(resetCourseState());
-    // navigate("/dashboad/my-courses")
+    navigate("/dashboad/my-courses")
   };
 
   const handleCoursePublish = async () => {

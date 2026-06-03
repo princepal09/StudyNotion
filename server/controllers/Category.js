@@ -127,12 +127,14 @@ exports.categoryPageDetails = async (req, res) => {
         },
       })
       .exec()
-    console.log(allCategories)
-    const allCourses = allCategories.flatMap((category) => category.courses)
+    // console.log(allCategories)
+    const allCourses = allCategories.flatMap((category) => category.course)
     const mostSellingCourses = allCourses
       .sort((a, b) => b.sold - a.sold)
       .slice(0, 10)
+
     // console.log("mostSellingCourses COURSE", mostSellingCourses)
+    
     res.status(200).json({
       success: true,
       data: {

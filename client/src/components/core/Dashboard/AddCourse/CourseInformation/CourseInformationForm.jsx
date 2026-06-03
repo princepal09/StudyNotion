@@ -153,7 +153,7 @@ const CourseInformationForm = () => {
     const result = await addCourseDetails(formData, token);
     setLoading(false);
 
-    console.log("PRINTING result", result);
+    console.log("PRINTING result in Course Information Form", result);
 
     if (result) {
       dispatch(setStep(2)); 

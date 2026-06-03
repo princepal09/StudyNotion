@@ -145,8 +145,8 @@ const VideoDetails = () => {
   }
 
 
-  const handleLectureCompletion = () => {
-///dummy code, baad me we will replace it witht the actual call
+  const handleLectureCompletion = async () => {
+
     setLoading(true);
     //PENDING - > Course Progress PENDING
     const res = await markLectureAsComplete({courseId: courseId, subSectionId: subSectionId}, token);
@@ -154,7 +154,9 @@ const VideoDetails = () => {
     if(res) {
         dispatch(updateCompletedLectures(subSectionId)); 
     }
-    setLoading(false);  };
+    setLoading(false); 
+    
+   };
   
 
   return (
@@ -184,14 +186,14 @@ const VideoDetails = () => {
               {!completedLectures.includes(subSectionId) && (
                 <IconBtn
                   disabled={loading}
-                  onClick={handleLectureCompletion}
+                  onclick={handleLectureCompletion}
                   text={!loading ? "Mark As Completed" : "Loading..."}
                 />
               )}
 
               <IconBtn
                 disabled={loading}
-                onClick={() => {
+                onclick={() => {
                   if (playerRef?.current) {
                     playerRef.current.seekTo(0, "seconds");
                     setVideoEnded(false);

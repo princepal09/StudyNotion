@@ -13,7 +13,6 @@ const Catalog = () => {
   const [catalogPageData, setCatalogPageData] = useState(null);
   const [categoryId, setCategoryId] = useState(null);
   const [active, setActive] = useState(1);
-  const { course } = useSelector((state) => state.course);
 
   // Fetch All Categories
 
@@ -39,6 +38,9 @@ const Catalog = () => {
       console.log(err);
     }
   };
+
+  console.log(catalogPageData)
+
   useEffect(() => {
     getCategories();
   }, [catalogName]);
@@ -49,6 +51,15 @@ const Catalog = () => {
     }
   }, [categoryId]);
 
+
+  
+    if (loading || !catalogPageData) {
+        return (
+          <div className="grid min-h-[calc(100vh-3.5rem)] place-items-center">
+            <div className="spinner"></div>
+          </div>
+        )
+      }
   
 
   
@@ -114,7 +125,7 @@ const Catalog = () => {
             </div>
             <div className="py-8">
               <CourseSlider
-                Courses={catalogPageData?.differentCategory?.courses}
+                Courses={catalogPageData?.differentCategory?.course}
               />
             </div>
           </div>
@@ -126,8 +137,8 @@ const Catalog = () => {
               <div className="grid grid-cols-1 gap-6 lg:grid-cols-2">
                 {catalogPageData?.mostSellingCourses
                   ?.slice(0, 4)
-                  .map((course, i) => (
-                    <Course_Card course={course} key={i} Height={"h-[400px]"} />
+                  .map((cs, i) => (
+                    <Course_Card course={cs} key={i} Height={"h-[400px]"} />
                   ))}
               </div>
             </div>
