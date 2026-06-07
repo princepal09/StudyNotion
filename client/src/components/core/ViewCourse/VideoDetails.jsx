@@ -47,7 +47,7 @@ const VideoDetails = () => {
   };
   useEffect(() => {
     setVideoSpecificDetails();
-  }, []);
+  }, [courseSectionData, sectionId, subSectionId]);
 
   const isFirstVideo = () => {
     const currentSectionIndex = courseSectionData.findIndex(

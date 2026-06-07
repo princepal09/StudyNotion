@@ -1,6 +1,7 @@
 import React, { useEffect } from "react";
 import { useForm } from "react-hook-form";
 import { useSelector } from "react-redux";
+import ReactStars from 'react-stars'
 import IconBtn from "../../common/IconBtn";
 import { createRating } from "../../../services/operations/courseDetailApi";
 import { data } from "react-router-dom";
@@ -14,7 +15,7 @@ const CourseReviewModal = ({ setReviewModal }) => {
     register,
     handleSubmit,
     setValue,
-    formState: { erros },
+    formState: { errors },
   } = useForm();
 
   useEffect(() => {
