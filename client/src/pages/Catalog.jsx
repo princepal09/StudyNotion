@@ -111,7 +111,7 @@ const Catalog = () => {
 
       {/* Section 2 */}
       <div className=" mx-auto box-content w-full max-w-maxContentTab px-3 py-12 lg:max-w-maxContent">
-        <div className="section_heading">
+        <div className="section_heading lg:text-start text-center">
           Top courses in {catalogPageData?.differentCategory?.name}
         </div>
         <div className="py-8">
@@ -121,9 +121,9 @@ const Catalog = () => {
 
       {/* Section 3 */}
       <div className=" mx-auto box-content w-full max-w-maxContentTab  lg:px-4 py-12 lg:max-w-maxContent">
-        <div className="section_heading">Frequently Bought</div>
-        <div className="py-8">
-          <div className="grid grid-cols-1 gap-6 lg:grid-cols-2">
+        <div className="section_heading text-center lg:text-start">Frequently Bought</div>
+        <div className="lg:py-8 py-2">
+          <div className="grid grid-cols-1 p-8 lg:p-0 gap-6 lg:grid-cols-2">
             {catalogPageData?.mostSellingCourses?.slice(0, 4).map((cs, i) => (
               <Course_Card course={cs} key={i} Height={"h-[400px]"} />
             ))}
