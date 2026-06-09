@@ -24,7 +24,7 @@ const InstructorChart = ({ courses }) => {
   };
 
   // Data for student enrollment chart
-  const chartDataForStudents = {
+  const chartDataStudents = {
     labels: courses.map((course) => course.courseName),
     datasets: [
       {
@@ -37,7 +37,7 @@ const InstructorChart = ({ courses }) => {
   };
 
   // Data for income chart
-  const chartDataForIncome = {
+  const chartIncomeData = {
     labels: courses.map((course) => course.courseName),
     datasets: [
       {
@@ -54,7 +54,7 @@ const InstructorChart = ({ courses }) => {
     responsive: true,
     plugins: {
       legend: {
-        position: "bottom",
+        position: "left",
       },
       title: {
         display: true,
@@ -67,51 +67,39 @@ const InstructorChart = ({ courses }) => {
   };
 
   return (
-    <div className="w-full rounded-md bg-richblack-800 p-6">
-      <p className="mb-4 text-xl font-semibold text-white">
-        Visualize Course Data
-      </p>
-
-      <div className="mb-6 flex gap-4">
+    <div className="flex  flex-1 flex-col gap-y-4 rounded-md bg-richblack-800 p-6">
+      <p className="text-lg font-bold text-richblack-5">Visualize</p>
+      <div className="space-x-4 font-semibold">
+        {/* Button to switch to the "students" chart */}
         <button
           onClick={() => setCurrChart("students")}
-          className={`rounded-md px-4 py-2 ${
+          className={`rounded-sm p-1 px-3 transition-all duration-200 ${
             currChart === "students"
-              ? "bg-yellow-50 text-black"
-              : "bg-richblack-700 text-white"
+              ? "bg-richblack-700 text-yellow-50"
+              : "text-yellow-400"
           }`}
         >
           Students
         </button>
-
+        {/* Button to switch to the "income" chart */}
         <button
-          onClick={() => setCurrChart("income")}
-          className={`rounded-md px-4 py-2 ${
+          onClick={() => setCurrChart('income')}
+          className={`rounded-sm p-1 px-3 transition-all duration-200 ${
             currChart === "income"
-              ? "bg-yellow-50 text-black"
-              : "bg-richblack-700 text-white"
+              ? "bg-richblack-700 text-yellow-50"
+              : "text-yellow-400"
           }`}
         >
           Income
         </button>
       </div>
-
-      {courses.length > 0 ? (
-        <div className="mx-auto max-w-md">
-          <Pie
-            data={
-              currChart === "students"
-                ? chartDataForStudents
-                : chartDataForIncome
-            }
-            options={options}
-          />
-        </div>
-      ) : (
-        <p className="text-center text-richblack-300">
-          No course data available.
-        </p>
-      )}
+      <div className="relative bottom-6 mx-auto aspect-square h-full w-full">
+        {/* Render the Pie chart based on the selected chart */}
+        <Pie
+          data={currChart === "students" ? chartDataStudents : chartIncomeData}
+          options={options}
+        />
+      </div>
     </div>
   );
 };
