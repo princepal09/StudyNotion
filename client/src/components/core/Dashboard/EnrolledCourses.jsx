@@ -51,7 +51,7 @@ const EnrolledCourses = () => {
              {/* Course Names */}
              {enrolledCourses.map((course, i, arr) => (
                <div
-                 className={`flex items-center border border-richblack-700 ${
+                 className={`flex lg:gap-x-0 gap-x-10 items-center border border-richblack-700 ${
                    i === arr.length - 1 ? "rounded-b-lg" : "rounded-none"
                  }`}
                  key={i}

@@ -5,6 +5,7 @@ import IconBtn from "../../common/IconBtn";
 import CoursesTable from "./InstructorCourses/CoursesTable";
 import { useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
+import { VscAdd } from "react-icons/vsc";
 
 const MyCourses = () => {
   const { token } = useSelector((state) => state.auth);
@@ -24,16 +25,16 @@ const MyCourses = () => {
   }, []);
 
   return (
-    <div className="text-white">
+    <div >
       <div className="mb-14 flex items-center justify-between">
         <h1 className="text-3xl font-medium text-richblack-5">My Courses</h1>
 
         <IconBtn
           text="Add Course"
           onclick={() => navigate("/dashboard/add-course")}
-          // TODO ADD ICON
         />
       </div>
+          <VscAdd />
 
       {courses && <CoursesTable courses={courses}  setCourses={setCourses} />}
     </div>

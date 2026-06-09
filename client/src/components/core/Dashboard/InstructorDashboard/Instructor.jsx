@@ -61,7 +61,7 @@ const Instructor = () => {
         <Spinner/>
       ) : courses?.length > 0 ? (
         <div>
-          <div className="my-4 flex h-[450px] space-x-4">
+          <div className="my-10 flex md:flex-row flex-col p-7 lg:p-0 gap-10 h-[950px] md:h-[450px] space-x-4">
             {/* Render chart / graph */}
             {totalAmount > 0 || totalStudents > 0 ? (
               <InstructorChart courses={instructorData} />
@@ -74,8 +74,8 @@ const Instructor = () => {
               </div>
             )}
             {/* Total Statistics */}
-            <div className="flex min-w-[250px] flex-col rounded-md bg-richblack-800 p-6">
-              <p className="text-lg font-bold text-richblack-5">Statistics</p>
+            <div className="flex  min-w-[300px] flex-col rounded-md bg-richblack-800 p-6">
+              <p className="lg:text-lg text-2xl font-bold text-richblack-5">Statistics</p>
               <div className="mt-4 space-y-4">
                 <div>
                   <p className="text-lg text-richblack-200">Total Courses</p>
@@ -98,9 +98,9 @@ const Instructor = () => {
               </div>
             </div>
           </div>
-          <div className="rounded-md bg-richblack-800 p-6">
+          <div className="rounded-md md:mt-0 mt-30 bg-richblack-800 p-6">
             {/* Render 3 courses */}
-            <div className="flex items-center justify-between">
+            <div className="flex  items-center justify-between">
               <p className="text-lg font-bold text-richblack-5">Your Courses</p>
               <Link to="/dashboard/my-courses">
                 <p className="text-xs font-semibold text-yellow-50">View All</p>

@@ -73,7 +73,7 @@ const CoursesTable = ({ courses, setCourses }) => {
                        alt={course?.courseName}
                        className="h-37 w-55 rounded-lg object-cover"
                      />
-                     <div className="flex flex-col justify-between">
+                     <div className="flex lg:gap-0 gap-3 flex-col justify-between">
                        <p className="text-lg font-semibold text-richblack-5">
                          {course.courseName}
                        </p>

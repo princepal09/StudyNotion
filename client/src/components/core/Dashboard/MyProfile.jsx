@@ -15,8 +15,8 @@ export default function MyProfile() {
       <h1 className="mb-14 text-3xl font-medium text-richblack-5">
         My Profile
       </h1>
-      <div className="flex items-center justify-between rounded-md border border-richblack-700 bg-richblack-800 p-8 px-12">
-        <div className="flex items-center gap-x-4">
+      <div className="flex gap-y-9 sm:gap-y-0 sm:flex-row flex-col sm:items-center justify-between rounded-md border border-richblack-700 bg-richblack-800 p-8 px-12">
+        <div className="flex items-center gap-x-9 lg:gap-x-5 ">
           <img
             src={user?.image}
             alt={`profile-${user?.firstName}`}
@@ -29,7 +29,7 @@ export default function MyProfile() {
             <p className="text-sm text-richblack-300">{user?.email}</p>
           </div>
         </div>
-        <IconBtn
+        <IconBtn  
           text="Edit"
           onclick={() => {
             navigate("/dashboard/settings");
@@ -74,7 +74,7 @@ export default function MyProfile() {
             <RiEditBoxLine />
           </IconBtn>
         </div>
-        <div className="flex max-w-125 justify-between">
+        <div className="flex gap-x-5 sm:gap-x-0 max-w-125 justify-between">
           <div className="flex flex-col gap-y-5">
             <div>
               <p className="mb-2 text-sm text-richblack-600">First Name</p>
