@@ -149,7 +149,7 @@ const Footer = () => {
 
                     <div>
                         <p className="tracking-wider">
-                            Made with <span className=' text-[18px] text-pink-200'>♥</span> by Prince Pal © 2025
+                            Made with <span className=' text-[18px] text-pink-200'>♥</span> by Prince Pal © {new Date().getFullYear()} 
                         </p>
                     </div>
 

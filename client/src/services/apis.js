@@ -61,3 +61,7 @@ export const profileEndpoints = {
   GET_USER_ENROLLED_COURSES_API: BASE_URL + "/profile/getEnrolledCourses",
   GET_USER_DETAILS_API: BASE_URL + "/profile/getUserDetails"
 }
+
+export const ratingsEndpoints = {
+  REVIEWS_DETAIL_API : BASE_URL + '/course/getReviews'
+}
