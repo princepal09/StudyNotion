@@ -32,6 +32,13 @@ const ReviewSlider = () => {
        fetchAllReviews();
     }, [])
 
+    if(!reviews.length){
+      return (
+        <p className='text-center m-10'>No Reviews found</p>
+      )
+
+    }
+
   return (
     <div className='text-white'>
       <div className='h-[190px] max-w-maxContent'>
