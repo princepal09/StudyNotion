@@ -3,7 +3,10 @@ import { toast } from "react-hot-toast"
 import { updateCompletedLectures } from "../../redux/slices/viewCourseSlice"
 // import { setLoading } from "../../slices/profileSlice";
 import { apiConnector } from "../apiconnector"
-import { courseEndpoints } from "../apis"
+import { courseEndpoints, profileEndpoints } from "../apis"
+
+
+const { GET_INSTRUCTOR_DATA_API } = profileEndpoints
 
 const {
   COURSE_DETAILS_API,
@@ -98,7 +101,7 @@ export const addCourseDetails = async (data, token) => {
     }
     toast.success("Course Details Added Successfully")
     result = response?.data?.data
-    
+
   } catch (error) {
     console.log("CREATE COURSE API ERROR............", error)
     toast.error(error.message)
@@ -184,7 +187,7 @@ export const updateSection = async (data, token) => {
     })
     console.log("UPDATE SECTION API RESPONSE............", response)
     if (!response?.data?.success) {
-      throw new Error("Could Not Update Se  ction") 
+      throw new Error("Could Not Update Se  ction")
     }
     toast.success("Course Section Updated")
     result = response?.data?.data
@@ -391,4 +394,31 @@ export const createRating = async (data, token) => {
   }
   toast.dismiss(toastId)
   return success
+}
+
+
+export const getInstructorData = async (token) => {
+  const toastId = toast.loading('Loading...')
+  let result = [];
+  try {
+    const response = await apiConnector("GET", GET_INSTRUCTOR_DATA_API, null,
+      {
+        Authorization: `Bearer ${token}`,
+      }
+    )
+
+    console.log("GET INSTRUCTOR API RESPONSE", response)
+
+    if (!response.data.courses) {
+      throw new Error(response.data.error)
+    }
+
+    result = response?.data?.courses
+  } catch (err) {
+    console.log("GET INSTRUCTOR API ERRRORR", err);
+    toast.error("Could not get Instructor Data")
+  }
+
+  toast.dismiss(toastId);
+  return result;
 }

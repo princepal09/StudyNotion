@@ -12,7 +12,6 @@ const initialState = {
     error: null
 }
 
-console.log(initialState.user)
 
 const profileSlice = createSlice({
     name: "profile",
