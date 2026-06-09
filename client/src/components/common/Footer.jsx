@@ -125,7 +125,7 @@ const Footer = () => {
 
                     {/* Section 2  */}
 
-                    <div className='flex  border-richblack-700 border-l mb-2 pl-13 flex-row gap-12'>
+                    <div className='flex  border-richblack-700 border-l mb-5 pl-13 flex-row gap-12'>
                         <div>
                             <FooterCol domain={subjects} title="Subjects" />
                         </div>
