@@ -8,13 +8,13 @@ import instructor from "../../../assets/Images/Instructor.png"
 const InstructorSection = () => {
   return (
     <div className='mt-20'>
-      <div className='flex flex-row gap-20 items-center'>
+      <div className='flex flex-col lg:flex-row gap-20 items-center'>
 
         <div className='w-[50%]'>
             <img src={instructor} className='shadow-[-20px_-20px_0px_0px_#FFFFFF]' alt="Instructor" loading='lazy'  />
         </div>
 
-        <div className='w-[50%] flex flex-col gap-5 items-start ' >
+        <div className='lg:w-[50%] w-[60%]  flex flex-col gap-5 items-start ' >
             <h2 className='font-semibold text-4xl '>
                 Become an <br />
                 <HighlightText text={"Instructor"}/>

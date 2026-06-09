@@ -60,7 +60,7 @@ const Footer = () => {
         <div className='bg-richblack-800'>
             <div className='w-11/12 max-w-maxContent leading-6 relative py-14 mx-auto'>
 
-                <div className='border-b w-full flex gap-20 flex-row pb-5 border-richblack-700'>
+                <div className='border-b w-full lg:p-0 p-3 flex gap-20 flex-col lg:flex-row pb-5 border-richblack-700'>
 
                     {/* Section 1  */}
                     <div className='flex gap-14'>
@@ -125,7 +125,7 @@ const Footer = () => {
 
                     {/* Section 2  */}
 
-                    <div className='flex  border-richblack-700 border-l pl-13 flex-row gap-12'>
+                    <div className='flex  border-richblack-700 border-l mb-2 pl-13 flex-row gap-12'>
                         <div>
                             <FooterCol domain={subjects} title="Subjects" />
                         </div>

@@ -22,22 +22,22 @@ const ExploreMore = () => {
 
 
   return (
-    <div className="w-11/12 relative  max-w-maxContent mx-auto">
+    <div className="w-11/12 relative mb-10 lg:mb-0  max-w-maxContent mx-auto">
 
       <div className="text-4xl font-semibold text-center">
         Unlock the
         <HighlightText text={"Power Of Code"} />
       </div>
 
-      <p className="text-center text-richblack-300 text-sm  text-[16px] mb-5 border-richblack-100 mt-3">
+      <p className="text-center text-richblzack-300 text-sm  text-[16px] mb-5 border-richblack-100 mt-3">
         Learn to build anything you can imagine
       </p>
 
-      <div className="flex gap-2 py-1 px-2 w-[60%] mx-auto bg-richblack-800 rounded-full items-center mt-5">
+      <div className="flex justify-center w-full  items-center gap-2 py-1 px-2 lg:w-[60%] mx-auto bg-richblack-800 rounded-full items-center mt-5">
         {tabsName.map((elem, idx) => {
           return (
-            <div className={`text-[16px] flex gap-2  ${currTab === elem ? "bg-richblack-900 text-richblack-5 font-meidum " :
-              "text-richblack-200 "} rounded-full transition-all duration-200 cursor-pointer hover:bg-richblack-900 hover:text-richblack-5 px-6 py-2`}
+            <div className={`lg:text-[16px] text-[14px] flex gap-2  ${currTab === elem ? "bg-richblack-900 text-richblack-5 font-meidum " :
+              "text-richblack-200 "} rounded-full   transition-all duration-200 cursor-pointer hover:bg-richblack-900 hover:text-richblack-5 px-6 py-2`}
               key={idx} onClick={() => setMyCards(elem)} >
               {elem}
             </div>
@@ -49,7 +49,7 @@ const ExploreMore = () => {
 
         {/* Group of course Card */}
 
-        <div className="mt-10 absolute flex gap-6 justify-start">
+        <div className="mt-10 lg:absolute  flex-col lg:flex-row flex gap-11 lg:gap-6 justify-start">
           {
             courses.map((elem, idx) => {
               return (

@@ -50,12 +50,14 @@ const Home = () => {
                         Book a Demo
                     </CTAButton>
                 </div>
-                <div className="shadow-[25px_25px_0px_0px_#FFFFFF] mx-3 my-12">
+
+                {/* Video  */}
+                <div className="mx-3 my-7 shadow-[10px_-5px_50px_-5px] shadow-blue-200">
                     <video
                         muted
                         loop
                         autoPlay
-                        className="w-full h-auto"
+                        className="shadow-[20px_20px_rgba(255,255,255)]"
                     >
                         <source src={Banner} type="video/mp4" />
                     </video>
@@ -65,9 +67,9 @@ const Home = () => {
                 {/* Code Section 1 */}
                 <div>
                     <CodeBlocks
-                        position={"lg:flex-row"}
+                        position={"lg:flex-row flex-col"}
                         heading={
-                            <div className='text-4xl font-semibold'>
+                            <div className='text-4xl font-semibold '>
                                 Unlock your
                                 <HighlightText text={"coding potential"} /> {" "}
                                 with our online courses
@@ -99,7 +101,7 @@ const Home = () => {
                 {/* Code Section 2 */}
                 <div>
                     <CodeBlocks
-                        position={"lg:flex-row-reverse"}
+                        position={"lg:flex-row-reverse flex-col"}
                         heading={
                             <div className='text-4xl font-semibold'>
                                 Start
@@ -136,7 +138,7 @@ const Home = () => {
             </div>
 
             {/*Section 2  */}
-            <div className='bg-pure-greys-5 text-richblack-700'>
+            <div className='bg-pure-greys-5 lg:mt-10 text-richblack-700'>
                 <div style={{backgroundImage : `url(${image})`}} className='homepage_bg h-83.25'>
 
                     <div className='w-11/12 flex items-center flex-col justify-center gap-5 mx-auto max-w-maxContent'>
