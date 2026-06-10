@@ -61,7 +61,6 @@ function Navbar() {
             alt="Logo"
             width={160}
             height={32}
-            loading="lazy"
           />
         </Link>
 
