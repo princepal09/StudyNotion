@@ -36,8 +36,8 @@ const ExploreMore = () => {
       <div className="flex justify-center w-full  items-center gap-2 py-1 px-2 lg:w-[60%] mx-auto bg-richblack-800 rounded-full items-center mt-5">
         {tabsName.map((elem, idx) => {
           return (
-            <div className={`lg:text-[16px] text-[14px] flex gap-2  ${currTab === elem ? "bg-richblack-900 text-richblack-5 font-meidum " :
-              "text-richblack-200 "} rounded-full   transition-all duration-200 cursor-pointer hover:bg-richblack-900 hover:text-richblack-5 px-6 py-2`}
+            <div className={`lg:text-[16px] text-[14px] flex gap-2  ${currTab === elem ? "bg-richblack-900 text-richblack-5 font-medium " :
+              "text-richblack-200 "} rounded-full   transition-all duration-200 cursor-pointer hover:bg-richblack-900 hover:text-richblack-5 px-2 md:px-6 py-2`}
               key={idx} onClick={() => setMyCards(elem)} >
               {elem}
             </div>
