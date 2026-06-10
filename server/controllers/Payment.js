@@ -13,7 +13,7 @@ exports.capturePayment = async (req, res) => {
   const userId = req.user.id;
 
   if (courses.length == 0) {
-    return res.josn({ success: false, message: "Please Provide Course Id" })
+    return res.json({ success: false, message: "Please Provide Course Id" })
 
   }
 
@@ -24,12 +24,12 @@ exports.capturePayment = async (req, res) => {
     try {
       course = await Course.findById(course_id);
       if (!course) {
-        return res.status(200).josn({ success: false, message: "Could not find the course" })
+        return res.status(200).json({ success: false, message: "Could not find the course" })
       }
 
       const uid = new mongoose.Types.ObjectId(userId);
       if (course.studentsEnrolled.includes(uid)) {
-        return res.status(200).josn({ success: false, message: "Student is already enrolled" })
+        return res.status(200).json({ success: false, message: "Student is already enrolled" })
       }
 
       totalAmount += course.price;
@@ -55,6 +55,7 @@ exports.capturePayment = async (req, res) => {
 
   try {
     const paymentResponse = await instance.orders.create(options);
+    console.log("Payment response has successfully completed")
     res.json({
       success: true,
       data: paymentResponse
@@ -137,7 +138,7 @@ const enrollStudents = async (courses, userId, res) => {
     })
   }
 
-  const CourseProgress = await CourseProgress.create({
+  const courseProgress = await CourseProgress.create({
     courseId, userId, completedVideos : []
   })
 

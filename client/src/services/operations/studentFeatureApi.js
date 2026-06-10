@@ -3,6 +3,8 @@ import { studentEndpoints } from '../apis'
 import { apiConnector } from '../apiConnector';
 import rzpLogo from '../../assets/Logo/rzp_logo.png'
 import { setPaymentLoading } from '../../redux/slices/courseSlice';
+import { resetCart } from '../../redux/slices/cartSlice';
+
 
 const { COURSE_PAYMENT_API, COURSE_VERIFY_API, SEND_PAYMENT_SUCCESS_EMAIL_API } = studentEndpoints;
 
@@ -115,6 +117,8 @@ async function sendPaymentSuccessEmail(response, amount, token) {
 
 async function verifyPayment(bodyData, token, navigate, dispatch) {
     const toastId = toast.loading("Verifying Payment");
+    console.log("verifyPayment called");
+
 
     dispatch(setPaymentLoading(true));
     try {
