@@ -105,17 +105,19 @@ function Navbar() {
                     <BsChevronDown />
 
                     <div
-                      className={`${
-                        showCatalog
-                          ? "visible opacity-100"
-                          : "invisible opacity-0"
-                      }
-  md:group-hover:visible md:group-hover:opacity-100
-  absolute left-0 top-full z-[1000]
-  mt-4 flex w-[220px] flex-col rounded-lg
-  bg-richblack-5 p-4 text-richblack-900
-  transition-all duration-150
-  lg:w-[300px]`}
+                      className={`
+    ${showCatalog ? "flex opacity-100" : "hidden opacity-0"}
+
+    md:invisible md:absolute md:flex
+    md:left-0 md:top-full
+    md:opacity-0
+    md:group-hover:visible
+    md:group-hover:opacity-100
+
+    mt-4 flex-col w-[220px] lg:w-[300px]
+    rounded-lg bg-richblack-5 p-4 text-richblack-900
+    transition-all duration-150
+  `}
                     >
                       {loading ? (
                         <p className="text-center">Loading...</p>
@@ -132,7 +134,7 @@ function Navbar() {
                               className="rounded-lg py-4 pl-4 hover:bg-richblack-50"
                               onClick={() => {
                                 setShowCatalog(false);
-                                setIsMenuOpen(false)
+                                setIsMenuOpen(false);
                               }}
                             >
                               <p>{subLink.name}</p>
