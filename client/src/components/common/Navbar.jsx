@@ -19,7 +19,7 @@ function Navbar() {
   const { totalItems } = useSelector((state) => state.cart);
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const location = useLocation();
-
+  const [showCatalog, setShowCatalog] = useState(false);
   const [subLinks, setSubLinks] = useState([]);
   const [loading, setLoading] = useState(false);
 
@@ -53,228 +53,215 @@ function Navbar() {
       } transition-all duration-200`}
     >
       <div className="flex w-11/12 max-w-maxContent items-center justify-between">
-  {/* Logo */}
-  <Link to="/">
-    <img
-      src={logo}
-      alt="Logo"
-      width={160}
-      height={32}
-      loading="lazy"
-    />
-  </Link>
+        {/* Logo */}
+        <Link to="/">
+          <img
+            loading="lazy"
+            src={logo}
+            alt="Logo"
+            width={160}
+            height={32}
+            loading="lazy"
+          />
+        </Link>
 
-  {/* Overlay */}
-  {isMenuOpen && (
-    <div
-      className="fixed inset-0 z-40 bg-black/50 md:hidden"
-      onClick={() => setIsMenuOpen(false)}
-    />
-  )}
+        {/* Overlay */}
+        {isMenuOpen && (
+          <div
+            className="fixed inset-0 z-40 bg-black/50 md:hidden"
+            onClick={() => setIsMenuOpen(false)}
+          />
+        )}
 
-  {/* Navigation */}
-  <nav
-  className={`fixed top-0 left-0 z-50 h-screen w-[260px]
+        {/* Navigation */}
+        <nav
+          className={`fixed top-0 left-0 z-50 h-screen w-[260px]
     bg-richblack-900 p-6 shadow-lg
     transition-transform duration-300 ease-in-out
     md:static md:h-auto md:w-auto md:bg-transparent md:p-0 md:shadow-none
-    ${
-      isMenuOpen ? "translate-x-0" : "-translate-x-full"
-    } md:translate-x-0`}
->
-    {/* Close Button */}
-    <div className="mb-8 flex justify-end md:hidden">
-      <button onClick={() => setIsMenuOpen(false)}>
-        <RxCross2 size={24} className="text-richblack-25" />
-      </button>
-    </div>
+    ${isMenuOpen ? "translate-x-0" : "-translate-x-full"} md:translate-x-0`}
+        >
+          {/* Close Button */}
+          <div className="mb-8 flex justify-end md:hidden">
+            <button onClick={() => setIsMenuOpen(false)}>
+              <RxCross2 size={24} className="text-richblack-25" />
+            </button>
+          </div>
 
-    <ul className="flex flex-col gap-y-6 text-richblack-25 md:flex-row md:gap-x-6">
-      {NavbarLinks?.map((link, index) => (
-        <li key={index}>
-          {link.title === "Catalog" ? (
-            <div
-              className={`group relative flex cursor-pointer items-center gap-1 ${
-                matchRoute("/catalog/:catalogName")
-                  ? "text-yellow-25"
-                  : "text-richblack-25"
-              }`}
-            >
-              <p>{link.title}</p>
+          <ul className="flex flex-col gap-y-6 text-richblack-25 md:flex-row md:gap-x-6">
+            {NavbarLinks?.map((link, index) => (
+              <li key={index}>
+                {link.title === "Catalog" ? (
+                  <div
+                    onClick={() => setShowCatalog((prev) => !prev)}
+                    className={`group relative flex cursor-pointer items-center gap-1 ${
+                      matchRoute("/catalog/:catalogName")
+                        ? "text-yellow-25"
+                        : "text-richblack-25"
+                    }`}
+                  >
+                    <p>{link.title}</p>
 
-              <BsChevronDown />
+                    <BsChevronDown />
 
-              <div
-                className="invisible absolute left-0 top-full z-[1000]
-                mt-4 flex w-[220px] flex-col rounded-lg
-                bg-richblack-5 p-4 text-richblack-900 opacity-0
-                transition-all duration-150
-                group-hover:visible group-hover:opacity-100
-                lg:w-[300px]"
-              >
-                {loading ? (
-                  <p className="text-center">Loading...</p>
-                ) : subLinks.length ? (
-                  subLinks
-                    ?.filter(
-                      (subLink) => subLink?.course?.length > 0
-                    )
-                    ?.map((subLink, i) => (
-                      <Link
-                        key={i}
-                        to={`/catalog/${subLink?.name
-                          .split(" ")
-                          .join("-")
-                          .toLowerCase()}`}
-                        className="rounded-lg py-4 pl-4 hover:bg-richblack-50"
-                        onClick={() => setIsMenuOpen(false)}
-                      >
-                        <p>{subLink.name}</p>
-                      </Link>
-                    ))
+                    <div
+                      className={`${
+                        showCatalog
+                          ? "visible opacity-100"
+                          : "invisible opacity-0"
+                      }
+  md:group-hover:visible md:group-hover:opacity-100
+  absolute left-0 top-full z-[1000]
+  mt-4 flex w-[220px] flex-col rounded-lg
+  bg-richblack-5 p-4 text-richblack-900
+  transition-all duration-150
+  lg:w-[300px]`}
+                    >
+                      {loading ? (
+                        <p className="text-center">Loading...</p>
+                      ) : subLinks.length ? (
+                        subLinks
+                          ?.filter((subLink) => subLink?.course?.length > 0)
+                          ?.map((subLink, i) => (
+                            <Link
+                              key={i}
+                              to={`/catalog/${subLink?.name
+                                .split(" ")
+                                .join("-")
+                                .toLowerCase()}`}
+                              className="rounded-lg py-4 pl-4 hover:bg-richblack-50"
+                              onClick={() => {
+                                setShowCatalog(false);
+                                setIsMenuOpen(false)
+                              }}
+                            >
+                              <p>{subLink.name}</p>
+                            </Link>
+                          ))
+                      ) : (
+                        <p className="text-center">No Courses Found</p>
+                      )}
+                    </div>
+                  </div>
                 ) : (
-                  <p className="text-center">
-                    No Courses Found
-                  </p>
+                  <Link to={link?.path} onClick={() => setIsMenuOpen(false)}>
+                    <p
+                      className={`${
+                        matchRoute(link?.path)
+                          ? "text-yellow-25"
+                          : "text-richblack-25"
+                      }`}
+                    >
+                      {link.title}
+                    </p>
+                  </Link>
                 )}
-              </div>
-            </div>
-          ) : (
-            <Link
-              to={link?.path}
-              onClick={() => setIsMenuOpen(false)}
-            >
-              <p
-                className={`${
-                  matchRoute(link?.path)
-                    ? "text-yellow-25"
-                    : "text-richblack-25"
-                }`}
+              </li>
+            ))}
+          </ul>
+
+          {/* Mobile Auth Buttons */}
+          <div className="mt-8 flex flex-col gap-4 md:hidden">
+            {user && user?.accountType !== ACCOUNT_TYPE.INSTRUCTOR && (
+              <Link
+                to="/dashboard/cart"
+                className="relative"
+                onClick={() => setIsMenuOpen(false)}
               >
-                {link.title}
-              </p>
-            </Link>
-          )}
-        </li>
-      ))}
-    </ul>
+                <AiOutlineShoppingCart className="text-2xl text-richblack-100" />
 
-    {/* Mobile Auth Buttons */}
-    <div className="mt-8 flex flex-col gap-4 md:hidden">
-      {user &&
-        user?.accountType !== ACCOUNT_TYPE.INSTRUCTOR && (
-          <Link
-            to="/dashboard/cart"
-            className="relative"
-            onClick={() => setIsMenuOpen(false)}
-          >
-            <AiOutlineShoppingCart className="text-2xl text-richblack-100" />
-
-            {totalItems > 0 && (
-              <span
-                className="absolute -bottom-2 left-5 grid h-5 w-5
+                {totalItems > 0 && (
+                  <span
+                    className="absolute -bottom-2 left-5 grid h-5 w-5
                 place-items-center rounded-full bg-richblack-600
                 text-xs font-bold text-yellow-100"
-              >
-                {totalItems}
-              </span>
+                  >
+                    {totalItems}
+                  </span>
+                )}
+              </Link>
             )}
-          </Link>
-        )}
 
-      {token === null && (
-        <>
-          <Link
-            to="/login"
-            onClick={() => setIsMenuOpen(false)}
-          >
-            <button
-              className="w-full rounded-[8px] border
+            {token === null && (
+              <>
+                <Link to="/login" onClick={() => setIsMenuOpen(false)}>
+                  <button
+                    className="w-full rounded-[8px] border
               border-richblack-700 bg-richblack-800
               px-4 py-2 text-richblack-100"
-            >
-              Log in
-            </button>
-          </Link>
+                  >
+                    Log in
+                  </button>
+                </Link>
 
-          <Link
-            to="/signup"
-            onClick={() => setIsMenuOpen(false)}
-          >
-            <button
-              className="w-full rounded-[8px] border
+                <Link to="/signup" onClick={() => setIsMenuOpen(false)}>
+                  <button
+                    className="w-full rounded-[8px] border
               border-richblack-700 bg-richblack-800
               px-4 py-2 text-richblack-100"
-            >
-              Sign up
-            </button>
-          </Link>
-        </>
-      )}
+                  >
+                    Sign up
+                  </button>
+                </Link>
+              </>
+            )}
 
-      {token !== null && (
-        <div onClick={() => setIsMenuOpen(false)}>
-          <ProfileDropdown />
-        </div>
-      )}
-    </div>
-  </nav>
+            {token !== null && (
+              <div onClick={() => setIsMenuOpen(false)}>
+                <ProfileDropdown />
+              </div>
+            )}
+          </div>
+        </nav>
 
-  {/* Desktop Auth Section */}
-  <div className="hidden items-center gap-x-4 md:flex">
-    {user &&
-      user?.accountType !== ACCOUNT_TYPE.INSTRUCTOR && (
-        <Link to="/dashboard/cart" className="relative">
-          <AiOutlineShoppingCart className="text-2xl text-richblack-100" />
+        {/* Desktop Auth Section */}
+        <div className="hidden items-center gap-x-4 md:flex">
+          {user && user?.accountType !== ACCOUNT_TYPE.INSTRUCTOR && (
+            <Link to="/dashboard/cart" className="relative">
+              <AiOutlineShoppingCart className="text-2xl text-richblack-100" />
 
-          {totalItems > 0 && (
-            <span
-              className="absolute -bottom-2 -right-2 grid h-5 w-5
+              {totalItems > 0 && (
+                <span
+                  className="absolute -bottom-2 -right-2 grid h-5 w-5
               place-items-center rounded-full bg-richblack-600
               text-xs font-bold text-yellow-100"
-            >
-              {totalItems}
-            </span>
+                >
+                  {totalItems}
+                </span>
+              )}
+            </Link>
           )}
-        </Link>
-      )}
 
-    {token === null && (
-      <>
-        <Link to="/login">
-          <button
-            className="rounded-[8px] border border-richblack-700
+          {token === null && (
+            <>
+              <Link to="/login">
+                <button
+                  className="rounded-[8px] border border-richblack-700
             bg-richblack-800 px-3 py-2 text-richblack-100"
-          >
-            Log in
-          </button>
-        </Link>
+                >
+                  Log in
+                </button>
+              </Link>
 
-        <Link to="/signup">
-          <button
-            className="rounded-[8px] border border-richblack-700
+              <Link to="/signup">
+                <button
+                  className="rounded-[8px] border border-richblack-700
             bg-richblack-800 px-3 py-2 text-richblack-100"
-          >
-            Sign up
-          </button>
-        </Link>
-      </>
-    )}
+                >
+                  Sign up
+                </button>
+              </Link>
+            </>
+          )}
 
-    {token !== null && <ProfileDropdown />}
-  </div>
+          {token !== null && <ProfileDropdown />}
+        </div>
 
-  {/* Hamburger Menu */}
-  <button
-    onClick={() => setIsMenuOpen(true)}
-    className="mr-4 md:hidden"
-  >
-    <AiOutlineMenu
-      fontSize={24}
-      fill="#AFB2BF"
-    />
-  </button>
-</div>
+        {/* Hamburger Menu */}
+        <button onClick={() => setIsMenuOpen(true)} className="mr-4 md:hidden">
+          <AiOutlineMenu fontSize={24} fill="#AFB2BF" />
+        </button>
+      </div>
     </div>
   );
 }
