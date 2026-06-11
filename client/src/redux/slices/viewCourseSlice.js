@@ -3,7 +3,7 @@ import { createSlice } from "@reduxjs/toolkit"
 const initialState = {
   courseSectionData: [],
   courseEntireData: [],
-  completedLectures: localStorage.getItem("completedLectures") ? JSON.parse(localStorage.getItem("completedLectures")) : [],
+  completedLectures: [],
   totalNoOfLectures: 0,
 }
 

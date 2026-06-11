@@ -363,18 +363,6 @@ export const markLectureAsComplete = async (data, token) => {
       throw new Error(response.data.error)
     }
     
-    const completedLectures = JSON.parse(
-      localStorage.getItem("completedLectures") || "[]"
-    );
-
-    if (!completedLectures.includes(data.subSectionId)) {
-      completedLectures.push(data.subSectionId);
-
-      localStorage.setItem(
-        "completedLectures",
-        JSON.stringify(completedLectures)
-      );
-    }
 
     toast.success("Lecture Completed")
     result = true
