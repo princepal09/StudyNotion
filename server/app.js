@@ -13,6 +13,8 @@ const fileupload = require("express-fileupload");
 // middlewares
 app.use(express.json());
 app.use(cookieParser());
+
+
 app.use(
   cors({
     origin: [
