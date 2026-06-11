@@ -37,7 +37,7 @@ export default function ProfileDropdown() {
       {open && (
         <div
           onClick={(e) => e.stopPropagation()}
-          className="absolute top-[118%] left-10 md:right-0 z-1000 divide-y divide-richblack-700 overflow-hidden rounded-md border border-richblack-700 bg-richblack-800"
+          className="absolute top-[118%] left-10  z-1000 divide-y divide-richblack-700 overflow-hidden rounded-md border border-richblack-700 bg-richblack-800"
           ref={ref}
         >
           <Link to="/dashboard/my-profile" onClick={() => setOpen(false)}>
