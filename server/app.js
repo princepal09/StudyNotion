@@ -18,7 +18,7 @@ app.use(cookieParser());
 app.use(
   cors({
     origin: [
-      "https://study-notion-ruddy-six.vercel.app/",
+      "https://study-notion-ruddy-six.vercel.app",
       "http://localhost:3000"
     ],
     credentials: true,
