@@ -3,9 +3,12 @@ import { createSlice } from "@reduxjs/toolkit"
 const initialState = {
   courseSectionData: [],
   courseEntireData: [],
-  completedLectures: [],
+  completedLectures: localStorage.getItem("completedLectures") ? JSON.parse(localStorage.getItem("completedLectures")) : [],
   totalNoOfLectures: 0,
 }
+
+console.log(initialState.completedLectures)
+
 
 const viewCourseSlice = createSlice({
   name: "viewCourse",
@@ -24,7 +27,15 @@ const viewCourseSlice = createSlice({
       state.completedLectures = action.payload
     },
     updateCompletedLectures: (state, action) => {
-      state.completedLectures = [...state.completedLectures, action.payload]
+      console.log("payload:", action.payload);
+      console.log("before:", state.completedLectures);
+
+      state.completedLectures = [
+        ...state.completedLectures,
+        action.payload,
+      ];
+
+      console.log("after:", state.completedLectures);
     },
   },
 })

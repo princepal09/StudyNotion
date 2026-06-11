@@ -19,7 +19,7 @@ export default function MyProfile() {
         <div className="flex items-center gap-x-9 lg:gap-x-5 ">
           <img
             src={user?.image}
-            alt={`profile-${user?.firstName}`}
+            alt={`profile-${user?.firstcompletedLecturesName}`}
             className="aspect-square w-19.5 rounded-full object-cover"
           />
           <div className="space-y-1">

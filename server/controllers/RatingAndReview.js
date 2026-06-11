@@ -7,10 +7,12 @@ exports.createRating = async (req, res) => {
     const userId = req.user.id;
 
     // fetch data from req body
-    const { rating, review, courseId } = req.body;
+    const { rating, review, courseId } = req.body;    
+
+    console.log(rating, review, courseId)
 
     // check if user is enrolled or not
-    const courseDetails = await findOne({
+    const courseDetails = await Course.findOne({
       _id: courseId,
       studentsEnrolled: { $elemMatch: { $eq: userId } },
     });
@@ -59,6 +61,7 @@ exports.createRating = async (req, res) => {
       ratingReview,
     });
   } catch (err) {
+    console.log(err.message)
     return res.status(500).json({
       success: false,
       message: `Error while creating createRating`,
@@ -122,11 +125,12 @@ exports.getAllRating = async(req, res) =>{
   try{
     const allReviews = await RatingAndReview.find({}).sort({rating : "desc"}).populate({
       path : "user",
-      select : "firstName, lastName, email, image"
+      select : "firstName lastName email image"
     }).populate({
       path : "course",
-      select : "coursName"
+      select : "courseName"
     }).exec();
+    console.log(allReviews)
 
     return res.status(200).json({
       success : true,

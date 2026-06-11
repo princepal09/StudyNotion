@@ -51,7 +51,7 @@ exports.updateCourseProgress = async (req, res) => {
         if (courseProgress.completedVideos.includes(subSectionId)) {
             return res.status(400).json({
                 succcess: false,
-                error: "SubSection already completed"
+                error: "This lecture has already completed"
 
             })
         }
@@ -67,7 +67,7 @@ exports.updateCourseProgress = async (req, res) => {
 
     return res.status(200).json({
         success: true,
-        message: 'Course Progress Updated Successfully !!'
+        message: 'Course Progress Updated Successfully !!',
     })
 
 } catch (err) {
@@ -76,7 +76,7 @@ exports.updateCourseProgress = async (req, res) => {
 
     return res.status(500).json({
         success: false,
-        message: "Internal Server error"
+        message: "Internal Server error",
     })
 
 }

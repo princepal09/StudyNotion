@@ -362,11 +362,25 @@ export const markLectureAsComplete = async (data, token) => {
     if (!response.data.message) {
       throw new Error(response.data.error)
     }
+    
+    const completedLectures = JSON.parse(
+      localStorage.getItem("completedLectures") || "[]"
+    );
+
+    if (!completedLectures.includes(data.subSectionId)) {
+      completedLectures.push(data.subSectionId);
+
+      localStorage.setItem(
+        "completedLectures",
+        JSON.stringify(completedLectures)
+      );
+    }
+
     toast.success("Lecture Completed")
     result = true
   } catch (error) {
     console.log("MARK_LECTURE_AS_COMPLETE_API API ERROR............", error)
-    toast.error(error.message)
+    toast.error(error.response.data.error)
     result = false
   }
   toast.dismiss(toastId)
@@ -376,6 +390,7 @@ export const markLectureAsComplete = async (data, token) => {
 // create a rating for course
 export const createRating = async (data, token) => {
   const toastId = toast.loading("Loading...")
+  console.log(data)
   let success = false
   try {
     const response = await apiConnector("POST", CREATE_RATING_API, data, {
@@ -390,7 +405,7 @@ export const createRating = async (data, token) => {
   } catch (error) {
     success = false
     console.log("CREATE RATING API ERROR............", error)
-    toast.error(error.message)
+    toast.error(error?.response?.data?.message)
   }
   toast.dismiss(toastId)
   return success

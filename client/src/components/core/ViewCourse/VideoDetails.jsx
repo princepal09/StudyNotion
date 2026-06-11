@@ -103,7 +103,7 @@ const VideoDetails = () => {
       //same section ki next video me jao
       const nextSubSectionId =
         courseSectionData[currentSectionIndex].subSection[
-          currentSectionIndex + 1
+          currentSubSectionIndex + 1
         ]._id;
       //next video pr jao
       navigate(
@@ -138,7 +138,7 @@ const VideoDetails = () => {
       const prevSubSectionId =
         courseSectionData[currentSectionIndex].subSection[
           currentSubSectionIndex - 1
-        ];
+        ]._id;
       //iss video par chalge jao
       navigate(
         `/view-course/${courseId}/section/${sectionId}/sub-section/${prevSubSectionId}`,
@@ -169,84 +169,112 @@ const VideoDetails = () => {
     //state update
     if (res) {
       dispatch(updateCompletedLectures(subSectionId));
+      
     }
     setLoading(false);
   };
 
   return (
-    <div className="text-white">
-      {videoData.length === 0 || !videoData ? (
-        <div>No Data Found</div>
-      ) : (
-        <div className="relative">
-          <ReactPlayer
-            ref={playerRef}
-            src={videoData?.videoUrl}
-            controls
-            config={{
-              file: {
-                attributes: {
-                  controlList: "nodownload",
-                },
-              },
-            }}
-            width="100%"
-            height="500px"
-            onEnded={() => setVideoEnded(true)}
-          />
-
-          {videoEnded && (
-            <div>
-              {!completedLectures.includes(subSectionId) && (
-                <IconBtn
-                  disabled={loading}
-                  onclick={handleLectureCompletion}
-                  text={!loading ? "Mark As Completed" : "Loading..."}
-                />
-              )}
-
-              <IconBtn
-                disabled={loading}
-                onclick={() => {
-                  if (playerRef?.current) {
-                    playerRef.current.currentTime = 0;
-                    playerRef.current.play();
-                    setVideoEnded(false);
-                    // setVideoEnded(false);
-                  }
-                }}
-                text="Rewatch"
-                customClasses="text-xl"
-              />
-
-              <div>
-                {!isFirstVideo() && (
-                  <button
-                    disabled={loading}
-                    onClick={goToPrevVideo}
-                    className="blackButton"
-                  >
-                    Prev
-                  </button>
-                )}
-
-                {!isLastVideo() && (
-                  <button
-                    disabled={loading}
-                    onClick={goToNextVideo}
-                    className="blackButton"
-                  >
-                    Next
-                  </button>
-                )}
-              </div>
-            </div>
-          )}
+    <div className="flex flex-col gap-6 text-richblack-5">
+      {!videoData ? (
+        <div className="rounded-xl border border-richblack-700 bg-richblack-800 p-8 text-center">
+          No Data Found
         </div>
-      )}
+      ) : (
+        <>
+          <div className="relative overflow-hidden rounded-2xl border border-richblack-700 bg-richblack-900 shadow-2xl">
+            <ReactPlayer
+              ref={playerRef}
+              src={videoData?.videoUrl}
+              controls
+              config={{
+                file: {
+                  attributes: {
+                    controlList: "nodownload",
+                  },
+                },
+              }}
+              width="100%"
+              height="500px"
+              onEnded={() => setVideoEnded(true)}
+            />
 
-      <h1>{videoData?.title}</h1>
-      <p>{videoData?.description}</p>
+            {videoEnded && (
+              <div
+                style={{
+                  backgroundImage:
+                    "linear-gradient(to top, rgba(0,0,0,0.95), rgba(0,0,0,0.85), rgba(0,0,0,0.65), rgba(0,0,0,0.35))",
+                }}
+                className="absolute inset-0 z-[100] flex items-center justify-center backdrop-blur-sm"
+              >
+                <div className="w-full max-w-md rounded-2xl border border-white/10 bg-richblack-900/70 p-8 shadow-2xl">
+                  <h2 className="mb-6 text-center text-2xl font-bold">
+                    Video Completed
+                  </h2>
+
+                  <div className="flex flex-col gap-4">
+                    {!completedLectures.includes(subSectionId) && (
+                      <IconBtn
+                        disabled={loading}
+                        onclick={handleLectureCompletion}
+                        text={!loading ? "Mark As Completed" : "Loading..."}
+                        customClasses="w-full justify-center rounded-lg px-4 py-3 text-lg"
+                      />
+                    )}
+
+                    <IconBtn
+                      disabled={loading}
+                      onclick={() => {
+                        if (playerRef?.current) {
+                          playerRef.current.currentTime = 0;
+                          playerRef.current.play();
+                          setVideoEnded(false);
+                        }
+                      }}
+                      text=" Rewatch"
+                      customClasses="w-full justify-center rounded-lg px-4 py-3 text-lg"
+                    />
+                  </div>
+
+                  <div className="mt-8 flex justify-center gap-4">
+                    {!isFirstVideo() && (
+                      <button
+                        disabled={loading}
+                        onClick={goToPrevVideo}
+                        className="rounded-lg border border-richblack-600 bg-richblack-800 px-6 py-3 font-medium transition-all duration-200 hover:bg-richblack-700 disabled:cursor-not-allowed disabled:opacity-50"
+                      >
+                        ← Previous
+                      </button>
+                    )}
+
+                    {!isLastVideo() && (
+                      <button
+                        disabled={loading}
+                        onClick={goToNextVideo}
+                        className="rounded-lg bg-yellow-50 px-6 py-3 font-semibold text-richblack-900 transition-all duration-200 hover:scale-105 hover:bg-yellow-25 disabled:cursor-not-allowed disabled:opacity-50"
+                      >
+                        Next →
+                      </button>
+                    )}
+                  </div>
+                </div>
+              </div>
+            )}
+          </div>
+
+          <div className="rounded-2xl border border-richblack-700 bg-richblack-800 p-6 shadow-lg">
+            <h1 className="text-3xl font-bold text-richblack-5">
+              {videoData?.title}
+            </h1>
+
+            <div className="mt-4 h-px bg-richblack-700" />
+
+            <p className="pt-4 text-richblack-200 leading-7">
+              {videoData?.description}
+            </p>
+          </div>
+        </>
+      )}
     </div>
   );
 };
