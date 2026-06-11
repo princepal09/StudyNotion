@@ -7,7 +7,7 @@ const initialState = {
   totalNoOfLectures: 0,
 }
 
-console.log(initialState.completedLectures)
+// console.log(initialState.completedLectures)
 
 
 const viewCourseSlice = createSlice({
@@ -27,15 +27,15 @@ const viewCourseSlice = createSlice({
       state.completedLectures = action.payload
     },
     updateCompletedLectures: (state, action) => {
-      console.log("payload:", action.payload);
-      console.log("before:", state.completedLectures);
+      // console.log("payload:", action.payload);
+      // console.log("before:", state.completedLectures);
 
       state.completedLectures = [
         ...state.completedLectures,
         action.payload,
       ];
 
-      console.log("after:", state.completedLectures);
+      // console.log("after:", state.completedLectures);
     },
   },
 })

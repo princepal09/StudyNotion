@@ -20,7 +20,7 @@ const VideoDetails = () => {
   const [videoEnded, setVideoEnded] = useState(false);
   const [loading, setLoading] = useState(false);
 
-  console.log(courseSectionData);
+  // console.log(courseSectionData);
 
   const setVideoSpecificDetails = async () => {
     if (!courseSectionData.length) return;
@@ -28,18 +28,18 @@ const VideoDetails = () => {
     if (!courseId && !sectionId && !subSectionId) {
       navigate("/dashboard/enrolled-courses");
     } else {
-      console.log("courseSectionData", courseSectionData);
+      // console.log("courseSectionData", courseSectionData);
       // let's assume k all 3 fields are present
       const filteredData = courseSectionData.filter(
         (course) => course._id === sectionId,
       );
-      console.log("filteredData", filteredData);
+      // console.log("filteredData", filteredData);
 
       const filteredVideoData = filteredData?.[0]?.subSection?.filter(
         (data) => data._id === subSectionId,
       );
 
-      console.log("filteredVideoData", filteredVideoData);
+      // console.log("filteredVideoData", filteredVideoData);
 
       setVideoData(filteredVideoData[0]);
       setVideoEnded(false);
@@ -169,7 +169,6 @@ const VideoDetails = () => {
     //state update
     if (res) {
       dispatch(updateCompletedLectures(subSectionId));
-      
     }
     setLoading(false);
   };
@@ -183,21 +182,23 @@ const VideoDetails = () => {
       ) : (
         <>
           <div className="relative overflow-hidden rounded-2xl border border-richblack-700 bg-richblack-900 shadow-2xl">
-            <ReactPlayer
-              ref={playerRef}
-              src={videoData?.videoUrl}
-              controls
-              config={{
-                file: {
-                  attributes: {
-                    controlList: "nodownload",
+            <div className="aspect-video w-full">
+              <ReactPlayer
+                ref={playerRef}
+                src={videoData?.videoUrl}
+                controls
+                config={{
+                  file: {
+                    attributes: {
+                      controlList: "nodownload",
+                    },
                   },
-                },
-              }}
-              width="100%"
-              height="500px"
-              onEnded={() => setVideoEnded(true)}
-            />
+                }}
+                width="100%"
+                height="100%"
+                onEnded={() => setVideoEnded(true)}
+              />
+            </div>
 
             {videoEnded && (
               <div
@@ -207,18 +208,18 @@ const VideoDetails = () => {
                 }}
                 className="absolute inset-0 z-[100] flex items-center justify-center backdrop-blur-sm"
               >
-                <div className="w-full max-w-md rounded-2xl border border-white/10 bg-richblack-900/70 p-8 shadow-2xl">
-                  <h2 className="mb-6 text-center text-2xl font-bold">
+                <div className="mx-4 w-full max-w-md rounded-2xl border border-white/10 bg-richblack-900/70 p-6 md:p-8 shadow-2xl">
+                  {" "}
+                  <h2 className="mb-6 text-center text-xl md:text-2xl font-bold">
                     Video Completed
                   </h2>
-
                   <div className="flex flex-col gap-4">
                     {!completedLectures.includes(subSectionId) && (
                       <IconBtn
                         disabled={loading}
                         onclick={handleLectureCompletion}
                         text={!loading ? "Mark As Completed" : "Loading..."}
-                        customClasses="w-full justify-center rounded-lg px-4 py-3 text-lg"
+                        customClasses="w-full justify-center rounded-lg px-4 py-3 text-sm md:text-lg"
                       />
                     )}
 
@@ -232,16 +233,15 @@ const VideoDetails = () => {
                         }
                       }}
                       text=" Rewatch"
-                      customClasses="w-full justify-center rounded-lg px-4 py-3 text-lg"
+                      customClasses="w-full justify-center rounded-lg px-4 py-3 text-sm md:text-lg"
                     />
                   </div>
-
-                  <div className="mt-8 flex justify-center gap-4">
+                  <div className="mt-8 flex flex-col gap-3 sm:flex-row sm:justify-center">
                     {!isFirstVideo() && (
                       <button
                         disabled={loading}
                         onClick={goToPrevVideo}
-                        className="rounded-lg border border-richblack-600 bg-richblack-800 px-6 py-3 font-medium transition-all duration-200 hover:bg-richblack-700 disabled:cursor-not-allowed disabled:opacity-50"
+                        className="w-full sm:w-auto rounded-lg border border-richblack-600 bg-richblack-800 px-6 py-3 font-medium transition-all duration-200 hover:bg-richblack-700 disabled:cursor-not-allowed disabled:opacity-50"
                       >
                         ← Previous
                       </button>
@@ -251,7 +251,7 @@ const VideoDetails = () => {
                       <button
                         disabled={loading}
                         onClick={goToNextVideo}
-                        className="rounded-lg bg-yellow-50 px-6 py-3 font-semibold text-richblack-900 transition-all duration-200 hover:scale-105 hover:bg-yellow-25 disabled:cursor-not-allowed disabled:opacity-50"
+                       className="w-full sm:w-auto rounded-lg bg-yellow-50 px-6 py-3 font-semibold text-richblack-900 transition-all duration-200 hover:scale-105 hover:bg-yellow-25 disabled:cursor-not-allowed disabled:opacity-50"
                       >
                         Next →
                       </button>
@@ -263,13 +263,13 @@ const VideoDetails = () => {
           </div>
 
           <div className="rounded-2xl border border-richblack-700 bg-richblack-800 p-6 shadow-lg">
-            <h1 className="text-3xl font-bold text-richblack-5">
+            <h1 className="text-2xl md:text-3xl font-bold text-richblack-5">
               {videoData?.title}
             </h1>
 
             <div className="mt-4 h-px bg-richblack-700" />
 
-            <p className="pt-4 text-richblack-200 leading-7">
+            <p className="pt-4 text-sm md:text-base leading-6 md:leading-7 text-richblack-200">
               {videoData?.description}
             </p>
           </div>
