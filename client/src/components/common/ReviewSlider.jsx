@@ -7,7 +7,7 @@ import "swiper/css/pagination";
 import ReactStars from "react-stars";
 
 import { FreeMode, Pagination, Navigation, Autoplay } from "swiper/modules";
-import { apiConnector } from "../../services/apiconnector";
+import { apiConnector } from "../../services/apiConnector";
 import { ratingsEndpoints } from "../../services/apis";
 import { FaStar } from "react-icons/fa";
 

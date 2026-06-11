@@ -2,7 +2,7 @@ import { toast } from "react-hot-toast"
 
 import { updateCompletedLectures } from "../../redux/slices/viewCourseSlice"
 // import { setLoading } from "../../slices/profileSlice";
-import { apiConnector } from "../apiconnector"
+import { apiConnector } from "../apiConnector"
 import { courseEndpoints, profileEndpoints } from "../apis"
 
 

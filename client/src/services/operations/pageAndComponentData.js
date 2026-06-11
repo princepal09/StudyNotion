@@ -1,5 +1,5 @@
 import toast from "react-hot-toast"
-import { apiConnector } from "../apiconnector"
+import { apiConnector } from "../apiConnector"
 import { catalogData } from "../apis"
 
 
