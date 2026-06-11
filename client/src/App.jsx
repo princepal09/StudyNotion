@@ -24,9 +24,9 @@ import { useSelector } from "react-redux";
 import { ACCOUNT_TYPE } from "./utils/constants";
 import Catalog from "./pages/Catalog";
 import CourseDetails from "./pages/CourseDetails";
-import ViewCourse from "./pages/ViewCourse";
 import VideoDetails from "./components/core/ViewCourse/VideoDetails";
 import Instructor from "./components/core/Dashboard/InstructorDashboard/Instructor";
+import ViewCourse from "./pages/ViewCourse";
 
 const App = () => {
   const { user } = useSelector((state) => state.profile);
