@@ -547,7 +547,7 @@ MAIL_USER=your_mail_user
 MAIL_PASS=your_mail_password
 ```
 
-> **Note:** A `.env.example` file is available in the `server/` directory for reference.
+> **Note:** A `.env.example` file is available in the `server/` and `client/` directory for reference.
 
 ---
 
@@ -597,12 +597,6 @@ Contributions are welcome! Here's how you can help:
 
 [![GitHub](https://img.shields.io/badge/GitHub-princepal09-181717?style=for-the-badge&logo=github)](https://github.com/princepal09)
 [![LinkedIn](https://img.shields.io/badge/LinkedIn-princepal09-0A66C2?style=for-the-badge&logo=linkedin)](https://linkedin.com/in/princepal09)
-
----
-
-## 📄 License
-
-This project is licensed under the **ISC License**. See the [LICENSE](LICENSE) file for details.
 
 ---
 
