@@ -19,9 +19,7 @@
   <a href="https://github.com/princepal09/StudyNotion/fork">
     <img src="https://img.shields.io/github/forks/princepal09/StudyNotion?style=for-the-badge&color=blue" alt="Forks" />
   </a>
-  <a href="https://github.com/princepal09/StudyNotion/blob/main/LICENSE">
-    <img src="https://img.shields.io/github/license/princepal09/StudyNotion?style=for-the-badge&color=green" alt="License" />
-  </a>
+ 
 </p>
 
 ---
