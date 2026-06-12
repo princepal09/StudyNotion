@@ -5,7 +5,7 @@ import { FaArrowRight } from "react-icons/fa"
 import { TypeAnimation } from 'react-type-animation'
 
 const CodeBlocks = ({
-    position, heading, subheading, ctabtn1, ctabtn2, codeblock, backgroudGradient, codeColor
+    position, heading, subheading, ctabtn1, ctabtn2, codeblock, backgroundGradient, codeColor
 }) => {
     return (
         <div className={`flex ${position} my-20 justify-between gap-10`}>
@@ -34,18 +34,10 @@ const CodeBlocks = ({
             </div>
 
             {/*Section 2*/}
-            <div style={{
-                border: "1px solid transparent",
-                borderImageSource: "linear-gradient(121.74deg, rgba(255,255,255,0.22) -7.75%, rgba(255,255,255,0) 37.38%)",
-                borderImageSlice: 2
-            }}
-
-                className=' h-fit  flex flex-row border border-white text-10[px] w-full py-4 lg:w-125'>
-                {/*HW -> BG gradient*/}
-
-
-
-                <div className='text-center flex flex-col w-[10%] text-richblack-400 font-inter font-bold'>
+             <div className="h-fit code-border flex flex-row py-3 text-[10px] sm:text-sm leading-[18px] sm:leading-6 relative w-[100%] lg:w-[470px]">
+        {backgroundGradient}
+        {/* Indexing */}
+        <div className="text-center flex flex-col   w-[10%] select-none text-richblack-400 font-inter font-bold ">
                     <p>1</p>
                     <p>2</p>
                     <p>3</p>
