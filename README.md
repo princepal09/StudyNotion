@@ -39,7 +39,6 @@
 - [Environment Variables](#-environment-variables)
 - [Contributing](#-contributing)
 - [Author](#-author)
-- [License](#-license)
 
 ---
 
