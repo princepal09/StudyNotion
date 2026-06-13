@@ -28,7 +28,7 @@ const LoginForm = () => {
 
   const handleOnSubmit = (e) => {
     e.preventDefault();
-    dispatch(login(email, password, navigate))
+    dispatch(login(email, password, accountType, navigate))
 
     setFormData({
       email: "",
