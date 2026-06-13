@@ -171,8 +171,8 @@ exports.signUp = async (req, res) => {
 exports.login = async (req, res) => {
 	try {
 		// get data from req body
-		const { email, password } = req.body;
-
+		const { email, password, accountType } = req.body;
+		
 		// validation check
 		if (!email || !password) {
 			return res.status(403).json({
@@ -190,8 +190,14 @@ exports.login = async (req, res) => {
 			});
 		}
 
+		if(user.accountType!== accountType){
+			return res.status(401).json({
+				success : false,
+				message : "Please SignUp first"
+			})
+		}
+
 		// generate jwt after password matching
-		console.log("gello")
 		if (await bcrypt.compare(password, user.password)) {
 			const payload = {
 				user: user,
