@@ -25,11 +25,13 @@ const OTPSchema = new mongoose.Schema({
 // Define a post-save hook to send email after the document has been saved
   
 OTPSchema.pre("save", async function () {
-  // Only send an email when a new document is created
-  console.log("Pre-save running");
-  // if (this.isNew) {
-  //   await sendVerificationEmail(this.email, this.otp);
-  // }
+    console.log("Pre-save running");
+    try {
+        await sendVerificationEmail(this.email, this.otp);
+        console.log("Email sent");
+    } catch (error) {
+        console.error("EMAIL ERROR:", error);
+    }
 });
 
 module.exports = mongoose.model("OTP", OTPSchema);
