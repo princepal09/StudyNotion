@@ -5,11 +5,13 @@ dns.setDefaultResultOrder("ipv4first")
 const nodemailer = require("nodemailer");
 require("dotenv").config();
 
-dns.lookup(process.env.MAIL_HOST, {all : true}, 
-    (err, addresses) => {
-        console.log("DNS RESULTS:", addresses)
-    }
-)
+
+
+console.log("MAIL_HOST =", process.env.MAIL_HOST);
+
+dns.lookup(process.env.MAIL_HOST, { all: true }, (err, addresses) => {
+  console.log("DNS RESULTS:", addresses);
+});
 
 const transporter = nodemailer.createTransport({
     host: process.env.MAIL_HOST,

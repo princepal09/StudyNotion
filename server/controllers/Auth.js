@@ -6,7 +6,7 @@ const jwt = require("jsonwebtoken");
 const { mailSender } = require("../mail/mailService");
 const Profile = require("../models/Profile")
 require("dotenv").config();
-const {passwordUpdated} = require("../mail/mailTypes")
+const { passwordUpdated } = require("../mail/mailTypes")
 // sendOTP
 exports.sendOTP = async (req, res) => {
 	try {
@@ -172,7 +172,7 @@ exports.login = async (req, res) => {
 	try {
 		// get data from req body
 		const { email, password, accountType } = req.body;
-		
+
 		// validation check
 		if (!email || !password) {
 			return res.status(403).json({
@@ -190,10 +190,10 @@ exports.login = async (req, res) => {
 			});
 		}
 
-		if(user.accountType!== accountType){
+		if (user.accountType !== accountType) {
 			return res.status(401).json({
-				success : false,
-				message : "Please SignUp first"
+				success: false,
+				message: "Please SignUp first"
 			})
 		}
 
@@ -205,30 +205,32 @@ exports.login = async (req, res) => {
 				accountType: user.accountType,
 			};
 
-
-			const token = jwt.sign(payload, process.env.JWT_SECRET, {
-				expiresIn: "2h",
-			});
-
+			const token = jwt.sign(payload, process.env.ACCESS_TOKEN_JWT_SECRET, {
+				expiresIn: '7d'
+			})
 			user.token = token;
 			user.password = undefined;
 
 			// create cookie and response
 
 			const options = {
-				expires: new Date(Date.now() + 3 * 24 * 60 * 60 * 1000),
 				httpOnly: true,
+				secure: false,
+				sameSite: 'none',
+				maxAge: 7 * 24 * 60 * 60 * 1000
+
 			};
+
 			res.cookie("token", token, options).status(200).json({
 				success: true,
-				token,
+				token: token,
 				user,
 				message: "Logged in Successfully",
 			});
 		} else {
 			console.log("Password is incorrect")
 			return res.status(401).json({
-				
+
 				success: false,
 				message: "Password is Incorrect",
 			});
@@ -259,10 +261,10 @@ exports.changePassword = async (req, res) => {
 			console.log("The old password is incorrect")
 			// If old password does not match, return a 401 (Unauthorized) error
 			return res
-			.status(401)
-			.json({ success: false, message: "The password is incorrect" });
+				.status(401)
+				.json({ success: false, message: "The password is incorrect" });
 		}
-		
+
 		// Match new password and confirm new password
 		// if (newPassword !== confirmNewPassword) {
 		// 	// If new password and confirm new password do not match, return a 400 (Bad Request) error
@@ -279,7 +281,7 @@ exports.changePassword = async (req, res) => {
 			{ password: encryptedPassword },
 			{ new: true }
 		);
-		console.log("updatedUSer",updatedUserDetails)
+		console.log("updatedUSer", updatedUserDetails)
 
 		// Send notification email
 		try {
@@ -312,3 +314,54 @@ exports.changePassword = async (req, res) => {
 		});
 	}
 };
+
+// exports.refreshToken = async (req, res) => {
+// 	try {
+
+// 		const { token } = req.cookies
+
+// 		if (!token) {
+// 			return res.status(401).json({
+// 				success: false,
+// 				message: "Refresh Token is not available"
+// 			})
+// 		}
+
+// 		const decoded = jwt.verify(token, process.env.REFRESH_TOKEN_JWT_SECRET)
+// 		console.log(decoded)
+
+// 		const payload = {
+// 			user: decoded.user,
+// 			id: decoded._id,
+// 			accountType: decoded.accountType,
+// 		}
+// 		const newAccessToken = jwt.sign(payload, process.env.ACCESS_TOKEN_JWT_SECRET, {
+// 			expiresIn: '15m'
+// 		})
+// 		const newRefreshToken = jwt.sign(payload, process.env.REFRESH_TOKEN_JWT_SECRET, {
+// 			expiresIn: '7d'
+// 		})
+
+// 		const options = {
+// 			httpOnly: true,
+// 			secure: false,
+// 			sameSite: 'none',
+// 			maxAge: 7 * 24 * 60 * 60 * 1000 // 7days
+// 		}
+
+
+// 		return res.cookie("token", token, options).status(200).json({
+// 			success: true,
+// 			token: newAccessToken,
+// 			user: decoded.user
+// 		});
+
+
+// 	} catch (err) {
+// 		console.log(err);
+// 		return res.status(500).json({
+// 			success: false,
+// 			message: "Internal server error while refresh the token"
+// 		})
+// 	}
+// }

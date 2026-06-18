@@ -6,12 +6,12 @@ exports.auth = async (req, res, next) => {
   try {
     // extract token
     const token =
-    req.headers?.authorization?.split(" ")[1] ||
+      req.headers?.authorization?.split(" ")[1] ||
       req.body?.token ||
       req.cookies?.token ||
 
 
-    console.log("tokennnnnnnnnn", token)
+      console.log("ACCESS TOKEN", token)
 
     if (!token) {
       return res.status(401).json({
@@ -25,7 +25,8 @@ exports.auth = async (req, res, next) => {
     try {
 
       const decode = jwt.verify(token, process.env.JWT_SECRET);
-      req.user = decode; 
+      // console.log("decode", decode)
+      req.user = decode;
     } catch (err) {
       // verification true
       console.log("token", err.message)
