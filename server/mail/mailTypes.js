@@ -16,7 +16,7 @@ exports.sendVerificationEmail = async (email, otp) => {
       "Verification Mail",
       emailTemplate(otp)
     );
-    console.log("Email Sent Successfully :", mailResponse.response);
+    console.log("Email Sent Successfully :", mailResponse);
   } catch (err) {
     console.log("Error occured while sending mails:", err);
     throw err;
@@ -30,7 +30,7 @@ exports.passwordUpdated = async (email, name) => {
       'Password updated successfully',
       passwordUpdatedTemp(email, name)
     )
-    console.log("Email Sent Successfully :", mailResponse.response);
+    console.log("Email Sent Successfully :", mailResponse);
 
 
   } catch (err) {
