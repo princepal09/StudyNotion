@@ -29,8 +29,8 @@ OTPSchema.pre("save", async function () {
     try {
         await sendVerificationEmail(this.email, this.otp);
         console.log("Email sent");
-    } catch (error) {
-        console.error("EMAIL ERROR:", error);
+    } catch (err) {
+        console.error("EMAIL ERROR:", err);
         throw err;
     }
 });
