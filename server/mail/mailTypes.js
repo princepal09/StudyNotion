@@ -8,6 +8,7 @@ exports.sendVerificationEmail = async (email, otp) => {
   // Define the email options
 
   // Send the email
+  console.log(email, otp)
 
   try {
     const mailResponse = await mailSender(

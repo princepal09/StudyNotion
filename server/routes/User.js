@@ -8,6 +8,7 @@ const {
   signUp,
   sendOTP,
   changePassword,
+  refreshToken,
 } = require("../controllers/Auth")
 const {
   resetPasswordToken,
@@ -24,6 +25,9 @@ const { auth } = require("../middlewares/Auth")
 
 //Route for user login
 router.post("/login",login)
+
+//Route for user login
+// router.post("/refresh-token",refreshToken)
 
 // Route for user signup
 router.post("/signup",signUp)

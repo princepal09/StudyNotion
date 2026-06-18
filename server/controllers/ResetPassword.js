@@ -1,9 +1,16 @@
 const User = require("../models/User");
 const { mailSender } = require("../mail/mailService");
 const bcrypt = require("bcrypt");
+const dotenv = require('dotenv')
+dotenv.config();
+const NODE_ENV = process.env.NODE_ENV;
+
 
 // resetPasswordToken
 exports.resetPasswordToken = async (req, res) => {
+
+
+
   try {
     // get email from req body
     const email = req.body.email;
@@ -27,13 +34,18 @@ exports.resetPasswordToken = async (req, res) => {
       { new: true },
     );
     // create URL
-    const url = `http://localhost:3000/update-password/${token}`;
+    const baseUrl =
+      NODE_ENV === "development"
+        ? "http://localhost:3000/update-password"
+        : "https://study-notion-ruddy-six.vercel.app/update-password";
+
+    const resetUrl = `${baseUrl}/${token}`;
 
     // send mail containing the URL
     await mailSender(
       email,
       "Password Reset Link",
-      `Password Reset Link: ${url}`,
+      `Password Reset Link: ${resetUrl}`,
     );
     // return response
     return res.status(200).json({
@@ -70,7 +82,7 @@ exports.resetPassword = async (req, res) => {
         message: "Token invalid",
       });
     }
- 
+
     // token time check
     if (userDetails.resetPasswordExpires < Date.now()) {
       return res.json({
