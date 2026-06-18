@@ -23,5 +23,6 @@ exports.mailSender = async (email, title, body) => {
         return info;
     } catch (err) {
         console.log(err.message);
+        throw err;
     }
 };

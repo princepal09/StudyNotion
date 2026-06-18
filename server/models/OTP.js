@@ -31,6 +31,7 @@ OTPSchema.pre("save", async function () {
         console.log("Email sent");
     } catch (error) {
         console.error("EMAIL ERROR:", error);
+        throw err;
     }
 });
 
