@@ -1,68 +1,71 @@
-import React, { useState } from 'react'
-import { ACCOUNT_TYPE } from "../../../utils/constants"
-import Tab from '../../common/Tab'
-import { AiOutlineEye, AiOutlineEyeInvisible } from "react-icons/ai"
-import { Link, useNavigate } from 'react-router-dom'
-import { login } from '../../../services/operations/authApi'
-import { useDispatch } from 'react-redux'
+import React, { useState } from "react";
+import { ACCOUNT_TYPE } from "../../../utils/constants";
+import Tab from "../../common/Tab";
+import { AiOutlineEye, AiOutlineEyeInvisible } from "react-icons/ai";
+import { Link, useNavigate } from "react-router-dom";
+import { login } from "../../../services/operations/authApi";
+import { useDispatch, useSelector } from "react-redux";
+import GoogleAuth from "./GoogleAuth";
 
 const LoginForm = () => {
   const dispatch = useDispatch();
   const navigate = useNavigate();
-  const [accountType, setAccountType] = useState(ACCOUNT_TYPE.STUDENT)
+  const [accountType, setAccountType] = useState(ACCOUNT_TYPE.STUDENT);
+
+
 
   const [formData, setFormData] = useState({
     email: "",
-    password: ""
-  })
+    password: "",
+  });
 
-  const { email, password } = formData
+  const { email, password } = formData;
 
   const handleOnChange = (e) => {
     setFormData((prev) => ({
       ...prev,
-      [e.target.name]: e.target.value
-    }))
-  }
-  
+      [e.target.name]: e.target.value,
+    }));
+  };
 
   const handleOnSubmit = (e) => {
     e.preventDefault();
-    dispatch(login(email, password, accountType, navigate))
+    dispatch(login(email, password, accountType, navigate));
 
     setFormData({
       email: "",
-      password: ""
-    })
-  }
+      password: "",
+    });
+  };
 
   const tabData = [
     {
       id: 1,
       tabName: "Student",
-      type: ACCOUNT_TYPE.STUDENT
+      type: ACCOUNT_TYPE.STUDENT,
     },
     {
       id: 2,
       tabName: "Instructor",
-      type: ACCOUNT_TYPE.INSTRUCTOR
-    }
-  ]
+      type: ACCOUNT_TYPE.INSTRUCTOR,
+    },
+  ];
 
   return (
     <div>
       {/* Tab  */}
       <Tab tabData={tabData} field={accountType} setField={setAccountType} />
 
-      <form onSubmit={handleOnSubmit} className='flex flex-col w-full gap-y-4 ' >
-
+      <form onSubmit={handleOnSubmit} className="flex flex-col w-full gap-y-4 ">
         {/* Email Address  */}
-        <label className='w-full'  >
+        <label className="w-full">
           <p className="mb-1 text-[0.875rem] leading-5.5 text-richblack-5">
             Email Address <sup className="text-pink-200">*</sup>
           </p>
 
-          <input onChange={handleOnChange} value={email}
+          <input
+            onChange={handleOnChange}
+            value={email}
             required
             type="email"
             name="email"
@@ -75,12 +78,15 @@ const LoginForm = () => {
         </label>
 
         {/* Password  */}
-        <label >
+        <label>
           <p className="mb-1 text-[0.875rem] leading-5.5 text-richblack-5">
             Password <sup className="text-pink-200">*</sup>
           </p>
-          <input onChange={handleOnChange}
-            required value={password}
+          <input
+            onChange={handleOnChange}
+            required
+            type="password"
+            value={password}
             name="password"
             placeholder="Enter Password"
             style={{
@@ -96,13 +102,23 @@ const LoginForm = () => {
         </label>
 
         {/* Sign In Button  */}
-        <button type='submit' className='mt-6 rounded-lg bg-yellow-50 py-2 px-3 font-medium text-richblack-900 cursor-pointer ' >
+        <button
+          type="submit"
+          className="mt-6 rounded-lg bg-yellow-50 py-2 px-3 font-medium text-richblack-900 cursor-pointer "
+        >
           Sign In
         </button>
+
+        <div className="my-5 flex items-center">
+          <div className="h-px flex-1 bg-richblack-700"></div>
+          <span className="px-4 text-sm text-richblack-300">OR</span>
+          <div className="h-px flex-1 bg-richblack-700"></div>
+        </div>
+
+       <GoogleAuth accountType={accountType} dispatch={dispatch} navigate={navigate}   />
       </form>
-
     </div>
-  )
-}
+  );
+};
 
-export default LoginForm
+export default LoginForm;

@@ -12,7 +12,45 @@ const {
   LOGIN_API,
   RESETPASSTOKEN_API,
   RESETPASSWORD_API,
+  GOOGLE_LOGIN_API
 } = endpoints
+
+export function googleResponse(code, navigate, accountType, setLoading) {
+  return async (dispatch) => {
+    // console.log(code,accountType)
+    const toastId = toast.loading("Loading...")
+    setLoading(true)
+
+    try {
+
+      const response = await apiConnector("POST", GOOGLE_LOGIN_API, {code, accountType})
+      console.log("GOOGLE OAUTH RESPONSE............", response)
+
+      if (!response.data.success) {
+        throw new Error(response.data.message)
+      }
+
+      toast.success("Login Successful")
+      dispatch(setToken(response.data.token))
+      const userImage = response.data?.user?.image
+        ? response.data.user.image
+        : `https://api.dicebear.com/5.x/initials/svg?seed=${response.data.user.firstName} ${response.data.user.lastName}`
+      dispatch(setUser({ ...response.data.user, image: userImage }))
+      localStorage.setItem("token", JSON.stringify(response.data.token))
+      localStorage.setItem("user", JSON.stringify(response.data.user))
+      navigate("/dashboard/my-profile")
+    } catch (error) {
+      console.log("GOOGLE OAUATH ERROR............", error)
+      const message =
+        error.response?.data?.message || error.message || "Login Failed"
+
+      toast.error(message)
+    }
+    setLoading(false);
+    toast.dismiss(toastId)
+  }
+}
+
 
 export function sendOtp(email, navigate) {
   return async (dispatch) => {
@@ -25,7 +63,7 @@ export function sendOtp(email, navigate) {
       console.log("SENDOTP API RESPONSE............", response)
 
       console.log(response.data.success)
-
+x
       if (!response.data.success) {
         throw new Error(response.data.message)
       }
@@ -34,7 +72,7 @@ export function sendOtp(email, navigate) {
       navigate("/verify-email")
     } catch (error) {
       console.log("SENDOTP API ERROR............", error)
-      toast.error("Could Not Send OTP")
+      toast.error(error?.response.message)
     }
     dispatch(setLoading(false))
     toast.dismiss(toastId)
@@ -82,7 +120,7 @@ export function signUp(
   }
 }
 
-export function login(email, password, accountType,  navigate) {
+export function login(email, password, accountType, navigate) {
   return async (dispatch) => {
     const toastId = toast.loading("Loading...")
     dispatch(setLoading(true))
