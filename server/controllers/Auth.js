@@ -218,7 +218,7 @@ exports.login = async (req, res) => {
 				accountType: user.accountType,
 			};
 
-			const token = jwt.sign(payload, process.env.ACCESS_TOKEN_JWT_SECRET, {
+			const token = jwt.sign(payload, process.env.JWT_SECRET, {
 				expiresIn: '7d'
 			})
 			user.token = token;
@@ -322,7 +322,7 @@ exports.google = async (req, res) => {
 		};
 
 
-		const token = jwt.sign(payload, process.env.ACCESS_TOKEN_JWT_SECRET, {
+		const token = jwt.sign(payload, process.env.JWT_SECRET, {
 			expiresIn: '7d'
 		})
 
