@@ -24,7 +24,7 @@ export default function MyProfile() {
           />
           <div className="space-y-1">
             <p className="text-lg font-semibold text-richblack-5">
-              {user?.firstName + " " + user?.lastName}
+              {`${user?.firstName ?? ''} ${user?.lastName ?? ''}`}
             </p>
             <p className="text-sm text-richblack-300">{user?.email}</p>
           </div>
@@ -99,7 +99,7 @@ export default function MyProfile() {
             <div>
               <p className="mb-2 text-sm text-richblack-600">Last Name</p>
               <p className="text-sm font-medium text-richblack-5">
-                {user?.lastName}
+                {user?.lastName ?? ''}
               </p>
             </div>
             <div>
