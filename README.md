@@ -52,6 +52,7 @@ The platform features a role-based system with three account types — **Student
 - 💳 Razorpay payment gateway integration
 - 📊 Instructor analytics dashboard with Chart.js
 - 🔐 JWT authentication with OTP email verification
+- 🔑 Google OAuth 2.0 (Sign in with Google)
 - ☁️ Cloudinary-powered media storage (thumbnails & videos)
 - 📧 Automated transactional emails via Nodemailer
 - 📱 Fully responsive UI built with Tailwind CSS
@@ -72,6 +73,7 @@ The platform features a role-based system with three account types — **Student
 | **Axios** | HTTP client |
 | **React Hook Form** | Form validation & management |
 | **Chart.js / react-chartjs-2** | Instructor analytics charts |
+| **@react-oauth/google** | Google OAuth 2.0 login |
 | **Swiper** | Course carousels & sliders |
 | **React Player** | Video playback |
 | **React Dropzone** | Drag-and-drop file uploads |
@@ -91,6 +93,7 @@ The platform features a role-based system with three account types — **Student
 | **bcrypt** | Password hashing |
 | **Razorpay** | Payment processing |
 | **Cloudinary** | Cloud media storage |
+| **googleapis** | Google OAuth 2.0 server-side token exchange |
 | **Nodemailer** | Transactional emails |
 | **otp-generator** | OTP generation for email verification |
 | **express-fileupload** | Multipart file handling |
@@ -101,6 +104,10 @@ The platform features a role-based system with three account types — **Student
 
 ### 🔐 Authentication & Security
 - JWT-based authentication (supports cookie, header, and body tokens)
+- **Google OAuth 2.0** — Sign in / sign up with Google (authorization code flow)
+  - Seamless account creation with Google profile data (name, email, avatar)
+  - Supports role selection (Student / Instructor) during OAuth signup
+  - Automatic profile linking for existing accounts
 - OTP email verification during signup (auto-expires after 5 minutes)
 - Secure password hashing with bcrypt
 - Password reset via email token link
@@ -155,27 +162,33 @@ The platform features a role-based system with three account types — **Student
 The project follows a **monorepo** structure with separate `client/` and `server/` directories, orchestrated by a root `package.json` using `concurrently`.
 
 ```
-┌─────────────────────────────────────────────────────────────────┐
-│                        StudyNotion                              │
-│                                                                 │
-│  ┌──────────────────────┐        ┌───────────────────────────┐  │
-│  │   Client (React)     │  HTTP  │   Server (Express)        │  │
-│  │   Port: 3000         │◄──────►│   Port: 4000              │  │
-│  │                      │        │                           │  │
-│  │  • React 19 + Vite   │        │  • Express 5              │  │
-│  │  • Redux Toolkit     │        │  • MVC Architecture       │  │
-│  │  • Tailwind CSS      │        │  • JWT Auth Middleware     │  │
-│  │  • React Router      │        │  • REST API (v1)          │  │
-│  └──────────────────────┘        └─────────┬─────────────────┘  │
-│                                            │                    │
-│                          ┌─────────────────┼─────────────────┐  │
-│                          │                 │                 │  │
-│                   ┌──────▼──────┐  ┌───────▼─────┐  ┌───────▼─┐│
-│                   │  MongoDB    │  │ Cloudinary  │  │Razorpay ││
-│                   │  (Database) │  │ (Media)     │  │(Payment)││
-│                   └─────────────┘  └─────────────┘  └─────────┘│
-│                                                                 │
-└─────────────────────────────────────────────────────────────────┘
+┌──────────────────────────────────────────────────────────────────────┐
+│                          StudyNotion                                 │
+│                                                                      │
+│  ┌──────────────────────┐        ┌────────────────────────────────┐  │
+│  │   Client (React)     │  HTTP  │   Server (Express)             │  │
+│  │   Port: 3000         │◄──────►│   Port: 4000                   │  │
+│  │                      │        │                                │  │
+│  │  • React 19 + Vite   │        │  • Express 5                   │  │
+│  │  • Redux Toolkit     │        │  • MVC Architecture            │  │
+│  │  • Tailwind CSS      │        │  • JWT Auth Middleware          │  │
+│  │  • React Router      │        │  • REST API (v1)               │  │
+│  │  • Google OAuth UI   │        │  • Google OAuth Token Exchange  │  │
+│  └──────────────────────┘        └─────────┬──────────────────────┘  │
+│                                            │                         │
+│                    ┌───────────────────┬────┼─────────────────┐       │
+│                    │                   │    │                 │       │
+│             ┌──────▼──────┐  ┌─────────▼──┐│ ┌───────▼─────┐ │       │
+│             │  MongoDB    │  │ Cloudinary  ││ │  Razorpay   │ │       │
+│             │  (Database) │  │ (Media)     ││ │  (Payment)  │ │       │
+│             └─────────────┘  └────────────┘│ └─────────────┘ │       │
+│                                            │                 │       │
+│                                    ┌───────▼─────┐           │       │
+│                                    │ Google OAuth │           │       │
+│                                    │ (googleapis) │           │       │
+│                                    └─────────────┘           │       │
+│                                                              │       │
+└──────────────────────────────────────────────────────────────────────┘
 ```
 
 **Backend Pattern:** MVC (Model → View → Controller) with dedicated middleware, routes, and service layers.
@@ -221,6 +234,7 @@ StudyNotion/
 │       │   └── core/               # Feature-specific components
 │       │       ├── AboutPage/
 │       │       ├── Auth/           # Login, Signup, Route guards
+│       │       │   ├── GoogleAuth.jsx  # Google OAuth button component
 │       │       ├── Catalog/        # Course cards & sliders
 │       │       ├── Course/         # Course detail views
 │       │       ├── Dashboard/      # All dashboard features
@@ -293,6 +307,7 @@ StudyNotion/
     ├── config/
     │   ├── database.js             # MongoDB connection
     │   ├── cloudinary.js           # Cloudinary config
+    │   ├── oauth.js                # Google OAuth2 client config
     │   └── razorpay.js             # Razorpay instance
     │
     ├── controllers/
@@ -358,6 +373,7 @@ All API endpoints are prefixed with `/api/v1`.
 |:---|:---|:---:|:---|
 | `POST` | `/signup` | ❌ | Register a new user |
 | `POST` | `/login` | ❌ | Login and receive JWT token |
+| `POST` | `/google` | ❌ | Sign in / sign up via Google OAuth 2.0 |
 | `POST` | `/sendotp` | ❌ | Send OTP to email for verification |
 | `POST` | `/changePassword` | 🔒 | Change authenticated user's password |
 | `POST` | `/reset-password-token` | ❌ | Generate password reset link |
@@ -442,7 +458,7 @@ The application uses **MongoDB** with **10 collections**:
 
 | Model | Key Fields |
 |:---|:---|
-| **User** | firstName, lastName, email, password, accountType (Admin/Student/Instructor), courses[], image, token |
+| **User** | firstName, lastName, email, password, accountType (Admin/Student/Instructor), provider (local/google), courses[], image, token |
 | **Profile** | gender, dateOfBirth, about, contactNumber |
 | **Course** | courseName, description, instructor, price, thumbnail, status (Draft/Published), courseContent[], studentsEnrolled[] |
 | **Section** | sectionName, subSection[] |
@@ -464,6 +480,7 @@ The application uses **MongoDB** with **10 collections**:
 - **MongoDB** (Atlas or local instance)
 - **Cloudinary** account (for media uploads)
 - **Razorpay** account (for payment processing)
+- **Google Cloud Console** project with OAuth 2.0 credentials (Client ID & Secret)
 
 ### Installation
 
@@ -514,6 +531,7 @@ The application uses **MongoDB** with **10 collections**:
 ```env
 VITE_BASE_URL=http://localhost:4000/api/v1
 VITE_RAZORPAY_KEY=your_razorpay_key_id
+VITE_GOOGLE_CLIENT_ID=your_google_oauth_client_id
 ```
 
 ### Server — `server/.env`
@@ -537,6 +555,10 @@ FOLDER_NAME=your_cloudinary_folder_name
 # Razorpay
 RAZORPAY_ID=your_razorpay_key_id
 RAZORPAY_SECRET=your_razorpay_secret_key
+
+# Google OAuth 2.0
+GOOGLE_CLIENT_ID=your_google_oauth_client_id
+GOOGLE_CLIENT_SECRET=your_google_oauth_client_secret
 
 # Mail (SMTP)
 MAIL_HOST=your_mail_host
