@@ -294,7 +294,6 @@ exports.google = async (req, res) => {
 				firstName: names[0],
 				lastName: names[1],
 				accountType,
-				password: null,
 				provider: 'google',
 				additionalDetails: profileDetails._id,
 				image: picture,

@@ -9,7 +9,9 @@ const userSchema = new mongoose.Schema(
     },
     lastName: {
       type: String,
-      required: true,
+      required:function(){
+        return this.provider === 'local'
+      },
       trim: true,
     },
     email: {
@@ -18,7 +20,9 @@ const userSchema = new mongoose.Schema(
     },
     password: {
       type: String,
-      required : true
+      required : function(){
+        return this.provider === 'local'
+      }
     },
     provider: {
       type: String,
