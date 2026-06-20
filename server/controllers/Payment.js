@@ -183,7 +183,7 @@ const enrollStudents = async (courses, userId, res) => {
 
 exports.sendPaymentSuccessEmail = async (req, res) => {
   const { orderId, paymentId, amount } = req.body;
-
+    const userId = req.user.id;
 
   if (!orderId || !paymentId || !amount) {
     return res.status(400).json({
