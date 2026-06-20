@@ -16,9 +16,14 @@ const userSchema = new mongoose.Schema(
       type: String,
       required: true,
     },
-    password : {
-      type : String,
+    password: {
+      type: String,
       required : true
+    },
+    provider: {
+      type: String,
+      enum: ["local", "google"],
+      default: "local",
     },
     token: {
       type: String,
@@ -26,13 +31,13 @@ const userSchema = new mongoose.Schema(
     resetPasswordExpires: {
       type: Date,
     },
-    active : {
-      type : Boolean,
-      default : true
+    active: {
+      type: Boolean,
+      default: true
     },
-    approved : {
-      type : Boolean,
-      default : true,
+    approved: {
+      type: Boolean,
+      default: true,
     },
     accountType: {
       type: String,
@@ -61,7 +66,7 @@ const userSchema = new mongoose.Schema(
       },
     ],
   },
-      // Add timestamps for when the document is created and last modified
+  // Add timestamps for when the document is created and last modified
   { timestamps: true },
 );
 

@@ -9,6 +9,7 @@ const {
   sendOTP,
   changePassword,
   refreshToken,
+  google,
 } = require("../controllers/Auth")
 const {
   resetPasswordToken,
@@ -25,6 +26,11 @@ const { auth } = require("../middlewares/Auth")
 
 //Route for user login
 router.post("/login",login)
+
+//Route for google login
+router.post("/google",google)
+
+
 
 //Route for user login
 // router.post("/refresh-token",refreshToken)

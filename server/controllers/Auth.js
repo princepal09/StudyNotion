@@ -6,7 +6,11 @@ const jwt = require("jsonwebtoken");
 const { mailSender } = require("../mail/mailService");
 const Profile = require("../models/Profile")
 require("dotenv").config();
-const { passwordUpdated } = require("../mail/mailTypes")
+const { passwordUpdated } = require("../mail/mailTypes");
+const { oauth2client } = require("../config/oauth");
+const axios = require("axios")
+
+const url = `https://www.googleapis.com/oauth2/v1/userinfo?alt=json&access_token=`
 // sendOTP
 exports.sendOTP = async (req, res) => {
 	try {
@@ -140,6 +144,7 @@ exports.signUp = async (req, res) => {
 			about: null,
 			contactNumber: null,
 		});
+
 		console.log("profileDetails", profileDetails)
 		const user = await User.create({
 			firstName,
@@ -170,6 +175,8 @@ exports.signUp = async (req, res) => {
 // Login
 exports.login = async (req, res) => {
 	try {
+
+
 		// get data from req body
 		const { email, password, accountType } = req.body;
 
@@ -181,6 +188,7 @@ exports.login = async (req, res) => {
 			});
 		}
 
+
 		// user check exists or not
 		const user = await User.findOne({ email }).populate("additionalDetails").exec()
 		if (!user) {
@@ -190,12 +198,17 @@ exports.login = async (req, res) => {
 			});
 		}
 
+
+
 		if (user.accountType !== accountType) {
 			return res.status(401).json({
 				success: false,
 				message: "Please SignUp first"
 			})
 		}
+
+
+
 
 		// generate jwt after password matching
 		if (await bcrypt.compare(password, user.password)) {
@@ -237,8 +250,112 @@ exports.login = async (req, res) => {
 		}
 	} catch (err) {
 		console.log("Failed to Login", err);
+		return res.status(500).json({
+			success: false,
+			message: err.message,
+		})
 	}
 };
+
+exports.google = async (req, res) => {
+	try {
+		const { code, accountType } = req.body
+
+		if (!code || !accountType) {
+			return res.status(400).json({
+				success: false,
+				message: "Authorization code and accountType is required",
+			});
+		}
+
+		const { tokens } = await oauth2client.getToken(code);
+		oauth2client.setCredentials(tokens);
+
+		const userRes = await axios.get(`${url}${tokens.access_token}`)
+		console.log("Google User:", userRes.data)
+
+		const { email, name, picture } = userRes.data
+		const names = name.split(" ");
+		console.log("names", names)
+
+
+		// user check exists or not
+		let user = await User.findOne({ email }).populate("additionalDetails").exec()
+
+		if (!user) {
+			const profileDetails = await Profile.create({
+				gender: null,
+				dateOfBirth: null,
+				about: null,
+				contactNumber: null,
+			});
+			user = await User.create({
+				email,
+				firstName: names[0],
+				lastName: names[1],
+				accountType,
+				password: null,
+				provider: 'google',
+				additionalDetails: profileDetails._id,
+				image: picture,
+			});
+
+			user = await User.findById(user._id)
+				.populate("additionalDetails")
+				.exec();
+		}
+
+
+
+		if (user.accountType !== accountType) {
+			return res.status(401).json({
+				success: false,
+				message: "This account is registered as a different user type."
+			})
+		}
+
+
+		const payload = {
+			user: user,
+			id: user._id,
+			accountType: user.accountType,
+		};
+
+
+		const token = jwt.sign(payload, process.env.ACCESS_TOKEN_JWT_SECRET, {
+			expiresIn: '7d'
+		})
+
+
+		user.token = token;
+		user.password = undefined;
+
+		// create cookie and response
+
+		const options = {
+			httpOnly: true,
+			secure: false,
+			sameSite: 'none',
+			maxAge: 7 * 24 * 60 * 60 * 1000
+
+		};
+
+		res.cookie("token", token, options).status(200).json({
+			success: true,
+			token: token,
+			user,
+			message: " Logged in Successfully",
+		});
+
+	} catch (err) {
+		console.log("Failed to Login", err);
+		return res.status(500).json({
+			success: false,
+			message: err.message,
+		})
+	}
+
+}
 
 
 // Controller for Changing Password
