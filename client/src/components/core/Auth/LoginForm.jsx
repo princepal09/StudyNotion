@@ -12,8 +12,6 @@ const LoginForm = () => {
   const navigate = useNavigate();
   const [accountType, setAccountType] = useState(ACCOUNT_TYPE.STUDENT);
 
-
-
   const [formData, setFormData] = useState({
     email: "",
     password: "",
@@ -57,6 +55,20 @@ const LoginForm = () => {
       <Tab tabData={tabData} field={accountType} setField={setAccountType} />
 
       <form onSubmit={handleOnSubmit} className="flex flex-col w-full gap-y-4 ">
+
+        <div className="mt-5 flex flex-col gap-y-6">
+          <GoogleAuth
+            accountType={accountType}
+            dispatch={dispatch}
+            navigate={navigate}
+          />
+          <div className="my-5 flex items-center">
+            <div className="h-px flex-1 bg-richblack-700"></div>
+            <span className="px-4 text-sm text-richblack-300">OR</span>
+            <div className="h-px flex-1 bg-richblack-700"></div>
+          </div>
+        </div>
+
         {/* Email Address  */}
         <label className="w-full">
           <p className="mb-1 text-[0.875rem] leading-5.5 text-richblack-5">
@@ -108,14 +120,6 @@ const LoginForm = () => {
         >
           Sign In
         </button>
-
-        <div className="my-5 flex items-center">
-          <div className="h-px flex-1 bg-richblack-700"></div>
-          <span className="px-4 text-sm text-richblack-300">OR</span>
-          <div className="h-px flex-1 bg-richblack-700"></div>
-        </div>
-
-       <GoogleAuth accountType={accountType} dispatch={dispatch} navigate={navigate}   />
       </form>
     </div>
   );

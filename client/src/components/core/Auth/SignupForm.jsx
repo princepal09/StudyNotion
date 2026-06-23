@@ -87,6 +87,22 @@ const SignupForm = () => {
 
       {/* Form  */}
       <form onSubmit={handleOnSubmit} className="flex flex-col w-full gap-y-4 ">
+
+        <div className="mt-5 flex flex-col gap-y-6" >
+          {/* Google Login  */}
+          <GoogleAuth 
+            accountType={accountType}
+            navigate={navigate}
+            dispatch={dispatch}
+          />
+
+          <div className="my-5 flex items-center">
+            <div className="h-px flex-1 bg-richblack-700"></div>
+            <span className="px-4 text-sm text-richblack-300">OR</span>
+            <div className="h-px flex-1 bg-richblack-700"></div>
+          </div>
+        </div>
+
         {/* Name  */}
         <div className="flex gap-x-4">
           {/* First Name  */}
@@ -221,19 +237,6 @@ const SignupForm = () => {
         >
           Create Account
         </button>
-
-        <div className="my-5 flex items-center">
-          <div className="h-px flex-1 bg-richblack-700"></div>
-          <span className="px-4 text-sm text-richblack-300">OR</span>
-          <div className="h-px flex-1 bg-richblack-700"></div>
-        </div>
-
-        {/* Google Login  */}
-        <GoogleAuth
-          accountType={accountType}
-          navigate={navigate}
-          dispatch={dispatch}
-        />
       </form>
     </div>
   );
