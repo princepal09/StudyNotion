@@ -32,6 +32,8 @@ const CourseDetails = () => {
   const[isActive, setIsActive] = useState([]); 
   //  both above  are same
 
+  
+
   const getCourseDetails = async () => {
     try {
       const res = await fetchCourseDetails(courseId);
@@ -58,7 +60,7 @@ const CourseDetails = () => {
   }, [courseId]);
 
   useEffect(() => {
-    const count = GetAvgRating(courseData?.courseDetails.ratingAndReview);
+    const count = GetAvgRating(courseData?.courseDetails.ratingAndReviews);
     setAvgReviewCount(count);
   }, [courseData]);
 
@@ -128,7 +130,7 @@ const CourseDetails = () => {
               </div>
               <p className={`text-richblack-200`}>{courseDescription}</p>
               <div className="text-md flex flex-wrap items-center gap-2">
-                <span className="text-yellow-25">{avgReviewCount}</span>
+                <span className="text-yellow-25">{Math.floor(avgReviewCount)}</span>
                 <RatingStars Review_Count={avgReviewCount} Star_Size={24} />
                 <span>{`(${ratingAndReviews.length} reviews)`}</span>
                 <span>{`${studentsEnrolled.length} students enrolled`}</span>

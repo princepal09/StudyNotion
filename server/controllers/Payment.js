@@ -160,13 +160,13 @@ const enrollStudents = async (courses, userId, res) => {
 
       // send mail to student
 
-      const emailResponse = await mailSender(
-        enrolledStudent.email,
-        `Successfully Enrolled into ${enrolledCourse.courseName}`,
-        courseEnrollmentEmail(enrolledCourse.courseName, `${enrolledStudent.firstName + enrolledStudent.lastName}`)
-      )
+      // const emailResponse = await mailSender(
+      //   enrolledStudent.email,
+      //   `Successfully Enrolled into ${enrolledCourse.courseName}`,
+      //   courseEnrollmentEmail(enrolledCourse.courseName, `${enrolledStudent.firstName + enrolledStudent.lastName}`)
+      // )
 
-      console.log("Email Sent Successfully", emailResponse);
+      // console.log("Email Sent Successfully", emailResponse);
     }
     catch (err) {
       console.log(err);
